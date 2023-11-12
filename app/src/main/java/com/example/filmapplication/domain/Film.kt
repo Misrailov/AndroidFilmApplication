@@ -1,4 +1,4 @@
-package com.example.filmapplication.data
+package com.example.filmapplication.domain
 
 data class Film (
     override  val title:String,
