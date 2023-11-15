@@ -8,8 +8,8 @@ data class Film(
         val titleText: TitleText,
         val originalTitleText: TitleText,
         val releaseYear: YearRange,
-        val releaseDate: ReleaseDate,
-        val position: Int
+        val releaseDate: ReleaseDate?,
+        val position: Int?
 )
 
 data class PrimaryImage(

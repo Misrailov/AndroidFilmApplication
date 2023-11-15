@@ -39,7 +39,7 @@ data class TitleText(
 
 data class YearRange(
         val year: Int,
-        val endYear: Int,
+        val endYear: Int?,
         val __typename: String
 )
 

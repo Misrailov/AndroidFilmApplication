@@ -1,6 +1,8 @@
 package com.example.filmapplication.screens.actor
 
+import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -38,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
+import com.example.filmapplication.R
 import com.example.filmapplication.domain.EntertainmentMedia
 import com.example.filmapplication.domain.Role
 import com.example.filmapplication.model.actor.Actor
@@ -93,6 +96,7 @@ fun Actors(actors:List<Actor>, navigationController: NavController){
             actors.forEach { actor ->
                 item {
                     ActorComposable(
+                        actorId = actor.nconst,
                         actorName = actor.primaryName,
 
                         playedIn=actor.knownForTitles.split(","),
@@ -105,60 +109,55 @@ fun Actors(actors:List<Actor>, navigationController: NavController){
             }
         }
     }
-}
-@Composable
+}@Composable
 fun ActorComposable(
+    actorId: String,
     actorName: String,
     playedIn: List<String>,
-    /*images: List<String>,*/
     birthDate: Int,
     role: Role,
     navigationController: NavController
-){
+) {
     Card(
         modifier = Modifier
             .padding(start = 4.dp, end = 12.dp)
             .widthIn(max = 350.dp, min = 350.dp)
-            .heightIn(min = 160.dp, max = 160.dp),
+            .heightIn(min = 160.dp, max = 160.dp)
+            .clickable { /* Handle click here */ },
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp,
         ),
-/*        shape = MaterialTheme.shapes.small,
-        colors = CardDefaults.cardColors(containerColor = secondaryColor),*/
-    ){
-
+    ) {
         Row(
-            modifier = Modifier
-                .padding(start = 8.dp),
-        ){
+            modifier = Modifier.padding(start = 8.dp),
+        ) {
             Column {
                 Text(
                     text = actorName,
                     color = Color.Black,
                     fontSize = 24.sp,
-                    modifier = Modifier
-                        .padding(top = 16.dp),
+                    modifier = Modifier.padding(top = 16.dp),
                 )
-/*                Text(
-                    text = specialisation,
-                    color = primaryColor,
-                    fontSize = 18.sp,
-                    modifier = Modifier
-                        .padding(top = 8.dp),
-                )*/
-
-
-
             }
-       /*     Image(
-                painter = rememberImagePainter(data = images[0]),
-                contentDescription = "picture of " + actorName,
+
+            // Other details or image can be added here
+
+            // Handle click by navigating to the actor details screen
+            Image(
+                painter = rememberImagePainter(data = R.drawable.loading_img),
+                contentDescription = "picture of $actorName",
                 modifier = Modifier
                     .fillMaxHeight()
                     .aspectRatio(1f)
                     .padding(16.dp)
-                    .align(Alignment.CenterVertically),
-            )*/
+                    .align(Alignment.CenterVertically)
+                    .clickable {
+                        // Navigate to actor details screen
+                        // You can pass necessary details to the destination screen
+                       navigationController.navigate("actorDetailsScreen/$actorId")
+
+                    },
+            )
         }
     }
 }

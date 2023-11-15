@@ -1,5 +1,6 @@
 package com.example.filmapplication.screens
 
+import android.util.Log
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -7,11 +8,14 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -21,15 +25,24 @@ import com.example.filmapplication.screens.actor.ActorViewModel
 import com.example.filmapplication.screens.appBar.MyBottomBar
 import com.example.templateapplication.screens.appBar.MyTopAppBar
 import androidx.navigation.compose.composable
+import com.example.filmapplication.FilmApplication
+import com.example.filmapplication.screens.actor.ActorDetails.ActorDetailViewModel
+import com.example.filmapplication.screens.actor.ActorDetails.ActorDetailsScreen
 import com.example.filmapplication.screens.actor.ActorScreen
+import com.example.filmapplication.screens.movie.FilmScreen
+import com.example.filmapplication.screens.movie.FilmViewModel
+import com.example.filmapplication.screens.serie.SerieScreen
+import com.example.filmapplication.screens.serie.SerieViewModel
 import com.example.filmapplication.ui.theme.EntertainmentApplicationTheme
+import kotlinx.coroutines.newFixedThreadPoolContext
 
 
 enum class Destinations {
     Home,
     Movies,
     Series,
-    Actors
+    Actors,
+    ActorsDetail
 }
 
 var primaryColor = Color(MainActivity.primaryColor)
@@ -41,7 +54,9 @@ fun FilmApp(name: String, modifier: Modifier = Modifier) {
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = currentBackStackEntry?.destination?.route
     val actorViewModel :ActorViewModel = viewModel(factory = ActorViewModel.Factory)
-
+    val filmViewModel: FilmViewModel = viewModel(factory = FilmViewModel.Factory)
+    val serieViewModel:SerieViewModel = viewModel(factory = SerieViewModel.Factory)
+    val actorDetailViewModel:ActorDetailViewModel = viewModel(factory = ActorDetailViewModel.Factory)
     Scaffold(
         containerColor = Color.Transparent,
         topBar = {
@@ -77,17 +92,32 @@ fun FilmApp(name: String, modifier: Modifier = Modifier) {
             }
             composable(Destinations.Movies.name){
                 //MovieScreen(navController)
-                ActorScreen(navController, actorViewModel.actorViewUiState)
+                FilmScreen(navController, filmViewModel.filmViewUiState)
 
             }
             composable(Destinations.Series.name){
 
                // SerieScreen(navController)
-                ActorScreen(navController, actorViewModel.actorViewUiState)
+                System.out.println(serieViewModel.serieViewUiState.toString())
+                SerieScreen(navController, serieViewModel.serieViewUiState)
 
             }
             composable(Destinations.Actors.name){
                 ActorScreen(navController, actorViewModel.actorViewUiState)
+            }
+
+            composable("actorDetailsScreen/{actorId}"){ navBackStackEntry ->
+
+
+                val actorId = navBackStackEntry.arguments?.getString("actorId")
+                actorDetailViewModel.SetId(actorId.toString())
+                ActorDetailsScreen(
+                    actorId = actorId,
+                    navigationController =navController ,
+                    actorDetailViewUiState =actorDetailViewModel.actorDetailViewUiState
+                )
+
+
             }
 
         }
