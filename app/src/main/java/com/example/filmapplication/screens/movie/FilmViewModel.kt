@@ -9,10 +9,15 @@ import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.AP
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.example.filmapplication.FilmApplication
 import com.example.filmapplication.model.film.Film
 import com.example.filmapplication.repository.FilmRepository
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.Flow
 
 
 sealed interface FilmViewUiState {
@@ -22,27 +27,35 @@ sealed interface FilmViewUiState {
     object Error: FilmViewUiState
 
 }
+private const val FILMS_PER_PAGE =50
 
 class FilmViewModel(private val filmRepository: FilmRepository):ViewModel(){
+
+    val filmPager:Flow<PagingData<Film>> =
+        Pager(config = PagingConfig(pageSize = FILMS_PER_PAGE,enablePlaceholders = false),
+            pagingSourceFactory = {filmRepository.filmPagingSource("most_pop_movies")}).flow.cachedIn(viewModelScope)
+
 
     var filmViewUiState:FilmViewUiState by mutableStateOf(FilmViewUiState.loading)
     private set
 
-    init {
+   /* init {
         getFilms()
-    }
+    }*/
+/*
 
     fun getFilms(){
         viewModelScope.launch {
             filmViewUiState = FilmViewUiState.loading
             filmViewUiState = try{
-                FilmViewUiState.Success(filmRepository.getFilms())
+                FilmViewUiState.Success(items.)
             }catch (e:Exception){
                 FilmViewUiState.Error
 
             }
         }
     }
+*/
 
     companion object{
         val Factory: ViewModelProvider.Factory = viewModelFactory {

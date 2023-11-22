@@ -37,9 +37,13 @@ import com.example.filmapplication.screens.ErrorScreen
 import com.example.filmapplication.screens.LoadingScreen
 import com.example.filmapplication.screens.actor.Actors
 import com.example.filmapplication.screens.primaryColor
+import kotlinx.coroutines.flow.toList
+
 @Composable
 fun FilmScreen(navigationController: NavController, filmViewUiState: FilmViewUiState) {
+
     var films: List<Film> by remember { mutableStateOf(listOf()) }
+
     when (filmViewUiState) {
         is FilmViewUiState.Success -> {
             films = filmViewUiState.films

@@ -11,7 +11,7 @@ interface FilmApiService {
 
 
     @GET("titles")
-    suspend fun getFilms(@Query("list") list:String , @Query("startYear") startYear:Int): FilmContainer
+    suspend fun getFilms(@Query("list") list:String,@Query("page") page:Int, @Query("startYear") startYear:Int): FilmContainer
 
     @GET("titles/{id}")
     suspend fun getFilmById(@Path("id") id: String): Film
