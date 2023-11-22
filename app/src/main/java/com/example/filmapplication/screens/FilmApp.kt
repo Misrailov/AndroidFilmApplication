@@ -1,6 +1,5 @@
 package com.example.filmapplication.screens
 
-import android.util.Log
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -8,14 +7,11 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -25,7 +21,6 @@ import com.example.filmapplication.screens.actor.ActorViewModel
 import com.example.filmapplication.screens.appBar.MyBottomBar
 import com.example.templateapplication.screens.appBar.MyTopAppBar
 import androidx.navigation.compose.composable
-import com.example.filmapplication.FilmApplication
 import com.example.filmapplication.screens.actor.ActorDetails.ActorDetailViewModel
 import com.example.filmapplication.screens.actor.ActorDetails.ActorDetailsScreen
 import com.example.filmapplication.screens.actor.ActorScreen
@@ -92,7 +87,7 @@ fun FilmApp(name: String, modifier: Modifier = Modifier) {
             }
             composable(Destinations.Movies.name){
                 //MovieScreen(navController)
-                FilmScreen(navController, filmViewModel.filmViewUiState)
+                FilmScreen(navController)
 
             }
             composable(Destinations.Series.name){
@@ -122,12 +117,5 @@ fun FilmApp(name: String, modifier: Modifier = Modifier) {
 
         }
 
-    }
-}
-@Preview(showBackground = true)
-@Composable
-fun EntertainmentAppPreview() {
-    EntertainmentApplicationTheme {
-        FilmApp("Android")
     }
 }

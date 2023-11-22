@@ -33,7 +33,13 @@ class FilmViewModel(private val filmRepository: FilmRepository):ViewModel(){
 
     val filmPager:Flow<PagingData<Film>> =
         Pager(config = PagingConfig(pageSize = FILMS_PER_PAGE,enablePlaceholders = false),
-            pagingSourceFactory = {filmRepository.filmPagingSource("most_pop_movies")}).flow.cachedIn(viewModelScope)
+            pagingSourceFactory = {filmRepository.filmPagingSource("top_boxoffice_200")}).flow.cachedIn(viewModelScope)
+    val filmPagerTopRated:Flow<PagingData<Film>> =
+        Pager(config = PagingConfig(pageSize = FILMS_PER_PAGE,enablePlaceholders = false),
+            pagingSourceFactory = {filmRepository.filmPagingSource("top_rated_english_250")}).flow.cachedIn(viewModelScope)
+    val filmPagerWorstMovies:Flow<PagingData<Film>> =
+        Pager(config = PagingConfig(pageSize = FILMS_PER_PAGE,enablePlaceholders = false),
+            pagingSourceFactory = {filmRepository.filmPagingSource("top_rated_lowest_100")}).flow.cachedIn(viewModelScope)
 
 
     var filmViewUiState:FilmViewUiState by mutableStateOf(FilmViewUiState.loading)

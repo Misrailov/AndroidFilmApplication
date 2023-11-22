@@ -1,86 +1,118 @@
 package com.example.filmapplication.screens.movie
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CardElevation
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.itemsIndexed
 import coil.compose.rememberImagePainter
 import com.example.filmapplication.model.film.Film
 import com.example.filmapplication.screens.ErrorScreen
 import com.example.filmapplication.screens.LoadingScreen
-import com.example.filmapplication.screens.actor.Actors
 import com.example.filmapplication.screens.primaryColor
-import kotlinx.coroutines.flow.toList
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FilmScreen(navigationController: NavController, filmViewUiState: FilmViewUiState) {
+fun FilmScreen(navigationController: NavController, filmViewModel:FilmViewModel = viewModel(factory =FilmViewModel.Factory) ) {
 
-    var films: List<Film> by remember { mutableStateOf(listOf()) }
+    var films = filmViewModel.filmPager.collectAsLazyPagingItems();
+    var worstFilms = filmViewModel.filmPagerWorstMovies.collectAsLazyPagingItems();
+    var bestFilms = filmViewModel.filmPagerTopRated.collectAsLazyPagingItems();
 
-    when (filmViewUiState) {
-        is FilmViewUiState.Success -> {
-            films = filmViewUiState.films
-        }
-        FilmViewUiState.loading -> {
-            LoadingScreen(modifier = Modifier.fillMaxSize())
-        }
-        FilmViewUiState.Error -> {
-            ErrorScreen(modifier = Modifier.fillMaxSize())
-        }
-    }
+   when(films.loadState.refresh){
+       is LoadState.Loading -> LoadingScreen()
+       is LoadState.Error-> {
+           Log.e("error", "errorScreenMovies")
+           ErrorScreen()}
+       else ->{
 
-    FilmsList(films = films, navigationController = navigationController)
+           Scaffold { padding->
+               Spacer(modifier = Modifier.padding(padding))
+               LazyRow {
+                   item {
+                       Column{
+                           Text(text = "Top Box Office films (most earnings)")
+
+                           filmList(films = films, title = "Top Box Office films (most earnings)")
+                       }
+                   }
+                   item {
+                       Column{
+                           Text(text = "Top rated films")
+                           filmList(films = bestFilms, title = "Top rated films")
+                       }
+                   }
+                   item {
+                       Column {
+                           Text(text ="Worst Films Ever" )
+
+                           filmList(films = worstFilms, title = "Worst rated films")
+                       }
+
+                   }
+               }
+           }
+       }
+   }
 }
 
+
+
 @Composable
-fun FilmsList(films: List<Film>, navigationController: NavController) {
+fun filmList(films:LazyPagingItems<Film>,  title:String) {
+
+
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
             .heightIn(min = 160.dp)
             .padding(start = 16.dp)
     ) {
-        if (films.isEmpty()) {
-            item {
-                Text("No Films found")
-            }
-        } else {
-            films.forEach { film ->
-                item {
-                    FilmComposable(
-                        filmTitle = film.titleText.text,
-                        releaseYear = film.releaseYear.year,
-                        primaryImage = film.primaryImage.url,
-                        navigationController = navigationController
-                    )
-                }
+        itemsIndexed(films) { index, film ->
+
+        film?.let {
+                Log.e("filmInfo", film.titleText.text)
+                FilmComposable(
+                    filmTitle = film.titleText.text,
+                    releaseYear = film.releaseYear.year,
+                    primaryImage = film.primaryImage.url,
+                )
+
             }
         }
     }
@@ -91,51 +123,49 @@ fun FilmComposable(
     filmTitle: String,
     releaseYear: Int,
     primaryImage: String,
-    navigationController: NavController
 ) {
     Card(
         modifier = Modifier
-            .padding(horizontal = 4.dp, vertical = 8.dp)
+            .padding(horizontal = 8.dp, vertical = 8.dp)
             .fillMaxWidth()
-            .height(160.dp),
+            .defaultMinSize(300.dp),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
         ),
     ) {
-        Row(
+        Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(8.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Image(
                 painter = rememberImagePainter(data = primaryImage),
                 contentDescription = "Photo of $filmTitle",
                 modifier = Modifier
-                    .aspectRatio(1f)
+                    .width(300.dp)
+                    .height(400.dp)
                     .clip(MaterialTheme.shapes.medium)
-                    .background(MaterialTheme.colorScheme.background)
+                    .background(Color.White)
             )
 
             Column(
                 modifier = Modifier
-                    .fillMaxHeight()
-                    .weight(1f)
+                    .fillMaxWidth()
+                    .padding(8.dp)
             ) {
                 Text(
                     text = filmTitle,
                     color = Color.Black,
-                    fontSize = 24.sp,
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.Bold,
                     modifier = Modifier
-                        .padding(top = 16.dp),
+                        .padding(top = 8.dp)
                 )
                 Text(
-                    text = releaseYear.toString(),
+                    text = "Released in $releaseYear",
                     color = primaryColor,
-                    fontSize = 18.sp,
+                    fontSize = 16.sp,
                     modifier = Modifier
-                        .padding(top = 8.dp),
+                        .padding(top = 4.dp)
                 )
             }
         }
