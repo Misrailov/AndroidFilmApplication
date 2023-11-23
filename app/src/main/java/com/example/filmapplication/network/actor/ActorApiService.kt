@@ -1,7 +1,6 @@
 package com.example.filmapplication.network.actor
 
 
-import com.example.filmapplication.model.actor.Actor
 import com.example.filmapplication.model.actor.ActorContainer
 import com.example.filmapplication.model.actor.ActorContainerSingular
 import retrofit2.http.GET

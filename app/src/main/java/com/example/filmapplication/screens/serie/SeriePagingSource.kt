@@ -3,7 +3,6 @@ package com.example.filmapplication.screens.serie
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.filmapplication.model.serie.Serie
-import com.example.filmapplication.repository.NetworkSerieRepository
 import com.example.filmapplication.repository.SerieRepository
 
 class SeriePagingSource(val serieRepository: SerieRepository, val query:String):PagingSource<Int,Serie>() {

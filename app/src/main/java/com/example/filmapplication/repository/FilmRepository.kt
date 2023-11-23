@@ -8,8 +8,6 @@ interface FilmRepository {
 
     suspend fun getFilms(query:String, page:Int): List<Film>
     suspend fun getFilmDetail(id:String) : Film
-    /*suspend fun getActorContainer(): ActorContainer*/
-//TODO : Nog zien hoe dat de container uit de API wordt verkregen
     suspend fun getFilmListByids(idsList: String) : List<Film>
      fun filmPagingSource(query:String): FilmPagingSource
 

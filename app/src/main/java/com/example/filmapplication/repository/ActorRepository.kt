@@ -1,16 +1,12 @@
 package com.example.filmapplication.repository
 
-import android.graphics.Movie
 import com.example.filmapplication.model.actor.Actor
-import com.example.filmapplication.model.film.Film
 import com.example.filmapplication.network.actor.ActorApiService
 
 interface ActorRepository {
 
 suspend fun getActors(): List<Actor>
 suspend fun getActorDetail(id:String) : Actor
-/*suspend fun getActorContainer(): ActorContainer*/
-//TODO : Nog zien hoe dat de container uit de API wordt verkregen
 
 
 }

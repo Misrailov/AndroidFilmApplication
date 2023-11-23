@@ -1,7 +1,5 @@
 package com.example.filmapplication.network.serie
 
-import com.example.filmapplication.model.film.Film
-import com.example.filmapplication.model.film.FilmContainer
 import com.example.filmapplication.model.serie.Serie
 import com.example.filmapplication.model.serie.SerieContainer
 import retrofit2.http.GET

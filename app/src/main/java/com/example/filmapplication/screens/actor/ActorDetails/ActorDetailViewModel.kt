@@ -14,7 +14,6 @@ import com.example.filmapplication.model.actor.Actor
 import com.example.filmapplication.model.film.Film
 import com.example.filmapplication.repository.ActorRepository
 import com.example.filmapplication.repository.FilmRepository
-import com.example.filmapplication.screens.actor.ActorViewModel
 import kotlinx.coroutines.launch
 
 sealed interface ActorDetailViewUiState{

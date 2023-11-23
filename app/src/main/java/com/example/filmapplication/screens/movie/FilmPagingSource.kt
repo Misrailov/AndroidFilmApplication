@@ -1,7 +1,6 @@
 import com.example.filmapplication.model.film.Film
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.filmapplication.network.movie.FilmApiService
 import com.example.filmapplication.repository.FilmRepository
 
 class FilmPagingSource(val filmRepository: FilmRepository, val query:String): PagingSource<Int, Film>() {

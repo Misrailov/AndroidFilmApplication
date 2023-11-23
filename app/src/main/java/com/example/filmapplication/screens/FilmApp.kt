@@ -25,10 +25,7 @@ import com.example.filmapplication.screens.actor.ActorDetails.ActorDetailViewMod
 import com.example.filmapplication.screens.actor.ActorDetails.ActorDetailsScreen
 import com.example.filmapplication.screens.actor.ActorScreen
 import com.example.filmapplication.screens.movie.FilmScreen
-import com.example.filmapplication.screens.movie.FilmViewModel
 import com.example.filmapplication.screens.serie.SerieScreen
-import com.example.filmapplication.screens.serie.SerieViewModel
-import kotlinx.coroutines.newFixedThreadPoolContext
 
 
 enum class Destinations {
@@ -48,8 +45,6 @@ fun FilmApp(name: String, modifier: Modifier = Modifier) {
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = currentBackStackEntry?.destination?.route
     val actorViewModel :ActorViewModel = viewModel(factory = ActorViewModel.Factory)
-    val filmViewModel: FilmViewModel = viewModel(factory = FilmViewModel.Factory)
-    val serieViewModel:SerieViewModel = viewModel(factory = SerieViewModel.Factory)
     val actorDetailViewModel:ActorDetailViewModel = viewModel(factory = ActorDetailViewModel.Factory)
     Scaffold(
         containerColor = Color.Transparent,
@@ -91,8 +86,7 @@ fun FilmApp(name: String, modifier: Modifier = Modifier) {
             }
             composable(Destinations.Series.name){
 
-               // SerieScreen(navController)
-                SerieScreen(navController)
+                SerieScreen()
 
             }
             composable(Destinations.Actors.name){

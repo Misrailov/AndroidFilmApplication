@@ -6,13 +6,11 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import com.example.filmapplication.screens.primaryColor
-import com.example.filmapplication.screens.secondaryColor
 
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun MyTopAppBar(currentpage: String,  navigationIcon: @Composable () -> Unit) {
+fun MyTopAppBar(currentpage: String) {
     TopAppBar(
         colors = TopAppBarDefaults.smallTopAppBarColors(
             containerColor = Color.Transparent,

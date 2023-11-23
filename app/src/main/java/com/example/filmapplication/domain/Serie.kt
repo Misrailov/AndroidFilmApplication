@@ -6,7 +6,6 @@ data class Serie(
     override  val rank: Int,
     override  val Image:String,
     override val IMDBRating: String,
-    //TODO: possibly seasons and episode per season
 
 
 ): EntertainmentMedia

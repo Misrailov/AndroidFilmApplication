@@ -16,7 +16,6 @@ import androidx.paging.cachedIn
 import com.example.filmapplication.FilmApplication
 import com.example.filmapplication.model.film.Film
 import com.example.filmapplication.repository.FilmRepository
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.Flow
 
 
@@ -45,23 +44,6 @@ class FilmViewModel(private val filmRepository: FilmRepository):ViewModel(){
     var filmViewUiState:FilmViewUiState by mutableStateOf(FilmViewUiState.loading)
     private set
 
-   /* init {
-        getFilms()
-    }*/
-/*
-
-    fun getFilms(){
-        viewModelScope.launch {
-            filmViewUiState = FilmViewUiState.loading
-            filmViewUiState = try{
-                FilmViewUiState.Success(items.)
-            }catch (e:Exception){
-                FilmViewUiState.Error
-
-            }
-        }
-    }
-*/
 
     companion object{
         val Factory: ViewModelProvider.Factory = viewModelFactory {
