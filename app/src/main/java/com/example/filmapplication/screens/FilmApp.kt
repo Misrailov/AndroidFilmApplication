@@ -28,7 +28,6 @@ import com.example.filmapplication.screens.movie.FilmScreen
 import com.example.filmapplication.screens.movie.FilmViewModel
 import com.example.filmapplication.screens.serie.SerieScreen
 import com.example.filmapplication.screens.serie.SerieViewModel
-import com.example.filmapplication.ui.theme.EntertainmentApplicationTheme
 import kotlinx.coroutines.newFixedThreadPoolContext
 
 

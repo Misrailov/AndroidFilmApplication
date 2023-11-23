@@ -33,7 +33,6 @@ import com.example.filmapplication.screens.ErrorScreen
 import com.example.filmapplication.screens.LoadingScreen
 import com.example.filmapplication.screens.actor.ActorViewModel
 import com.example.filmapplication.screens.actor.ActorViewUiState
-import com.example.filmapplication.ui.theme.EntertainmentApplicationTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -5,6 +5,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import com.example.filmapplication.screens.primaryColor
 import com.example.filmapplication.screens.secondaryColor
 
@@ -14,13 +15,15 @@ import com.example.filmapplication.screens.secondaryColor
 fun MyTopAppBar(currentpage: String,  navigationIcon: @Composable () -> Unit) {
     TopAppBar(
         colors = TopAppBarDefaults.smallTopAppBarColors(
-            containerColor = primaryColor,
-            titleContentColor = secondaryColor,
+            containerColor = Color.Transparent,
+            titleContentColor = Color.Black,
 
             ),
         title = {
             Text(currentpage)
         },
+/*
         navigationIcon = navigationIcon
+*/
     )
 }

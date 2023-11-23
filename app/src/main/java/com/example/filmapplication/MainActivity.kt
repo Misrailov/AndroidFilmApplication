@@ -8,8 +8,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.core.content.ContextCompat
+import com.example.compose.EntertainmentApplicationTheme
 import com.example.filmapplication.screens.FilmApp
-import com.example.filmapplication.ui.theme.EntertainmentApplicationTheme
 
 class MainActivity : ComponentActivity() {
 
