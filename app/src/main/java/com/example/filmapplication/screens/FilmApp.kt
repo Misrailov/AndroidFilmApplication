@@ -92,8 +92,7 @@ fun FilmApp(name: String, modifier: Modifier = Modifier) {
             composable(Destinations.Series.name){
 
                // SerieScreen(navController)
-                System.out.println(serieViewModel.serieViewUiState.toString())
-                SerieScreen(navController, serieViewModel.serieViewUiState)
+                SerieScreen(navController)
 
             }
             composable(Destinations.Actors.name){

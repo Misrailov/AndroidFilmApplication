@@ -10,10 +10,16 @@ import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.AP
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.example.filmapplication.FilmApplication
 import com.example.filmapplication.model.serie.Serie
 import com.example.filmapplication.repository.SerieRepository
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+private const val SERIES_PER_PAGE =50
 
 sealed interface SerieViewUiState{
 
@@ -24,13 +30,22 @@ sealed interface SerieViewUiState{
 }
 
 class SerieViewModel(private val serieRepository: SerieRepository): ViewModel(){
-    var serieViewUiState: SerieViewUiState by mutableStateOf(SerieViewUiState.loading)
-        private set
 
-    init {
+
+    val seriePager: Flow<PagingData<Serie>> =
+        Pager(config = PagingConfig(pageSize = SERIES_PER_PAGE, enablePlaceholders = false),
+            pagingSourceFactory = {serieRepository.seriePagingSource("most_pop_series")}).flow.cachedIn(viewModelScope)
+    val serieTopRatedPager: Flow<PagingData<Serie>> =
+        Pager(config = PagingConfig(pageSize = SERIES_PER_PAGE, enablePlaceholders = false),
+            pagingSourceFactory = {serieRepository.seriePagingSource("top_rated_series_250")}).flow.cachedIn(viewModelScope)
+
+    /*var serieViewUiState: SerieViewUiState by mutableStateOf(SerieViewUiState.loading)
+        private set*/
+
+   /* init {
         getSeries()
-    }
-    fun getSeries(){
+    }*/
+/*    fun getSeries(){
         viewModelScope.launch {
             serieViewUiState = SerieViewUiState.loading
             serieViewUiState = try{
@@ -41,7 +56,7 @@ class SerieViewModel(private val serieRepository: SerieRepository): ViewModel(){
                 SerieViewUiState.Error
             }
         }
-    }
+    }*/
     companion object{
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {

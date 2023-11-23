@@ -10,7 +10,7 @@ import retrofit2.http.Query
 
 interface SerieApiService {
     @GET("titles")
-    suspend fun getSeries(@Query("list") list:String , @Query("startYear") startYear:Int): SerieContainer
+    suspend fun getSeries(@Query("list") list:String ,@Query("page")page:Int, @Query("startYear") startYear:Int): SerieContainer
 
     @GET("titles/{id}")
     suspend fun getSerieById(@Path("id") id: String): Serie

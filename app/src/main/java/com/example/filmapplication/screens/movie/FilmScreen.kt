@@ -68,20 +68,20 @@ fun FilmScreen(navigationController: NavController, filmViewModel:FilmViewModel 
                        Column{
                            Text(text = "Top Box Office films (most earnings)")
 
-                           filmList(films = films, title = "Top Box Office films (most earnings)")
+                           filmList(films = films)
                        }
                    }
                    item {
                        Column{
                            Text(text = "Top rated films")
-                           filmList(films = bestFilms, title = "Top rated films")
+                           filmList(films = bestFilms)
                        }
                    }
                    item {
                        Column {
                            Text(text ="Worst Films Ever" )
 
-                           filmList(films = worstFilms, title = "Worst rated films")
+                           filmList(films = worstFilms)
                        }
 
                    }
@@ -94,7 +94,7 @@ fun FilmScreen(navigationController: NavController, filmViewModel:FilmViewModel 
 
 
 @Composable
-fun filmList(films:LazyPagingItems<Film>,  title:String) {
+fun filmList(films:LazyPagingItems<Film>) {
 
 
     LazyColumn(
