@@ -30,6 +30,8 @@ class ActorDetailViewModel(private val actorRepository: ActorRepository, private
         private set
     init{getActorDetails()
 
+        Log.i("Init", " ActorDetailViewModel Init")
+
     }
     public fun SetId(id:String){
         this.actorId = id;

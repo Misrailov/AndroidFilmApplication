@@ -9,6 +9,8 @@ suspend fun getActors(): List<Actor>
 suspend fun getActorDetail(id:String) : Actor
 
 
+
+
 }
 
 class NetworkActorRepository(private val actorApiService: ActorApiService):ActorRepository{

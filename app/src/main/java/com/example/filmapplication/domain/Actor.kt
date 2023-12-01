@@ -11,4 +11,9 @@ enum class Role {
     CREW_MEMBER,
     OTHER_ROLE
 }
-data class Person (val actorName: String, val playedIn: List<String>, val images: List<String>, val birthDate: String, val role: Role )
+data class Person ( val nconst: String,
+                    val primaryName: String,
+                    val birthYear: Int,
+                    val deathYear: Int,
+                    val primaryProfession: String,
+                    val knownForTitles: String)

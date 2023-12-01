@@ -49,13 +49,8 @@ fun FilmApp(name: String, modifier: Modifier = Modifier) {
     Scaffold(
         containerColor = Color.Transparent,
         topBar = {
-            MyTopAppBar(currentpage =currentDestination.toString() ) {
-                val isStartDestionation = currentDestination == Destinations.Home.name
-                if(!isStartDestionation){
-                    IconButton(onClick = { navController.popBackStack() }) { Icon(Icons.Filled.ArrowBack, contentDescription = "Localized description", tint = Color(0xFFFEFEFE)) }
-                }
+            MyTopAppBar(currentpage =currentDestination.toString() )
 
-            }
         },
         bottomBar = {
             MyBottomBar(
@@ -81,7 +76,7 @@ fun FilmApp(name: String, modifier: Modifier = Modifier) {
             }
             composable(Destinations.Movies.name){
                 //MovieScreen(navController)
-                FilmScreen(navController)
+                FilmScreen()
 
             }
             composable(Destinations.Series.name){
