@@ -1,3 +1,4 @@
+/*
 package com.example.filmapplication.screens.actor.ActorDetails
 
 import android.util.Log
@@ -20,7 +21,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.example.filmapplication.R
-import com.example.filmapplication.model.actor.Actor
+import com.example.filmapplication.domain.DomainActor
+import com.example.filmapplication.model.actor.ApiActor
 import com.example.filmapplication.model.film.Film
 import com.example.filmapplication.screens.ErrorScreen
 import com.example.filmapplication.screens.LoadingScreen
@@ -32,7 +34,7 @@ fun ActorDetailsScreen(
     navigationController: NavController,actorDetailViewUiState: ActorDetailViewUiState
 ) {
     Log.e(" actordetailscreen",actorId.toString())
-    var actor by remember { mutableStateOf<Actor?>(null)}
+    var actor by remember { mutableStateOf<DomainActor?>(null)}
 
     var films: List<Film> by remember { mutableStateOf(listOf()) }
 
@@ -99,7 +101,7 @@ fun ActorDetailsScreen(
 }
 
 @Composable
-fun ActorHeader(actor: Actor) {
+fun ActorHeader(actor: DomainActor) {
     Log.e(" actornam", actor.primaryName)
     Column(
         modifier = Modifier
@@ -173,3 +175,4 @@ fun FilmRow(film: Film) {
         }
     }
 }
+*/

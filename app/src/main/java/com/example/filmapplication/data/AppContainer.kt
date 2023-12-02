@@ -1,11 +1,13 @@
 package com.example.filmapplication.data
 
+import android.content.Context
+import com.example.filmapplication.data.database.actor.ActorDb
 import com.example.filmapplication.network.actor.ActorApiService
 import com.example.filmapplication.network.movie.FilmApiService
 import com.example.filmapplication.network.serie.SerieApiService
 import com.example.filmapplication.repository.ActorRepository
+import com.example.filmapplication.repository.CachingActorRepository
 import com.example.filmapplication.repository.FilmRepository
-import com.example.filmapplication.repository.NetworkActorRepository
 import com.example.filmapplication.repository.NetworkFilmRepository
 import com.example.filmapplication.repository.NetworkSerieRepository
 import com.example.filmapplication.repository.SerieRepository
@@ -24,7 +26,7 @@ interface AppContainer {
 
 
 }
-class DefaultAppContainer : AppContainer {
+class DefaultAppContainer (private val context: Context): AppContainer {
     private val baseUrl = "https://moviesdatabase.p.rapidapi.com/"
 
     private val moshi = Moshi.Builder()
@@ -59,7 +61,7 @@ class DefaultAppContainer : AppContainer {
     }
 
     override val actorRepository: ActorRepository by lazy {
-        NetworkActorRepository(actorApiService)
+        CachingActorRepository(ActorDb.getDatabase(context = context).actorDao(),actorApiService)
     }
 
     private val filmApiService:FilmApiService by lazy{

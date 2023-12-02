@@ -69,14 +69,6 @@ fun FilmScreen( filmViewModel:FilmViewModel = viewModel(factory =FilmViewModel.F
                            filmList(films = bestFilms)
                        }
                    }
-                   item {
-                       Column {
-                           Text(text ="Worst Films Ever" )
-
-                           filmList(films = worstFilms)
-                       }
-
-                   }
                }
            }
        }

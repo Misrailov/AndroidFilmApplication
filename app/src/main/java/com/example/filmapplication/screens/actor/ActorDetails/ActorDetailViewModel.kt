@@ -10,7 +10,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.filmapplication.FilmApplication
-import com.example.filmapplication.model.actor.Actor
+import com.example.filmapplication.domain.DomainActor
+import com.example.filmapplication.model.actor.ApiActor
 import com.example.filmapplication.model.film.Film
 import com.example.filmapplication.repository.ActorRepository
 import com.example.filmapplication.repository.FilmRepository
@@ -18,7 +19,7 @@ import kotlinx.coroutines.launch
 
 sealed interface ActorDetailViewUiState{
     object loading: ActorDetailViewUiState
-    data class Success(val films: List<Film>, val actor: Actor):ActorDetailViewUiState
+    data class Success(val films: List<Film>, val actor: DomainActor):ActorDetailViewUiState
     object Error: ActorDetailViewUiState
 }
 
@@ -28,9 +29,9 @@ class ActorDetailViewModel(private val actorRepository: ActorRepository, private
     private var actorId :String = "nm0000005";
     var actorDetailViewUiState:ActorDetailViewUiState by mutableStateOf(ActorDetailViewUiState.loading)
         private set
-    init{getActorDetails()
+    init{
+        getActorDetails()
 
-        Log.i("Init", " ActorDetailViewModel Init")
 
     }
     public fun SetId(id:String){
@@ -43,7 +44,9 @@ class ActorDetailViewModel(private val actorRepository: ActorRepository, private
 
             try {
                 Log.e("Komt hier wel", " komt hier")
-                val actor: Actor = actorRepository.getActorDetail(actorId)
+
+                val actor: DomainActor = actorRepository.getActorDetail(actorId)
+
                 Log.e("actor", actor.toString())
                 Log.e("Komt hier ook", " komt hier")
 
