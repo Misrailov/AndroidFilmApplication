@@ -1,15 +1,15 @@
 package com.example.filmapplication.data
 
 import android.content.Context
-import com.example.filmapplication.data.database.actor.ActorDb
+import com.example.filmapplication.data.database.FilmApplicationDb
 import com.example.filmapplication.network.actor.ActorApiService
 import com.example.filmapplication.network.movie.FilmApiService
 import com.example.filmapplication.network.serie.SerieApiService
 import com.example.filmapplication.repository.ActorRepository
 import com.example.filmapplication.repository.CachingActorRepository
+import com.example.filmapplication.repository.CachingFilmRepository
+import com.example.filmapplication.repository.CachingSerieRepository
 import com.example.filmapplication.repository.FilmRepository
-import com.example.filmapplication.repository.NetworkFilmRepository
-import com.example.filmapplication.repository.NetworkSerieRepository
 import com.example.filmapplication.repository.SerieRepository
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -61,20 +61,20 @@ class DefaultAppContainer (private val context: Context): AppContainer {
     }
 
     override val actorRepository: ActorRepository by lazy {
-        CachingActorRepository(ActorDb.getDatabase(context = context).actorDao(),actorApiService)
+        CachingActorRepository(FilmApplicationDb.getDatabase(context = context).actorDao(),actorApiService)
     }
 
     private val filmApiService:FilmApiService by lazy{
         retrofit.create(FilmApiService::class.java)
     }
     override  val filmRepository:FilmRepository by lazy{
-        NetworkFilmRepository(filmApiService)
+        CachingFilmRepository(FilmApplicationDb.getDatabase(context = context).filmDao(),filmApiService)
     }
 
     private val serieApiService: SerieApiService by lazy{
         retrofit.create(SerieApiService::class.java)
     }
     override val serieRepository:SerieRepository by lazy{
-        NetworkSerieRepository(serieApiService)
+        CachingSerieRepository(FilmApplicationDb.getDatabase(context = context).serieDao(),serieApiService)
     }
 }

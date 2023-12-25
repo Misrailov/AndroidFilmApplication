@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
@@ -67,7 +68,7 @@ fun ActorScreen (performClick: (id:String)->Unit, actorViewModel: ActorViewModel
             is ActorApiState.Loading -> LoadingScreen()
             is ActorApiState.Error -> ErrorScreen()
             //is  ActorApiState.Success ->  Actors(actors = actorListState.actorList, performClick = { s -> navigationController.navigate(s)})
-            is  ActorApiState.Success ->  Actors(actors = actorListState.actorList, performClick = {id-> performClick(id)})
+            is  ActorApiState.Success ->  Actors(actors = actorListState.actorList,favActors = actorListState.favouriteActors,actorViewModel, performClick = performClick)
 
 
         }
@@ -76,8 +77,7 @@ fun ActorScreen (performClick: (id:String)->Unit, actorViewModel: ActorViewModel
 }
 
 @Composable
-fun Actors(actors:List<DomainActor>, performClick: (item: String) -> Unit){
-    Log.i("actors count", actors.toString())
+fun Actors(actors:List<DomainActor>,favActors:List<DomainActor>,actorViewModel: ActorViewModel,performClick: (item: String) -> Unit){
     LazyColumn(        modifier = Modifier.run {
         fillMaxWidth()
             .heightIn(min = 160.dp)
@@ -90,16 +90,13 @@ fun Actors(actors:List<DomainActor>, performClick: (item: String) -> Unit){
             }
         }else {
             actors.forEach { actor ->
+                var isFavouriteActor = favActors.contains(actor)
                 item {
                     ActorComposable(
-                        actorId = actor.nconst,
-                        actorName = actor.primaryName,
-
-                        playedIn=actor.knownForTitles.split(","),
-                        /*images= actor.,*/
-                        birthDate= actor.birthYear,
-                        role = if (actor.primaryProfession == "actor" || actor.primaryProfession == "actress") Role.ACTOR else Role.OTHER_ROLE,
-                        performClick = { performClick("actordetailscreen/" +actor.nconst) }
+                        actorViewModel = actorViewModel,
+                        actor= actor,
+                        isFavouriteActor=isFavouriteActor,
+                        performClick = performClick
                     )
                 }
             }
@@ -107,19 +104,17 @@ fun Actors(actors:List<DomainActor>, performClick: (item: String) -> Unit){
     }
 }@Composable
 fun ActorComposable(
-    actorId: String,
-    actorName: String,
-    playedIn: List<String>,
-    birthDate: Int,
-    role: Role,
-    performClick: ()->Unit
+    actorViewModel: ActorViewModel,
+    actor:DomainActor,
+    isFavouriteActor:Boolean,
+    performClick: (item:String)->Unit
 ) {
     Card(
         modifier = Modifier
             .padding(start = 4.dp, end = 12.dp)
             .widthIn(max = 350.dp, min = 350.dp)
             .heightIn(min = 160.dp, max = 160.dp)
-            .clickable { performClick() },
+            .clickable { performClick(actor.nconst) },
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp,
         ),
@@ -130,39 +125,28 @@ fun ActorComposable(
         ) {
             Column {
                 Text(
-                    text = actorName,
+                    text = actor.primaryName,
                     color = Color.Black,
                     fontSize = 24.sp,
                     modifier = Modifier.padding(top = 16.dp),
                 )
 
                 Text(
-                    text = "Born: " + birthDate,
+                    text = "Born: " + actor.birthYear,
                     color = Color.Black,
                     fontSize = 24.sp,
                     modifier = Modifier.padding(top = 16.dp),
                 )
+                Log.e("actor",actor.isFavourite.toString())
+
+                Button(onClick = { actorViewModel.addActorToFavourites(actor) }) {
+                    Text(text = if (isFavouriteActor) "Add to Favourites" else "Remove From Favourites")
+                }
 
             }
 
-            // Other details or image can be added here
 
-            // Handle click by navigating to the actor details screen
-//            Image(
-//                painter = rememberImagePainter(data = R.drawable.loading_img),
-//                contentDescription = "picture of $actorName",
-//                modifier = Modifier
-//                    .fillMaxHeight()
-//                    .aspectRatio(1f)
-//                    .padding(16.dp)
-//                    .align(Alignment.CenterVertically)
-//                    .clickable {
-//                        // Navigate to actor details screen
-//                        // You can pass necessary details to the destination screen
-//                        performClick()
-//
-//                    },
-//            )
+
         }
     }
 }

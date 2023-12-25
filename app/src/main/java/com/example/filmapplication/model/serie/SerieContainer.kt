@@ -4,7 +4,7 @@ data class SerieContainer (
         val page: Int,
         val next: String,
         val entries: Int,
-        val results: List<Serie>
+        val results: List<ApiSerie>
 
 
 

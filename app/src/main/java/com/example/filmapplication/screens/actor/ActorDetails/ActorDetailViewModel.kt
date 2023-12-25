@@ -11,53 +11,39 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.filmapplication.FilmApplication
 import com.example.filmapplication.domain.DomainActor
-import com.example.filmapplication.model.actor.ApiActor
-import com.example.filmapplication.model.film.Film
+import com.example.filmapplication.domain.DomainFilm
 import com.example.filmapplication.repository.ActorRepository
 import com.example.filmapplication.repository.FilmRepository
 import kotlinx.coroutines.launch
 
 sealed interface ActorDetailViewUiState{
     object loading: ActorDetailViewUiState
-    data class Success(val films: List<Film>, val actor: DomainActor):ActorDetailViewUiState
+    data class Success(val films: List<DomainFilm>, val actor: DomainActor):ActorDetailViewUiState
     object Error: ActorDetailViewUiState
 }
 
 class ActorDetailViewModel(private val actorRepository: ActorRepository, private val filmRepository: FilmRepository
 
 ):ViewModel(){
-    private var actorId :String = "nm0000005";
     var actorDetailViewUiState:ActorDetailViewUiState by mutableStateOf(ActorDetailViewUiState.loading)
         private set
     init{
-        getActorDetails()
-
 
     }
-    public fun SetId(id:String){
-        this.actorId = id;
-    }
-    fun getActorDetails() {
+
+    fun getActorDetails(id:String) {
         viewModelScope.launch {
             actorDetailViewUiState = ActorDetailViewUiState.loading
-            Log.e("actorId", actorId.toString())
 
             try {
-                Log.e("Komt hier wel", " komt hier")
+                val actor: DomainActor = actorRepository.getActorDetail(id)
 
-                val actor: DomainActor = actorRepository.getActorDetail(actorId)
 
-                Log.e("actor", actor.toString())
-                Log.e("Komt hier ook", " komt hier")
-
-                val films: List<Film> = filmRepository.getFilmListByids(actor.knownForTitles)
-                Log.e("films", films.toString())
-
+                val films: List<DomainFilm> = filmRepository.getFilmListByids(actor.knownForTitles)
 
                 actorDetailViewUiState = ActorDetailViewUiState.Success(films, actor)
             } catch (e: Exception) {
-                Log.e("actorIdWhereError", actorId.toString())
-                Log.e("Exception", e.toString())
+
                 Log.e("Exception", e.stackTraceToString())
 
                 actorDetailViewUiState = ActorDetailViewUiState.Error

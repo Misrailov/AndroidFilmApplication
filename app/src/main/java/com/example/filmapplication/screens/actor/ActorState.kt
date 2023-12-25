@@ -7,7 +7,7 @@ data class ActorState (
     val scrollActionIdx: Int = 0,
     val scrollToItemIndex: Int = 0,
 )
-data class ActorListState(val actorList: List<DomainActor> = listOf())
+data class ActorListState(val actorList: List<DomainActor> = listOf(),val favouriteActors:List<DomainActor> = listOf())
 sealed interface ActorApiState{
     object Success : ActorApiState
     object Error: ActorApiState

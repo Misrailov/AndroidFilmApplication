@@ -11,10 +11,13 @@ enum class Role {
     CREW_MEMBER,
     OTHER_ROLE
 }
-data class DomainActor ( val nconst: String,
-                    val primaryName: String,
-                    val birthYear: Int,
-                    val deathYear: Int,
-                    val primaryProfession: String,
-                    val knownForTitles: String,
-                         val isFavorite:Boolean = false)
+
+data class DomainActor(
+    val nconst: String,
+    val primaryName: String,
+    val birthYear: Int,
+    val deathYear: Int,
+    val primaryProfession: String,
+    val knownForTitles: String,
+    var isFavourite: Boolean = false
+)

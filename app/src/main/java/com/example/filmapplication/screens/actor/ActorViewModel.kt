@@ -11,12 +11,15 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.filmapplication.FilmApplication
+import com.example.filmapplication.domain.DomainActor
+import com.example.filmapplication.domain.DomainSerie
 import com.example.filmapplication.repository.ActorRepository
 import com.example.filmapplication.repository.FilmRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -33,15 +36,23 @@ var actorApiState: ActorApiState by mutableStateOf(ActorApiState.Loading)
     lateinit var uiListActorState: StateFlow<ActorListState>
     init{
         getRepoActors()
-        Log.i("vm inspection", "ActorViewModel init")
-        Log.i("actors in init", uiListActorState.map { it.actorList[0] }.toString())
 
+
+    }
+    fun addActorToFavourites(actor: DomainActor){
+        actor.isFavourite = !actor.isFavourite
+        viewModelScope.launch {
+            actorRepository.insert(actor)
+        }
     }
 
     fun getRepoActors(){
         try{
             viewModelScope.launch { actorRepository.refresh() }
-            uiListActorState = actorRepository.getAllItems().map { ActorListState(it) }
+            uiListActorState = actorRepository.getAllItems().combine(actorRepository.getAllFavourites()){
+                actors,favouriteActors ->
+                ActorListState(actors,favouriteActors)
+            }
                 .stateIn(
                     scope = viewModelScope,
                     started = SharingStarted.WhileSubscribed(5_000L),
@@ -54,31 +65,6 @@ var actorApiState: ActorApiState by mutableStateOf(ActorApiState.Loading)
         }
     }
 
-
- /*   fun getActors(){
-        viewModelScope.launch {
-            actorViewUiState = ActorViewUiState.loading
-            actorViewUiState = try{
-                ActorViewUiState.Success(actorRepository.getActors())
-            }catch (e:Exception){
-                ActorViewUiState.Error
-            }
-        }
-    }*/
-
- /*   fun getMoviesForActor(actorId: String) {
-        viewModelScope.launch {
-            actorViewUiState = ActorViewUiState.loading
-            actorViewUiState = try {
-                val actor = actorRepository.getActorDetail(actorId)
-                val movies = filmRepository.getFilmListByids(actor.knownForTitles)
-                // Now you have the movies, update the UI state or do something with them
-                ActorViewUiState.Success(emptyList())
-            } catch (e: Exception) {
-                ActorViewUiState.Error
-            }
-        }
-    }*/
     companion object{
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {

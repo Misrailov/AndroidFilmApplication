@@ -1,6 +1,11 @@
 package com.example.filmapplication.model.serie
 
-data class Serie(
+import com.example.filmapplication.domain.DomainFilm
+import com.example.filmapplication.domain.DomainSerie
+import com.example.filmapplication.model.film.ApiFilm
+import java.time.LocalDate
+
+data class ApiSerie(
         val _id: String,
         val id: String,
         val primaryImage: PrimaryImage,
@@ -49,3 +54,12 @@ data class ReleaseDate(
         val year: Int,
         val __typename: String
 )
+
+fun ApiSerie.asDomainSerie(): DomainSerie {
+        return DomainSerie(
+                id = this._id, primaryImage = this.primaryImage.url,
+                titleText = this.titleText.text, releaseYear = releaseYear.year,
+                releaseDate = LocalDate.of(this.releaseDate!!.year, this.releaseDate.month, releaseDate.day)
+                        .toString()
+        )
+}

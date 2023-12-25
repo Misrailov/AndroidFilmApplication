@@ -1,6 +1,5 @@
 package com.example.filmapplication.model.actor
 
-import com.example.filmapplication.data.database.actor.asDomainActors
 import com.example.filmapplication.domain.DomainActor
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

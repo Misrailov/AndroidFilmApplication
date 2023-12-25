@@ -1,5 +1,9 @@
 package com.example.filmapplication.screens.serie
 
+import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
@@ -11,31 +15,64 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.filmapplication.FilmApplication
-import com.example.filmapplication.model.serie.Serie
+import com.example.filmapplication.domain.DomainSerie
 import com.example.filmapplication.repository.SerieRepository
 import kotlinx.coroutines.flow.Flow
-private const val SERIES_PER_PAGE =50
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
+import java.io.IOException
 
-sealed interface SerieViewUiState{
+private const val SERIES_PER_PAGE = 50
 
-    object loading: SerieViewUiState
-    data class Success(val series: List<Serie>):SerieViewUiState
+class SerieViewModel(private val serieRepository: SerieRepository) : ViewModel() {
 
-    object Error: SerieViewUiState
-}
-
-class SerieViewModel(private val serieRepository: SerieRepository): ViewModel(){
-
-
-    val seriePager: Flow<PagingData<Serie>> =
+    val seriePager: Flow<PagingData<DomainSerie>> =
         Pager(config = PagingConfig(pageSize = SERIES_PER_PAGE, enablePlaceholders = false),
-            pagingSourceFactory = {serieRepository.seriePagingSource("most_pop_series")}).flow.cachedIn(viewModelScope)
-    val serieTopRatedPager: Flow<PagingData<Serie>> =
+            pagingSourceFactory = { serieRepository.seriePagingSource("most_pop_series") }).flow.cachedIn(
+            viewModelScope
+        )
+    val serieTopRatedPager: Flow<PagingData<DomainSerie>> =
         Pager(config = PagingConfig(pageSize = SERIES_PER_PAGE, enablePlaceholders = false),
-            pagingSourceFactory = {serieRepository.seriePagingSource("top_rated_series_250")}).flow.cachedIn(viewModelScope)
+            pagingSourceFactory = { serieRepository.seriePagingSource("top_rated_series_250") }).flow.cachedIn(
+            viewModelScope
+        )
+
+    var serieApiState: SerieApiState by mutableStateOf(SerieApiState.Loading)
+        private set
+    private val _uiState = MutableStateFlow(SerieState())
+    lateinit var uiListSerieState: StateFlow<SerieListState>
+
+    init {
+        getFavouriteSeries()
+    }
+
+    fun getFavouriteSeries() {
+        try {
+            uiListSerieState = serieRepository.getAllFavourites().map { SerieListState(it) }
+                .stateIn(
+                    scope = viewModelScope,
+                    started = SharingStarted.WhileSubscribed(5_000L),
+                    initialValue = SerieListState()
+                )
+            serieApiState = SerieApiState.Success
+        }catch (e:IOException){
+            Log.e("IOException", e.stackTraceToString())
+            serieApiState =SerieApiState.Error
+        }
+    }
+    fun addSerieToFavourites(serie:DomainSerie){
+        serie.isFavourite = !serie.isFavourite
+        viewModelScope.launch {
+            serieRepository.insert(serie)
+        }
+    }
 
 
-    companion object{
+    companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 val application = (this[APPLICATION_KEY] as FilmApplication)

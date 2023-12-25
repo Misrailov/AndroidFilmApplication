@@ -11,13 +11,13 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ActorDao {
     @Insert(onConflict =OnConflictStrategy.REPLACE)
-    suspend fun insert(item:dbActor)
+    suspend fun insert(item: dbActor)
 
     @Update
-    suspend fun update(item:dbActor)
+    suspend fun update(item: dbActor)
 
     @Delete
-    suspend fun delete(item:dbActor)
+    suspend fun delete(item: dbActor)
 
 
     @Query("SELECT * from actors WHERE primaryName = :name")
@@ -25,4 +25,7 @@ interface ActorDao {
 
     @Query("SELECT * from actors ORDER BY primaryName ASC")
     fun getAllItems(): Flow<List<dbActor>>
+
+    @Query("SELECT * from actors where isFavourite =True ORDER BY primaryName ASC")
+    fun getFavourites():Flow<List<dbActor>>
 }

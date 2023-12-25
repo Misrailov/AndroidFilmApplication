@@ -1,5 +1,5 @@
 package com.example.filmapplication.model.film
 
 data class MultipleFilmsContainer( val entries: Int,
-                                   val results: List<Film>
+                                   val results: List<ApiFilm>
 )

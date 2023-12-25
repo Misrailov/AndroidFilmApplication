@@ -1,16 +1,17 @@
-import com.example.filmapplication.model.film.Film
+import com.example.filmapplication.model.film.ApiFilm
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import com.example.filmapplication.domain.DomainFilm
 import com.example.filmapplication.repository.FilmRepository
 
-class FilmPagingSource(val filmRepository: FilmRepository, val query:String): PagingSource<Int, Film>() {
+class FilmPagingSource(val filmRepository: FilmRepository, val query:String): PagingSource<Int, DomainFilm>() {
 
 
 
 
 
     override suspend fun load(
-      params:LoadParams<Int>):LoadResult<Int,Film>{
+      params:LoadParams<Int>): LoadResult<Int, DomainFilm> {
         try{
             val nextPageNumber = params.key ?: 1
             val response = filmRepository.getFilms(query,nextPageNumber)
@@ -24,7 +25,7 @@ class FilmPagingSource(val filmRepository: FilmRepository, val query:String): Pa
         }
         }
 
-    override fun getRefreshKey(state: PagingState<Int, Film>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, DomainFilm>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
                 ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1) }

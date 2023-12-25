@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -21,6 +22,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -33,52 +36,59 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
 import coil.compose.rememberImagePainter
-import com.example.filmapplication.model.film.Film
+import com.example.filmapplication.domain.DomainFilm
+import com.example.filmapplication.domain.DomainSerie
+import com.example.filmapplication.model.film.ApiFilm
 import com.example.filmapplication.screens.ErrorScreen
 import com.example.filmapplication.screens.LoadingScreen
 import com.example.filmapplication.screens.primaryColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FilmScreen( filmViewModel:FilmViewModel = viewModel(factory =FilmViewModel.Factory) ) {
+fun FilmScreen(filmViewModel: FilmViewModel = viewModel(factory = FilmViewModel.Factory)) {
 
-    var films = filmViewModel.filmPager.collectAsLazyPagingItems();
-    var worstFilms = filmViewModel.filmPagerWorstMovies.collectAsLazyPagingItems();
-    var bestFilms = filmViewModel.filmPagerTopRated.collectAsLazyPagingItems();
+    var films = filmViewModel.apiFilmPager.collectAsLazyPagingItems();
+    var worstFilms = filmViewModel.apiFilmPagerWorstMovies.collectAsLazyPagingItems();
+    var bestFilms = filmViewModel.apiFilmPagerTopRated.collectAsLazyPagingItems();
+    val filmListState by filmViewModel.uiListFilmState.collectAsState()
+    val filmApiState = filmViewModel.filmApiState
+    var favouriteFilms = listOf<DomainFilm>()
 
-   when(films.loadState.refresh){
-       is LoadState.Loading -> LoadingScreen()
-       is LoadState.Error-> {
-           Log.e("error", "errorScreenMovies")
-           ErrorScreen()}
-       else ->{
 
-           Scaffold { padding->
-               Spacer(modifier = Modifier.padding(padding))
-               LazyRow {
-                   item {
-                       Column{
-                           Text(text = "Top Box Office films (most earnings)")
+    when (filmApiState) {
+        is FilmApiState.Error -> ErrorScreen()
+        is FilmApiState.Loading -> LoadingScreen()
+        is FilmApiState.Success -> {
+            favouriteFilms = filmListState.favouriteFilms
+            Scaffold { padding ->
+                Spacer(modifier = Modifier.padding(padding))
+                LazyRow {
+                    item {
+                        Column {
+                            Text(text = "Top Box Office films (most earnings)")
 
-                           filmList(films = films)
-                       }
-                   }
-                   item {
-                       Column{
-                           Text(text = "Top rated films")
-                           filmList(films = bestFilms)
-                       }
-                   }
-               }
-           }
-       }
-   }
+                            filmList(films = films, filmViewModel, favouriteFilms)
+                        }
+                    }
+                    item {
+                        Column {
+                            Text(text = "Top rated films")
+                            filmList(films = bestFilms, filmViewModel, favouriteFilms)
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 
-
 @Composable
-fun filmList(films:LazyPagingItems<Film>) {
+fun filmList(
+    films: LazyPagingItems<DomainFilm>,
+    filmViewModel: FilmViewModel,
+    favouriteFilms: List<DomainFilm>
+) {
 
 
     LazyColumn(
@@ -88,13 +98,14 @@ fun filmList(films:LazyPagingItems<Film>) {
             .padding(start = 16.dp)
     ) {
         itemsIndexed(films) { _, film ->
+            val isFavourite =
+                favouriteFilms.filter { x -> x.id == film!!.id && x.isFavourite }.isNotEmpty()
 
-        film?.let {
-                Log.e("filmInfo", film.titleText.text)
+            film?.let {
                 FilmComposable(
-                    filmTitle = film.titleText.text,
-                    releaseYear = film.releaseYear.year,
-                    primaryImage = film.primaryImage.url,
+                    film,
+                    filmViewModel,
+                    isFavourite
                 )
 
             }
@@ -104,9 +115,9 @@ fun filmList(films:LazyPagingItems<Film>) {
 
 @Composable
 fun FilmComposable(
-    filmTitle: String,
-    releaseYear: Int,
-    primaryImage: String,
+    film: DomainFilm,
+    filmViewModel: FilmViewModel,
+    isFavourite: Boolean
 ) {
     Card(
         modifier = Modifier
@@ -122,8 +133,8 @@ fun FilmComposable(
                 .fillMaxSize()
         ) {
             Image(
-                painter = rememberImagePainter(data = primaryImage),
-                contentDescription = "Photo of $filmTitle",
+                painter = rememberImagePainter(data = film.primaryImage),
+                contentDescription = "Photo of ${film.titleText}",
                 modifier = Modifier
                     .width(300.dp)
                     .height(400.dp)
@@ -137,7 +148,7 @@ fun FilmComposable(
                     .padding(8.dp)
             ) {
                 Text(
-                    text = filmTitle,
+                    text = film.titleText,
                     color = Color.Black,
                     fontSize = 15.sp,
                     fontWeight = FontWeight.Bold,
@@ -145,12 +156,15 @@ fun FilmComposable(
                         .padding(top = 8.dp)
                 )
                 Text(
-                    text = "Released in $releaseYear",
+                    text = "Released in ${film.releaseYear}",
                     color = primaryColor,
                     fontSize = 16.sp,
                     modifier = Modifier
                         .padding(top = 4.dp)
                 )
+                Button(onClick = { filmViewModel.addFilmToFavourites(film) }) {
+                    Text(text = if (!isFavourite) "Add to Favourites" else "Remove From Favourites")
+                }
             }
         }
     }
