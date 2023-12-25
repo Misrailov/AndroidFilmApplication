@@ -37,7 +37,6 @@ var actorApiState: ActorApiState by mutableStateOf(ActorApiState.Loading)
     init{
         getRepoActors()
 
-
     }
     fun addActorToFavourites(actor: DomainActor){
         actor.isFavourite = !actor.isFavourite

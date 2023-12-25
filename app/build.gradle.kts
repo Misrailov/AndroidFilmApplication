@@ -73,6 +73,7 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
     implementation("androidx.compose.material:material-icons-extended:1.5.4")
     implementation("androidx.compose.material:material-icons-core:1.5.4")
+    implementation("androidx.compose.material3:material3-window-size-class")
 
 
     // lifecycle components

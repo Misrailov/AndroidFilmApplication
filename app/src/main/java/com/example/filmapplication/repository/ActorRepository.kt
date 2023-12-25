@@ -75,26 +75,33 @@ class CachingActorRepository(
 
     override suspend fun refresh() {
         try {
+            Log.e("GetAllFavs happens","kank")
 
             actorApiService.getActorsAsFlow().collect { value ->
                 for (actor in value.results) {
-                    var actorInDb = DomainActor("", "", 0, 0, "", "")
-                    actorDao.getItem(actor.primaryName).collect() { actorInDb = it.asDomainActor() }
-                    if (actorInDb.primaryName.isNotEmpty()) insert(actorInDb)
-                    else insert(actor.asDomainActor())
+                    if(getAllItems().map { it.contains(actor.asDomainActor()) }.equals(true)){
+                        var actorToCreate = DomainActor("", "", 0, 0, "", "")
+                        getItem(actor.asDomainActor().nconst).collect(){
+                            actorToCreate =it!!
+                        }
+                        insert(actorToCreate)
+                    }else  insert(actor.asDomainActor())
                 }
             }
         } catch (e: SocketTimeoutException) {
-            //log something
+            Log.e("SocketTimeoutException", e.stackTraceToString())
+        }catch (e: Exception) {
+            Log.e("GeneralException", e.stackTraceToString())
         }
 
     }
 
-    override fun getAllFavourites(): Flow<List<DomainActor>> {
+    override  fun getAllFavourites(): Flow<List<DomainActor>> {
         return try {
             actorDao.getFavourites().map {
                 it.asDomainActors()
             }
+
         } catch (e: Exception) {
             Log.e("GeneralException", e.stackTraceToString())
             flow { listOf<DomainActor>() }

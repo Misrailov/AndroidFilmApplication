@@ -6,10 +6,14 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.ui.Modifier
 import androidx.core.content.ContextCompat
 import com.example.compose.EntertainmentApplicationTheme
 import com.example.filmapplication.screens.FilmApp
+import com.example.filmapplication.screens.utils.FilmApplicationNavigationType
 
 class MainActivity : ComponentActivity() {
 
@@ -18,6 +22,7 @@ class MainActivity : ComponentActivity() {
         var secondaryColor: Int = 0
     }
 
+    @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -33,7 +38,25 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background,
                 ) {
-                    FilmApp("Android")
+                    val windowSize = calculateWindowSizeClass(this)
+
+                    when (windowSize.widthSizeClass) {
+                        WindowWidthSizeClass.Compact -> {
+                            FilmApp(FilmApplicationNavigationType.BOTTOM_NAVIGATION)
+                        }
+
+                        WindowWidthSizeClass.Medium -> {
+                            FilmApp(FilmApplicationNavigationType.NAVIGATION_RAIL)
+                        }
+
+                        WindowWidthSizeClass.Expanded -> {
+                            FilmApp(navigationType = FilmApplicationNavigationType.PERMANENT_NAVIGATION_DRAWER)
+                        }
+
+                        else -> {
+                            FilmApp(navigationType = FilmApplicationNavigationType.BOTTOM_NAVIGATION)
+                        }
+                    }
                 }
             }
         }

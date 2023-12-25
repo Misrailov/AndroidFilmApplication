@@ -1,13 +1,40 @@
 package com.example.filmapplication.screens
 
+import android.graphics.drawable.Icon
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.LocalMovies
+import androidx.compose.material.icons.filled.Movie
+import androidx.compose.material.icons.filled.People
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.PermanentDrawerSheet
+import androidx.compose.material3.PermanentNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -16,20 +43,25 @@ import com.example.filmapplication.screens.actor.ActorViewModel
 import com.example.filmapplication.screens.appBar.MyBottomBar
 import com.example.templateapplication.screens.appBar.MyTopAppBar
 import androidx.navigation.compose.composable
+import com.example.filmapplication.R
 import com.example.filmapplication.screens.actor.ActorDetails.ActorDetailScreen
 
 import com.example.filmapplication.screens.actor.ActorScreen
 import com.example.filmapplication.screens.home.HomeScreen
 import com.example.filmapplication.screens.movie.FilmScreen
+import com.example.filmapplication.screens.navigation.navComponent
 import com.example.filmapplication.screens.serie.SerieScreen
+import com.example.filmapplication.screens.utils.FilmApplicationNavigationType
+import com.example.taskapp.ui.components.FilmNavigationRail
+import com.example.taskapp.ui.components.NavigationDrawerContent
 
 
-enum class Destinations (val route:String){
-    Home("home"),
-    Movies("movies"),
-    Series("series"),
-    Actors("actors"),
-    ActorsDetail("actorsDetail");
+enum class Destinations (val route:String,val icon: ImageVector){
+    Home("home",icon = Icons.Filled.Home),
+    Movies("movies",icon = Icons.Filled.Movie),
+    Series("series",icon = Icons.Filled.LocalMovies),
+    Actors("actors",icon = Icons.Filled.People),
+    ActorsDetail("actorsDetail",icon = Icons.Filled.Person);
     fun createRoute(id:String) = "$route/$id"
 
 }
@@ -39,67 +71,103 @@ var primaryColor = Color(MainActivity.primaryColor)
 var secondaryColor = Color(MainActivity.secondaryColor)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FilmApp(name: String, modifier: Modifier = Modifier) {
-
-    val navController = rememberNavController()
+fun FilmApp(navigationType: FilmApplicationNavigationType,navController:NavHostController = rememberNavController()) {
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = currentBackStackEntry?.destination?.route
-
+    val currentEnumDestination: Destinations? = currentDestination?.let { route -> enumValues<Destinations>().find { it.route == route } }
+    val currentpage = currentEnumDestination?.name ?: Destinations.Home.name
+    val goToHome = { navController.navigate(Destinations.Home.route) }
+    val goToMovies = { navController.navigate(Destinations.Movies.route) }
+    val goToSeries = { navController.navigate(Destinations.Series.route) }
+    val goToActors = { navController.navigate(Destinations.Actors.route) }
     fun onActorClick(actorId:String){
         navController.navigate(Destinations.ActorsDetail.createRoute(actorId))
     }
 
-    Scaffold(
-        containerColor = Color.Transparent,
-        topBar = {
-            MyTopAppBar(currentpage =currentDestination.toString() )
-
-        },
-        bottomBar = {
-            MyBottomBar(
-                OnHome = { navController.popBackStack(Destinations.Home.name, inclusive = false) },
-                OnMovie = { navController.navigate(Destinations.Movies.name) },
-                OnSerie = { navController.navigate(Destinations.Series.name) },
-                OnActor = {navController.navigate(Destinations.Actors.name)},)
-
-        },
-
-
-
-    ){innerPadding ->
-        NavHost(
-            navController = navController,
-            startDestination = Destinations.Home.route,
-            Modifier.padding(innerPadding),
-        ) {
-            composable(Destinations.Home.route){
-                HomeScreen()
-
+    if (navigationType == FilmApplicationNavigationType.PERMANENT_NAVIGATION_DRAWER) {
+        PermanentNavigationDrawer(drawerContent = {
+            PermanentDrawerSheet(Modifier.width(dimensionResource(R.dimen.drawer_width))) {
+                NavigationDrawerContent(
+                    selectedDestination = navController.currentDestination,
+                    onTabPressed = { node: String -> navController.navigate(node) },
+                    modifier = Modifier
+                        .wrapContentWidth()
+                        .fillMaxHeight()
+                        .background(MaterialTheme.colorScheme.inverseOnSurface)
+                        .padding(dimensionResource(R.dimen.drawer_padding_content)),
+                )
             }
-            composable(Destinations.Movies.route){
-                //MovieScreen(navController)
-                FilmScreen()
+        }) {
+            Scaffold(
+                containerColor = Color.Transparent,
+                topBar = {
+                    MyTopAppBar(
+                        currentpage = currentpage,
+                    )
+                },
 
+                // modifier = Modifier.padding(dimensionResource(id = R.dimen.drawer_width), 0.dp, 0.dp, 0.dp )
+            ) { innerPadding ->
+
+                navComponent(
+                    navController = navController,
+                    modifier = Modifier.padding(innerPadding),
+                    navigationType = navigationType,
+                    onActorClick = ::onActorClick
+
+                )
             }
-            composable(Destinations.Series.route){
-
-                SerieScreen()
-
-            }
-            composable(Destinations.Actors.route){
-                ActorScreen(::onActorClick)
-            }
-
-            composable("${Destinations.ActorsDetail.route}/{id}"){ navBackStackEntry ->
-
-
-                ActorDetailScreen(actorId =navBackStackEntry.arguments?.getString("id"))
-
-
-
-            }
-
         }
+    } else if (navigationType == FilmApplicationNavigationType.BOTTOM_NAVIGATION) {
+        Scaffold(
+            containerColor = Color.Transparent,
+            topBar = {
+                MyTopAppBar(
+                    currentpage = currentpage,
+                )
+            },
+            bottomBar = {
 
+                MyBottomBar(goToHome, goToMovies, goToSeries, goToActors)
+
+            },
+
+        ) { innerPadding ->
+            navComponent(
+                navController = navController,
+                modifier = Modifier.padding(innerPadding),
+                navigationType = navigationType,
+                onActorClick = ::onActorClick
+
+            )
+        }
+    } else {
+        Row {
+            AnimatedVisibility(visible = navigationType == FilmApplicationNavigationType.NAVIGATION_RAIL) {
+                val navigationRailContentDescription = stringResource(R.string.navigation_rail)
+                FilmNavigationRail(
+                    selectedDestination = navController.currentDestination,
+                    onTabPressed = { node: String -> navController.navigate(node) },
+                )
+            }
+            Scaffold(
+                containerColor = Color.Transparent,
+                topBar = {
+                    MyTopAppBar(
+                        currentpage = currentpage,
+                    )
+                },
+
+            ) { innerPadding ->
+
+                navComponent(
+                    navController = navController,
+                    modifier = Modifier.padding(innerPadding),
+                    navigationType = navigationType,
+                    onActorClick = ::onActorClick
+
+                )
+            }
+        }
     }
 }

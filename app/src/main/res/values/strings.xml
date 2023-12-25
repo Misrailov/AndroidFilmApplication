@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">FilmApplication</string>
+    <string name="navigation_rail">Navigate between items here\n</string>
 </resources>

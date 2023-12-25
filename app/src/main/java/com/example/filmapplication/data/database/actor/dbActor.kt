@@ -1,5 +1,6 @@
 package com.example.filmapplication.data.database.actor
 
+import android.util.Log
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.filmapplication.domain.DomainActor
@@ -19,6 +20,7 @@ data class dbActor(
 
 
 fun dbActor.asDomainActor(): DomainActor {
+    Log.e("dbActor", this.toString())
     return DomainActor(
         nconst = this.nconst,
         primaryName = this.primaryName,

@@ -140,7 +140,7 @@ fun ActorComposable(
                 Log.e("actor",actor.isFavourite.toString())
 
                 Button(onClick = { actorViewModel.addActorToFavourites(actor) }) {
-                    Text(text = if (isFavouriteActor) "Add to Favourites" else "Remove From Favourites")
+                    Text(text = if (!isFavouriteActor) "Add to Favourites" else "Remove From Favourites")
                 }
 
             }
