@@ -75,17 +75,14 @@ class CachingActorRepository(
 
     override suspend fun refresh() {
         try {
-            Log.e("GetAllFavs happens","kank")
 
             actorApiService.getActorsAsFlow().collect { value ->
+                var favourites:List<DomainActor>  = listOf()
+                getAllFavourites().collect() { favourites= it }
                 for (actor in value.results) {
-                    if(getAllItems().map { it.contains(actor.asDomainActor()) }.equals(true)){
-                        var actorToCreate = DomainActor("", "", 0, 0, "", "")
-                        getItem(actor.asDomainActor().nconst).collect(){
-                            actorToCreate =it!!
-                        }
-                        insert(actorToCreate)
-                    }else  insert(actor.asDomainActor())
+                    if(favourites.filter { x->x.nconst.equals(actor.nconst) }.isNotEmpty()){
+                        insert(favourites.find { x->x.nconst == actor.nconst}!!)
+                    }else insert(actor.asDomainActor())
                 }
             }
         } catch (e: SocketTimeoutException) {

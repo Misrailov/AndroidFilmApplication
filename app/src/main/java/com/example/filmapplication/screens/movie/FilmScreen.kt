@@ -1,6 +1,5 @@
 package com.example.filmapplication.screens.movie
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -31,14 +30,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.items
 import androidx.paging.compose.itemsIndexed
 import coil.compose.rememberImagePainter
 import com.example.filmapplication.domain.DomainFilm
-import com.example.filmapplication.domain.DomainSerie
-import com.example.filmapplication.model.film.ApiFilm
 import com.example.filmapplication.screens.ErrorScreen
 import com.example.filmapplication.screens.LoadingScreen
 import com.example.filmapplication.screens.primaryColor
@@ -53,7 +50,9 @@ fun FilmScreen(filmViewModel: FilmViewModel = viewModel(factory = FilmViewModel.
     val filmListState by filmViewModel.uiListFilmState.collectAsState()
     val filmApiState = filmViewModel.filmApiState
     var favouriteFilms = listOf<DomainFilm>()
-
+    fun addFilmFav(film:DomainFilm){
+        filmViewModel.addFilmToFavourites(film)
+    }
 
     when (filmApiState) {
         is FilmApiState.Error -> ErrorScreen()
@@ -67,13 +66,13 @@ fun FilmScreen(filmViewModel: FilmViewModel = viewModel(factory = FilmViewModel.
                         Column {
                             Text(text = "Top Box Office films (most earnings)")
 
-                            filmList(films = films, filmViewModel, favouriteFilms)
+                            FilmList(filmsPaged = films, addFilmToFavourites = ::addFilmFav, favouriteFilms =  favouriteFilms)
                         }
                     }
                     item {
                         Column {
                             Text(text = "Top rated films")
-                            filmList(films = bestFilms, filmViewModel, favouriteFilms)
+                            FilmList(filmsPaged = bestFilms, addFilmToFavourites = ::addFilmFav, favouriteFilms = favouriteFilms)
                         }
                     }
                 }
@@ -84,11 +83,13 @@ fun FilmScreen(filmViewModel: FilmViewModel = viewModel(factory = FilmViewModel.
 
 
 @Composable
-fun filmList(
-    films: LazyPagingItems<DomainFilm>,
-    filmViewModel: FilmViewModel,
+fun FilmList(
+    filmList:List<DomainFilm>? = listOf<DomainFilm>(),
+    filmsPaged: LazyPagingItems<DomainFilm>? = null,
+    addFilmToFavourites:(film:DomainFilm)->Unit,
     favouriteFilms: List<DomainFilm>
 ) {
+
 
 
     LazyColumn(
@@ -97,18 +98,34 @@ fun filmList(
             .heightIn(min = 160.dp)
             .padding(start = 16.dp)
     ) {
-        itemsIndexed(films) { _, film ->
+        if(filmsPaged !=null){
+        itemsIndexed(filmsPaged) { _, film ->
             val isFavourite =
                 favouriteFilms.filter { x -> x.id == film!!.id && x.isFavourite }.isNotEmpty()
 
             film?.let {
                 FilmComposable(
                     film,
-                    filmViewModel,
+                    addFilmToFavourites,
                     isFavourite
                 )
 
             }
+        }
+    }else{
+        filmList?.forEach { film -> item {
+            val isFavourite =
+                favouriteFilms.filter { x -> x.id == film.id && x.isFavourite }.isNotEmpty()
+
+            film.let {
+                FilmComposable(
+                    film,
+                    addFilmToFavourites,
+                    isFavourite
+                )
+
+            }
+        } }
         }
     }
 }
@@ -116,7 +133,7 @@ fun filmList(
 @Composable
 fun FilmComposable(
     film: DomainFilm,
-    filmViewModel: FilmViewModel,
+    addFilmToFavourites:(film:DomainFilm)->Unit,
     isFavourite: Boolean
 ) {
     Card(
@@ -162,7 +179,7 @@ fun FilmComposable(
                     modifier = Modifier
                         .padding(top = 4.dp)
                 )
-                Button(onClick = { filmViewModel.addFilmToFavourites(film) }) {
+                Button(onClick = { addFilmToFavourites(film) }) {
                     Text(text = if (!isFavourite) "Add to Favourites" else "Remove From Favourites")
                 }
             }

@@ -1,6 +1,5 @@
 package com.example.filmapplication.screens.serie
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -31,7 +30,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
@@ -55,6 +53,9 @@ fun SerieScreen(
     val serieApiState = serieViewModel.serieApiState
     var favouriteSeries = listOf<DomainSerie>()
 
+    fun addSerieFav(serie:DomainSerie){
+        serieViewModel.addSerieToFavourites(serie)
+    }
 
     when (serieApiState) {
         is SerieApiState.Error -> ErrorScreen()
@@ -68,13 +69,13 @@ fun SerieScreen(
                         Column {
                             Text(text = "Most popular series")
 
-                            Series(series = mostPopSeries,serieViewModel,favouriteSeries)
+                            SerieList(seriesPaged = mostPopSeries, addSerieToFav = ::addSerieFav, favouriteSeries =  favouriteSeries)
                         }
                     }
                     item {
                         Column {
                             Text(text = "Top rated series")
-                            Series(series = topRatedSeries,serieViewModel,favouriteSeries)
+                            SerieList(seriesPaged = topRatedSeries, addSerieToFav = ::addSerieFav, favouriteSeries = favouriteSeries)
                         }
                     }
 
@@ -86,25 +87,43 @@ fun SerieScreen(
 }
 
 @Composable
-fun Series(series: LazyPagingItems<DomainSerie>,serieViewModel: SerieViewModel,favouriteSeries:List<DomainSerie>) {
+fun SerieList(
+    serieList:List<DomainSerie>? = listOf<DomainSerie>(),
+    seriesPaged: LazyPagingItems<DomainSerie>?=null,
+    addSerieToFav:(serie: DomainSerie)->Unit,
+    favouriteSeries: List<DomainSerie>
+) {
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
             .heightIn(min = 160.dp)
             .padding(start = 16.dp)
     ) {
-        itemsIndexed(series) { _, serie ->
-            val isFavourite = favouriteSeries.filter { x -> x.id ==serie!!.id && x.isFavourite}.isNotEmpty()
+        if(seriesPaged !=null){
+        itemsIndexed(seriesPaged) { _, serie ->
+            val isFavourite =
+                favouriteSeries.filter { x -> x.id == serie!!.id && x.isFavourite }.isNotEmpty()
             serie?.let {
                 SerieComposable(
-                   serie = serie,
-                    serieViewModel=serieViewModel,
+                    serie = serie,
+                    addSerieToFav = addSerieToFav,
                     isFavourite = isFavourite
-
-
-                    )
+                )
             }
+        }
 
+        }else{
+            serieList?.forEach { serie ->item {
+                val isFavourite =
+                    favouriteSeries.filter { x -> x.id == serie.id && x.isFavourite }.isNotEmpty()
+                serie.let {
+                    SerieComposable(
+                        serie = serie,
+                        addSerieToFav = addSerieToFav,
+                        isFavourite = isFavourite
+                    )
+                }
+            } }
         }
 
 
@@ -114,9 +133,9 @@ fun Series(series: LazyPagingItems<DomainSerie>,serieViewModel: SerieViewModel,f
 
 @Composable
 fun SerieComposable(
-    serie:DomainSerie,
-    serieViewModel: SerieViewModel,
-    isFavourite:Boolean
+    serie: DomainSerie,
+    addSerieToFav:(serie: DomainSerie)->Unit,
+    isFavourite: Boolean
 ) {
     Card(
         modifier = Modifier
@@ -161,7 +180,7 @@ fun SerieComposable(
                     modifier = Modifier
                         .padding(top = 4.dp)
                 )
-                Button(onClick = { serieViewModel.addSerieToFavourites(serie) }) {
+                Button(onClick = { addSerieToFav(serie)}) {
                     Text(text = if (!isFavourite) "Add to Favourites" else "Remove From Favourites")
                 }
             }

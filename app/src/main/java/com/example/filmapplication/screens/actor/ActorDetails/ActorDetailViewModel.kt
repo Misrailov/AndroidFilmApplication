@@ -14,11 +14,12 @@ import com.example.filmapplication.domain.DomainActor
 import com.example.filmapplication.domain.DomainFilm
 import com.example.filmapplication.repository.ActorRepository
 import com.example.filmapplication.repository.FilmRepository
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 sealed interface ActorDetailViewUiState{
     object loading: ActorDetailViewUiState
-    data class Success(val films: List<DomainFilm>, val actor: DomainActor):ActorDetailViewUiState
+    data class Success(val films: List<DomainFilm>, val actor: DomainActor,val favFilms :List<DomainFilm> = listOf()):ActorDetailViewUiState
     object Error: ActorDetailViewUiState
 }
 
@@ -27,9 +28,8 @@ class ActorDetailViewModel(private val actorRepository: ActorRepository, private
 ):ViewModel(){
     var actorDetailViewUiState:ActorDetailViewUiState by mutableStateOf(ActorDetailViewUiState.loading)
         private set
-    init{
 
-    }
+
 
     fun getActorDetails(id:String) {
         viewModelScope.launch {
@@ -37,11 +37,10 @@ class ActorDetailViewModel(private val actorRepository: ActorRepository, private
 
             try {
                 val actor: DomainActor = actorRepository.getActorDetail(id)
-
-
                 val films: List<DomainFilm> = filmRepository.getFilmListByids(actor.knownForTitles)
-
-                actorDetailViewUiState = ActorDetailViewUiState.Success(films, actor)
+                var favourites :List<DomainFilm> = listOf()
+               // filmRepository.getAllFavourites().collect(){favourites=it}
+                actorDetailViewUiState = ActorDetailViewUiState.Success(films, actor,favourites)
             } catch (e: Exception) {
 
                 Log.e("Exception", e.stackTraceToString())
@@ -49,6 +48,13 @@ class ActorDetailViewModel(private val actorRepository: ActorRepository, private
                 actorDetailViewUiState = ActorDetailViewUiState.Error
             }
         }
+    }
+    fun addFilmToFavourites(film:DomainFilm){
+        film.isFavourite = !film.isFavourite
+        viewModelScope.launch {
+            filmRepository.insert(film)
+        }
+
     }
     companion object{
         val Factory: ViewModelProvider.Factory = viewModelFactory {

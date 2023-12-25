@@ -103,3 +103,5 @@ Q.idea/sonarlint/securityhotspotstore/4/f/4f5faee91c157d76a8aee3a345c6fa1809cb68
 Rapp/src/main/java/com/example/filmapplication/model/film/MultipleFilmsContainer.kt,b/b/bb3828f96dbbf0a19359906c77eb1190800bd688
 Å
 Q.idea/sonarlint/securityhotspotstore/c/7/c7e4b19e1aa4f71a8e666d2dadab26b34fff9654,7/0/7042e42c35a939e7017ec7534d23571cfedbd101
+~
+Napp/src/main/java/com/example/filmapplication/screens/navigation/navigation.kt,8/4/8443fc40ea7bd4e6099b47beb3d5c24b67a8116e

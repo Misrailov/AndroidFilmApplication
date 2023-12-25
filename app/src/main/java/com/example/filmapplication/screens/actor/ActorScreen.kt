@@ -1,14 +1,10 @@
 package com.example.filmapplication.screens.actor
 
 import android.util.Log
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
@@ -22,21 +18,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
-import coil.compose.rememberImagePainter
-import com.example.filmapplication.R
 import com.example.filmapplication.domain.DomainActor
-import com.example.filmapplication.domain.Role
-import com.example.filmapplication.model.actor.ApiActor
 import com.example.filmapplication.screens.ErrorScreen
 import com.example.filmapplication.screens.LoadingScreen
 
@@ -51,7 +38,9 @@ fun ActorScreen (performClick: (id:String)->Unit, actorViewModel: ActorViewModel
 
 
     val actorApiState = actorViewModel.actorApiState
-
+    fun addActorToFav(actor: DomainActor){
+        actorViewModel.addActorToFavourites(actor)
+    }
 
     Column(
         modifier = Modifier
@@ -68,7 +57,7 @@ fun ActorScreen (performClick: (id:String)->Unit, actorViewModel: ActorViewModel
             is ActorApiState.Loading -> LoadingScreen()
             is ActorApiState.Error -> ErrorScreen()
             //is  ActorApiState.Success ->  Actors(actors = actorListState.actorList, performClick = { s -> navigationController.navigate(s)})
-            is  ActorApiState.Success ->  Actors(actors = actorListState.actorList,favActors = actorListState.favouriteActors,actorViewModel, performClick = performClick)
+            is  ActorApiState.Success ->  ActorList(actors = actorListState.actorList,favActors = actorListState.favouriteActors, addActorToFav = ::addActorToFav, performClick = performClick)
 
 
         }
@@ -77,7 +66,7 @@ fun ActorScreen (performClick: (id:String)->Unit, actorViewModel: ActorViewModel
 }
 
 @Composable
-fun Actors(actors:List<DomainActor>,favActors:List<DomainActor>,actorViewModel: ActorViewModel,performClick: (item: String) -> Unit){
+fun ActorList(actors:List<DomainActor>, favActors:List<DomainActor>, addActorToFav: (item:DomainActor) -> Unit, performClick: (item: String) -> Unit){
     LazyColumn(        modifier = Modifier.run {
         fillMaxWidth()
             .heightIn(min = 160.dp)
@@ -93,7 +82,7 @@ fun Actors(actors:List<DomainActor>,favActors:List<DomainActor>,actorViewModel: 
                 var isFavouriteActor = favActors.contains(actor)
                 item {
                     ActorComposable(
-                        actorViewModel = actorViewModel,
+                        addActorToFav = addActorToFav,
                         actor= actor,
                         isFavouriteActor=isFavouriteActor,
                         performClick = performClick
@@ -104,7 +93,7 @@ fun Actors(actors:List<DomainActor>,favActors:List<DomainActor>,actorViewModel: 
     }
 }@Composable
 fun ActorComposable(
-    actorViewModel: ActorViewModel,
+    addActorToFav: (item:DomainActor) -> Unit,
     actor:DomainActor,
     isFavouriteActor:Boolean,
     performClick: (item:String)->Unit
@@ -113,7 +102,8 @@ fun ActorComposable(
         modifier = Modifier
             .padding(start = 4.dp, end = 12.dp)
             .widthIn(max = 350.dp, min = 350.dp)
-            .heightIn(min = 160.dp, max = 160.dp)
+            .heightIn(min = 160.dp, max = 200.dp)
+            .padding(bottom = 16.dp)
             .clickable { performClick(actor.nconst) },
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp,
@@ -123,7 +113,7 @@ fun ActorComposable(
         Row(
             modifier = Modifier.padding(start = 8.dp),
         ) {
-            Column {
+            Column (modifier = Modifier.padding(start = 16.dp)){
                 Text(
                     text = actor.primaryName,
                     color = Color.Black,
@@ -135,11 +125,10 @@ fun ActorComposable(
                     text = "Born: " + actor.birthYear,
                     color = Color.Black,
                     fontSize = 24.sp,
-                    modifier = Modifier.padding(top = 16.dp),
+                    modifier = Modifier.padding(top = 16.dp, bottom = 16.dp),
                 )
-                Log.e("actor",actor.isFavourite.toString())
 
-                Button(onClick = { actorViewModel.addActorToFavourites(actor) }) {
+                Button(onClick = { addActorToFav(actor) },modifier =Modifier.padding(bottom=16.dp)) {
                     Text(text = if (!isFavouriteActor) "Add to Favourites" else "Remove From Favourites")
                 }
 

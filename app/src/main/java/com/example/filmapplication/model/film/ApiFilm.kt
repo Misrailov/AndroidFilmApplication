@@ -35,25 +35,25 @@ data class TitleType(
     val id: String,
     val isSeries: Boolean,
     val isEpisode: Boolean,
-    val __typename: String
+    val __typename: String=""
 )
 
 data class TitleText(
-    val text: String,
-    val __typename: String
+    val text: String="",
+    val __typename: String=""
 )
 
 data class YearRange(
-    val year: Int,
-    val endYear: Int?,
-    val __typename: String
+    val year: Int=0,
+    val endYear: Int?=0,
+    val __typename: String=""
 )
 
 data class ReleaseDate(
-    val day: Int,
-    val month: Int,
-    val year: Int,
-    val __typename: String
+    val day: Int=0,
+    val month: Int=0,
+    val year: Int=0,
+    val __typename: String=""
 )
 
 fun ApiFilm.asDomainFilm(): DomainFilm {

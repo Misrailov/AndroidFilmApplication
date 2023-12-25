@@ -5,11 +5,18 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
+import com.example.filmapplication.FilmApplication
 import com.example.filmapplication.domain.DomainActor
+import com.example.filmapplication.domain.DomainFilm
+import com.example.filmapplication.domain.DomainSerie
 import com.example.filmapplication.repository.ActorRepository
 import com.example.filmapplication.repository.FilmRepository
 import com.example.filmapplication.repository.SerieRepository
+import com.example.filmapplication.screens.movie.FilmViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -39,10 +46,9 @@ class HomeViewModel(
 
     fun getFavourites() {
         try {
-            uiListHomeState = filmRepository.getAllFavourites()
-                .combine(serieRepository.getAllFavourites()) { films, series ->
-                    var actors = listOf<DomainActor>()
-                    actorRepository.getAllFavourites().collect() { value -> actors = value }
+
+                 uiListHomeState =combine(filmRepository.getAllFavourites(),serieRepository.getAllFavourites(),actorRepository.getAllFavourites()) { films, series,actors ->
+
                     HomeListState(films, series, actors)
 
                 }.stateIn(
@@ -56,5 +62,36 @@ class HomeViewModel(
 
         }
     }
+    fun addFilmToFavourites(film: DomainFilm){
+        film.isFavourite = !film.isFavourite
+        viewModelScope.launch {
+            filmRepository.insert(film)
+        }
 
+    }
+    fun addSerieToFavourites(serie: DomainSerie){
+        serie.isFavourite = !serie.isFavourite
+        viewModelScope.launch {
+            serieRepository.insert(serie)
+        }
+    }
+    fun addActorToFavourites(actor: DomainActor){
+        actor.isFavourite = !actor.isFavourite
+        viewModelScope.launch {
+            actorRepository.insert(actor)
+        }
+    }
+
+    companion object {
+        val Factory: ViewModelProvider.Factory = viewModelFactory {
+            initializer {
+                val application =
+                    (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as FilmApplication)
+                val filmRepository = application.container.filmRepository
+                val actorRepository = application.container.actorRepository
+                val serieRepository = application.container.serieRepository
+                HomeViewModel(filmRepository,actorRepository,serieRepository)
+            }
+        }
+    }
 }

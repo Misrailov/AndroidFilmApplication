@@ -28,7 +28,7 @@ fun navComponent(
         modifier = modifier,
     ) {
         composable(Destinations.Home.route) {
-            HomeScreen()
+            HomeScreen(performClick = onActorClick)
 
         }
         composable(Destinations.Movies.route) {
@@ -42,7 +42,7 @@ fun navComponent(
 
         }
         composable(Destinations.Actors.route) {
-            ActorScreen(onActorClick)
+            ActorScreen(performClick = onActorClick)
         }
 
         composable("${Destinations.ActorsDetail.route}/{id}") { navBackStackEntry ->
