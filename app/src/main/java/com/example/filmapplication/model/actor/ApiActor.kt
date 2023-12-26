@@ -8,8 +8,8 @@ data class ApiActor(
 
     val nconst: String,
     val primaryName: String,
-    val birthYear: Int,
-    val deathYear: Int,
+    val birthYear: String = "0",
+    val deathYear: String ="0",
     val primaryProfession: String,
     val knownForTitles: String
 ){}
@@ -22,7 +22,7 @@ fun Flow<List<ApiActor>>.asDomainActors(): Flow<List<DomainActor>> {
 
 fun List<ApiActor>.asDomainActors():List<DomainActor>{
     return  this.map { DomainActor(nconst=it.nconst, primaryName=it.primaryName,
-        birthYear=it.birthYear,deathYear=it.deathYear,primaryProfession=it.primaryProfession,knownForTitles=it.knownForTitles)
+        birthYear=it.birthYear,deathYear=it.deathYear.toString(),primaryProfession=it.primaryProfession,knownForTitles=it.knownForTitles)
     }}
 
 fun  ApiActor.asDomainActor():DomainActor{

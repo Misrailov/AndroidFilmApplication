@@ -2,6 +2,7 @@ package com.example.filmapplication.data
 
 import android.content.Context
 import com.example.filmapplication.data.database.FilmApplicationDb
+import com.example.filmapplication.network.NetworkConnectionInterceptor
 import com.example.filmapplication.network.actor.ActorApiService
 import com.example.filmapplication.network.movie.FilmApiService
 import com.example.filmapplication.network.serie.SerieApiService
@@ -44,8 +45,9 @@ class DefaultAppContainer (private val context: Context): AppContainer {
             .build()
         chain.proceed(request)
     }
-
+    private val networkCheck = NetworkConnectionInterceptor(context)
     private val client = OkHttpClient.Builder()
+        .addInterceptor(networkCheck)
         .addInterceptor(logger)
         .addInterceptor(headersInterceptor)
         .build()

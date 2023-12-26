@@ -68,6 +68,7 @@ class FilmViewModel(private val filmRepository: FilmRepository):ViewModel(){
         }catch (e:IOException){
             Log.e("IOException",e.stackTraceToString())
             filmApiState =FilmApiState.Error
+
         }
     }
 

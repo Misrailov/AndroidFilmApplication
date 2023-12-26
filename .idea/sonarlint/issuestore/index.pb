@@ -105,3 +105,13 @@ Rapp/src/main/java/com/example/filmapplication/model/film/MultipleFilmsContainer
 Q.idea/sonarlint/securityhotspotstore/c/7/c7e4b19e1aa4f71a8e666d2dadab26b34fff9654,7/0/7042e42c35a939e7017ec7534d23571cfedbd101
 ~
 Napp/src/main/java/com/example/filmapplication/screens/navigation/navigation.kt,8/4/8443fc40ea7bd4e6099b47beb3d5c24b67a8116e
+…
+Uapp/src/main/java/com/example/filmapplication/network/NetworkConnectionInterceptor.kt,8/5/85edbe3c7e3a75d2d1359c772c5b487d1b7bc9a5
+~
+Napp/src/main/java/com/example/filmapplication/screens/appBar/MyBottomAppBar.kt,5/1/510e53dbc2b647f5b924cbda680dddb3c76b8c81
+†
+Vapp/src/main/java/com/example/filmapplication/screens/navigation/FilmNavigationRail.kt,8/c/8cf1073648d560b10afe8b1e87316cb288bc7282
+„
+Tapp/src/main/java/com/example/filmapplication/screens/navigation/NavigationDrawer.kt,c/c/ccdc3d115c2ee84a4109f3f4b23c2a7fa1b55b5a
+t
+Dapp/src/main/java/com/example/filmapplication/screens/ErrorScreen.kt,0/8/08e62788565acfde5d8518b950843f651cad4585

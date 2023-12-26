@@ -11,8 +11,8 @@ data class dbActor(
     @PrimaryKey
     val nconst: String = "",
     val primaryName: String = "",
-    val birthYear: Int = 0,
-    val deathYear: Int = 0,
+    val birthYear: String = "0",
+    val deathYear: String = "0",
     val primaryProfession: String = "",
     val knownForTitles: String = "",
     val isFavourite: Boolean = false
@@ -25,7 +25,7 @@ fun dbActor.asDomainActor(): DomainActor {
         nconst = this.nconst,
         primaryName = this.primaryName,
         birthYear = this.birthYear,
-        deathYear = this.deathYear,
+        deathYear = this.deathYear.toString(),
         primaryProfession = this.primaryProfession,
         knownForTitles = this.knownForTitles,
         isFavourite = this.isFavourite
@@ -47,7 +47,7 @@ fun List<dbActor>.asDomainActors(): List<DomainActor> {
             nconst = it.nconst,
             primaryName = it.primaryName,
             birthYear = it.birthYear,
-            deathYear = it.deathYear,
+            deathYear = it.deathYear.toString(),
             primaryProfession = it.primaryProfession,
             knownForTitles = it.knownForTitles,
             isFavourite = it.isFavourite

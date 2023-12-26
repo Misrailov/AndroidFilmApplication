@@ -64,14 +64,16 @@ class CachingActorRepository(
 
         } catch (e: SocketTimeoutException) {
             Log.e("SocketTimeoutException", e.stackTraceToString())
-            DomainActor("", "", 0, 0, "", "")
+            DomainActor("", "", "0", "0", "", "")
 
         } catch (e: Exception) {
             Log.e("GeneralException", e.stackTraceToString())
-            DomainActor("", "", 0, 0, "", "")
+            DomainActor("", "", "0", "0", "", "")
 
         }
     }
+
+
 
     override suspend fun refresh() {
         try {

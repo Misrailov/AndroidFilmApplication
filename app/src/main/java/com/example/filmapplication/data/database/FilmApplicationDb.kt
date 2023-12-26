@@ -12,7 +12,7 @@ import com.example.filmapplication.data.database.serie.SerieDao
 import com.example.filmapplication.data.database.serie.dbSerie
 
 
-@Database(entities = [dbActor::class,dbSerie::class,dbFilm::class], version = 4, exportSchema = false)
+@Database(entities = [dbActor::class,dbSerie::class,dbFilm::class], version = 6, exportSchema = false)
 abstract class FilmApplicationDb : RoomDatabase() {
 
     abstract fun actorDao(): ActorDao

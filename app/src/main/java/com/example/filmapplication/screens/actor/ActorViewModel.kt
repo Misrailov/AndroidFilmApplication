@@ -38,6 +38,8 @@ var actorApiState: ActorApiState by mutableStateOf(ActorApiState.Loading)
         getRepoActors()
 
     }
+
+
     fun addActorToFavourites(actor: DomainActor){
         actor.isFavourite = !actor.isFavourite
         viewModelScope.launch {

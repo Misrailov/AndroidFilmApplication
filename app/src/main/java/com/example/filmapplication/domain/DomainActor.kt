@@ -15,8 +15,8 @@ enum class Role {
 data class DomainActor(
     val nconst: String,
     val primaryName: String,
-    val birthYear: Int,
-    val deathYear: Int,
+    val birthYear: String = "0",
+    val deathYear: String = "0",
     val primaryProfession: String,
     val knownForTitles: String,
     var isFavourite: Boolean = false

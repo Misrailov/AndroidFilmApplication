@@ -7,7 +7,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.CalendarMonth
 import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.LocalMovies
+import androidx.compose.material.icons.outlined.Movie
 import androidx.compose.material.icons.outlined.Newspaper
+import androidx.compose.material.icons.outlined.People
 import androidx.compose.material.icons.outlined.Visibility
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
@@ -38,17 +41,17 @@ fun MyBottomBar(
                     Icon(Icons.Outlined.Home, contentDescription = "Localized description")
                 }
                 IconButton(onClick = OnMovie) {
-                    Icon(Icons.Outlined.CalendarMonth, contentDescription = "Localized description")
+                    Icon(Icons.Outlined.Movie, contentDescription = "Localized description")
                 }
                 IconButton(onClick = OnSerie) {
                     Icon(
-                        Icons.Outlined.Newspaper,
+                        Icons.Outlined.LocalMovies,
                         contentDescription = "Localized description",
                     )
                 }
                 IconButton(onClick = OnActor) {
                     Icon(
-                        Icons.Outlined.Visibility,
+                        Icons.Outlined.People,
                         contentDescription = "Localized description",
                     )
                 }

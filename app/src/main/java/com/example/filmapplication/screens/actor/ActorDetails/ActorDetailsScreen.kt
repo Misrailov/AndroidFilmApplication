@@ -107,7 +107,7 @@ fun ActorHeader(actor: DomainActor) {
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
                 )
                 Text(text = "Born: ${actor.birthYear}")
-                if (actor.deathYear != 0) {
+                if (actor.deathYear != "0") {
                     Text(text = "Died: ${actor.deathYear}")
                 }
             }
