@@ -15,18 +15,21 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.filmapplication.domain.DomainActor
 import com.example.filmapplication.screens.ErrorScreen
 import com.example.filmapplication.screens.LoadingScreen
+import com.example.filmapplication.R
 
 
 @Composable
@@ -46,21 +49,23 @@ fun ActorScreen (performClick: (id:String)->Unit, actorViewModel: ActorViewModel
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(dimensionResource(id = R.dimen.standard_padding)),
     ) {
         FilledTonalButton(onClick = { actorViewModel.getRepoActors() }) {
             Text("Refresh Random Actors")
         }
         Spacer(
             modifier = Modifier
-                .height(16.dp)
-                .padding(start = 16.dp, top = 16.dp),
+                .height(dimensionResource(id = R.dimen.standard_height))
+                .padding(
+                    start = dimensionResource(id = R.dimen.standard_padding),
+                    top = dimensionResource(id = R.dimen.standard_padding)
+                ),
         )
 
         when(actorApiState){
             is ActorApiState.Loading -> LoadingScreen()
             is ActorApiState.Error -> ErrorScreen()
-            //is  ActorApiState.Success ->  Actors(actors = actorListState.actorList, performClick = { s -> navigationController.navigate(s)})
             is  ActorApiState.Success ->  ActorList(actors = actorListState.actorList,favActors = actorListState.favouriteActors, addActorToFav = ::addActorToFav, performClick = performClick)
 
 
@@ -73,13 +78,13 @@ fun ActorScreen (performClick: (id:String)->Unit, actorViewModel: ActorViewModel
 fun ActorList(actors:List<DomainActor>, favActors:List<DomainActor>, addActorToFav: (item:DomainActor) -> Unit, performClick: (item: String) -> Unit){
     LazyColumn(        modifier = Modifier.run {
         fillMaxWidth()
-            .heightIn(min = 160.dp)
-            .padding(start = 16.dp)
+            .heightIn(min = dimensionResource(id = R.dimen.min_height))
+            .padding(dimensionResource(id = R.dimen.standard_padding))
     },
         ){
         if(actors.isEmpty()){
             item{
-                Text("No Actors found")
+                Text(stringResource(id = R.string.No_Actors))
             }
         }else {
             actors.forEach { actor ->
@@ -104,37 +109,42 @@ fun ActorComposable(
 ) {
     Card(
         modifier = Modifier
-            .padding(start = 4.dp, end = 12.dp)
-            .widthIn(max = 350.dp, min = 350.dp)
-            .heightIn(min = 160.dp, max = 200.dp)
-            .padding(bottom = 16.dp)
+            .padding(
+                start = dimensionResource(id = R.dimen.small_padding),
+                end = dimensionResource(id = R.dimen.standard_padding)
+            )
+            .widthIn(max = dimensionResource(id = R.dimen.actor_card_width), min = dimensionResource(id = R.dimen.actor_card_width))
+            .heightIn(min = dimensionResource(id = R.dimen.min_height), max = dimensionResource(id = R.dimen.max_height))
+            .padding(bottom = dimensionResource(id = R.dimen.standard_padding))
             .clickable { performClick(actor.nconst) },
         elevation = CardDefaults.cardElevation(
-            defaultElevation = 6.dp,
+            defaultElevation = dimensionResource(id = R.dimen.standard_elevation),
         ),
 
     ) {
         Row(
-            modifier = Modifier.padding(start = 8.dp),
+            modifier = Modifier.padding(start = dimensionResource(id = R.dimen.medium_padding)),
         ) {
 
-            Column (modifier = Modifier.padding(start = 16.dp)){
+            Column (modifier = Modifier.padding(start = dimensionResource(id = R.dimen.standard_padding))){
                 Text(
                     text = actor.primaryName,
-                    color = Color.Black,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer,
                     fontSize = 24.sp,
-                    modifier = Modifier.padding(top = 16.dp),
+                    modifier = Modifier.padding(top = dimensionResource(id = R.dimen.standard_padding)),
                 )
 
                 Text(
-                    text = "Born: " + actor.birthYear,
-                    color = Color.Black,
+                    text = stringResource(id = R.string.Born)  +": $actor.birthYear",
+                    color = MaterialTheme.colorScheme.onPrimaryContainer,
                     fontSize = 24.sp,
-                    modifier = Modifier.padding(top = 16.dp, bottom = 16.dp),
+                    modifier = Modifier.padding(top = dimensionResource(id = R.dimen.standard_padding), bottom = dimensionResource(id = R.dimen.standard_padding)),
                 )
 
-                Button(onClick = { addActorToFav(actor) },modifier =Modifier.padding(bottom=16.dp)) {
-                    Text(text = if (!isFavouriteActor) "Add to Favourites" else "Remove From Favourites")
+                Button(onClick = { addActorToFav(actor) },modifier =Modifier.padding(bottom=dimensionResource(id = R.dimen.standard_padding))) {
+                    Text(text = if (!isFavouriteActor) stringResource(id = R.string.Add_Favourites) else stringResource(
+                        id = R.string.Remove_Favourites
+                    ))
                 }
 
             }

@@ -4,4 +4,18 @@
     <dimen name="drawer_padding_header">8dp</dimen>
     <dimen name="drawer_padding_content">8dp</dimen>
     <dimen name="drawer_width">160dp</dimen>
+    <dimen name="standard_spacing">16.dp</dimen>
+    <dimen name="standard_height">16.dp</dimen>
+    <dimen name="default_Screen_size">200.dp</dimen>
+    <dimen name="medium_padding">8.dp</dimen>
+    <dimen name="small_padding">4.dp</dimen>
+    <dimen name="img_size">80.dp</dimen>
+    <dimen name="standard_elevation">6.dp</dimen>
+    <dimen name="standard_min_size">300.dp</dimen>
+    <dimen name="standard_width">300.dp</dimen>
+    <dimen name="img_card_size">400.dp</dimen>
+    <dimen name="min_height">160.dp</dimen>
+    <dimen name="actor_card_width">350.dp</dimen>
+    <dimen name="max_height">200.dp</dimen>
+    <dimen name="bottom_bar_height">56.dp</dimen>
 </resources>

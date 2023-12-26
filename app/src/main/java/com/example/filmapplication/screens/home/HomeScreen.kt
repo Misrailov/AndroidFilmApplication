@@ -12,6 +12,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.filmapplication.domain.DomainActor
 import com.example.filmapplication.domain.DomainFilm
@@ -21,6 +23,7 @@ import com.example.filmapplication.screens.LoadingScreen
 import com.example.filmapplication.screens.actor.ActorList
 import com.example.filmapplication.screens.movie.FilmList
 import com.example.filmapplication.screens.serie.SerieList
+import com.example.filmapplication.R
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -53,20 +56,10 @@ fun HomeScreen(
             Scaffold { padding ->
                 Spacer(modifier = Modifier.padding(padding))
                 LazyRow {
+
                     item {
                         Column {
-                            Text(text = "Your Favourite Actors")
-                            ActorList(
-                                actors = homeListState.actors,
-                                favActors = homeListState.actors,
-                                addActorToFav = ::addActorToFav,
-                                performClick = performClick
-                            )
-                        }
-                    }
-                    item {
-                        Column {
-                            Text(text = "Your Favourite Films")
+                            Text(text = stringResource(id = R.string.Favourite_Movies))
 
                             FilmList(
                                 filmList = homeListState.films,
@@ -77,11 +70,22 @@ fun HomeScreen(
                     }
                     item {
                         Column {
-                            Text(text = "Your Favourite Series")
+                            Text(text = stringResource(id = R.string.Favourite_Series))
                             SerieList(
                                 serieList = homeListState.series,
                                 addSerieToFav = ::addSerieFav,
                                 favouriteSeries = homeListState.series
+                            )
+                        }
+                    }
+                    item {
+                        Column {
+                            Text(text = stringResource(id = R.string.Favourite_Actors))
+                            ActorList(
+                                actors = homeListState.actors,
+                                favActors = homeListState.actors,
+                                addActorToFav = ::addActorToFav,
+                                performClick = performClick
                             )
                         }
                     }

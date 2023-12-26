@@ -44,7 +44,7 @@ enum class Destinations (val route:String,val icon: ImageVector){
     Movies("movies",icon = Icons.Filled.Movie),
     Series("series",icon = Icons.Filled.LocalMovies),
     Actors("actors",icon = Icons.Filled.People),
-    ActorsDetail("actorsDetail",icon = Icons.Filled.Person);
+    ActorsDetail("actors detail",icon = Icons.Filled.Person);
     fun createRoute(id:String) = "$route/$id"
 
 }
@@ -82,14 +82,13 @@ fun FilmApp(navigationType: FilmApplicationNavigationType,navController:NavHostC
             }
         }) {
             Scaffold(
-                containerColor = Color.Transparent,
+                containerColor = MaterialTheme.colorScheme.background,
                 topBar = {
                     MyTopAppBar(
                         currentpage = currentpage,
                     )
                 },
 
-                // modifier = Modifier.padding(dimensionResource(id = R.dimen.drawer_width), 0.dp, 0.dp, 0.dp )
             ) { innerPadding ->
 
                 navComponent(
@@ -103,7 +102,7 @@ fun FilmApp(navigationType: FilmApplicationNavigationType,navController:NavHostC
         }
     } else if (navigationType == FilmApplicationNavigationType.BOTTOM_NAVIGATION) {
         Scaffold(
-            containerColor = Color.Transparent,
+            containerColor = MaterialTheme.colorScheme.background,
             topBar = {
                 MyTopAppBar(
                     currentpage = currentpage,
@@ -134,7 +133,7 @@ fun FilmApp(navigationType: FilmApplicationNavigationType,navController:NavHostC
                 )
             }
             Scaffold(
-                containerColor = Color.Transparent,
+                containerColor = MaterialTheme.colorScheme.background,
                 topBar = {
                     MyTopAppBar(
                         currentpage = currentpage,

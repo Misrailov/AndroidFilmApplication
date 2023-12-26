@@ -10,6 +10,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -58,16 +59,16 @@ fun ActorDetailScreen(
     Scaffold(
 
         modifier = Modifier
-            .padding(PaddingValues(6.dp)),
+            .padding(PaddingValues(dimensionResource(id = R.dimen.drawer_padding_header))),
         content = { padding ->
             if (actor != null) {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(16.dp),
+                        .padding(dimensionResource(id = R.dimen.standard_padding)),
                 ) {
                     ActorHeader(actor = actor!!)
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.standard_spacing)))
 
                     FilmList(filmList = films, addFilmToFavourites = ::addFilmFav,favouriteFilms=favouriteFilms)
 
@@ -84,23 +85,23 @@ fun ActorHeader(actor: DomainActor) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
+            .padding(dimensionResource(id = R.dimen.standard_padding))
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 8.dp),
+                .padding(bottom = dimensionResource(id = R.dimen.standard_padding)),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Image(
                 painter = painterResource(id = R.drawable.loading_img),
                 contentDescription = "Actor Image",
                 modifier = Modifier
-                    .size(80.dp)
+                    .size(dimensionResource(id = R.dimen.img_size))
                     .clip(CircleShape)
                     .background(MaterialTheme.colorScheme.primary)
             )
-            Spacer(modifier = Modifier.width(16.dp))
+            Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.standard_spacing)))
             Column {
                 Text(
                     text = actor.primaryName,
@@ -112,7 +113,7 @@ fun ActorHeader(actor: DomainActor) {
                 }
             }
         }
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.standard_padding)))
         Text(
             text = "Known For",
             style = MaterialTheme.typography.labelSmall,

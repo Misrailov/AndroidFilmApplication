@@ -11,7 +11,7 @@ import com.example.filmapplication.screens.Destinations
 @Composable
 fun FilmNavigationRail(selectedDestination: NavDestination?, onTabPressed: (String) -> Unit, modifier: Modifier = Modifier) {
     NavigationRail(modifier = modifier) {
-        for (navItem in Destinations.values()) {
+        for (navItem in Destinations.values().copyOfRange(0,4)) {
             NavigationRailItem(
                 selected = selectedDestination?.route == navItem.name,
                 onClick = { onTabPressed(navItem.name) },

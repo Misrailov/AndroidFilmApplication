@@ -38,6 +38,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -47,6 +49,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import androidx.paging.compose.itemsIndexed
 import coil.compose.rememberImagePainter
+import com.example.filmapplication.R
 import com.example.filmapplication.domain.DomainFilm
 import com.example.filmapplication.network.NetworkConnectionInterceptor
 import com.example.filmapplication.screens.ErrorScreen
@@ -83,21 +86,21 @@ fun FilmScreen(filmViewModel: FilmViewModel = viewModel(factory = FilmViewModel.
 
                 if(!networkCheck.isConnected(LocalContext.current)){
                     scope.launch {
-                        snackbarHostState.showSnackbar("No Internet Connection ")
+                        snackbarHostState.showSnackbar( R.string.No_Internet.toString())
                     }
                 }
                 Spacer(modifier = Modifier.padding(padding))
                 LazyRow {
                     item {
                         Column {
-                            Text(text = "Top Box Office films (most earnings)")
+                            Text(text = stringResource(R.string.TopBox_Movies))
 
                             FilmList(filmsPaged = films, addFilmToFavourites = ::addFilmFav, favouriteFilms =  favouriteFilms)
                         }
                     }
                     item {
                         Column {
-                            Text(text = "Top rated films")
+                            Text(text = stringResource(R.string.Top_Rated_Films))
                             FilmList(filmsPaged = bestFilms, addFilmToFavourites = ::addFilmFav, favouriteFilms = favouriteFilms)
                         }
                     }
@@ -121,8 +124,8 @@ fun FilmList(
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
-            .heightIn(min = 160.dp)
-            .padding(start = 16.dp)
+            .heightIn(min = dimensionResource(id = R.dimen.min_height))
+            .padding(start = dimensionResource(id = R.dimen.standard_padding))
     ) {
         if(filmsPaged !=null){
         itemsIndexed(filmsPaged) { _, film ->
@@ -164,11 +167,14 @@ fun FilmComposable(
 ) {
     Card(
         modifier = Modifier
-            .padding(horizontal = 8.dp, vertical = 8.dp)
+            .padding(
+                horizontal = dimensionResource(id = R.dimen.medium_padding),
+                vertical = dimensionResource(id = R.dimen.medium_padding)
+            )
             .fillMaxWidth()
-            .defaultMinSize(300.dp),
+            .defaultMinSize(dimensionResource(id = R.dimen.standard_min_size)),
         elevation = CardDefaults.cardElevation(
-            defaultElevation = 6.dp
+            defaultElevation = dimensionResource(id = R.dimen.standard_elevation)
         ),
     ) {
         Column(
@@ -177,36 +183,36 @@ fun FilmComposable(
         ) {
             Image(
                 painter = rememberImagePainter(data = film.primaryImage),
-                contentDescription = "Photo of ${film.titleText}",
+                contentDescription = stringResource(id = R.string.Photo_Of) + "${film.titleText}",
                 modifier = Modifier
-                    .width(300.dp)
-                    .height(400.dp)
+                    .width(dimensionResource(id = R.dimen.standard_width))
+                    .height(dimensionResource(id = R.dimen.img_card_size))
                     .clip(MaterialTheme.shapes.medium)
-                    .background(Color.White)
+                    .background(MaterialTheme.colorScheme.primary)
             )
 
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(8.dp)
+                    .padding(dimensionResource(id = R.dimen.medium_padding))
             ) {
                 Text(
                     text = film.titleText,
-                    color = Color.Black,
+                    color = MaterialTheme.colorScheme.onBackground,
                     fontSize = 15.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
-                        .padding(top = 8.dp)
+                        .padding(top = dimensionResource(id = R.dimen.medium_padding))
                 )
                 Text(
-                    text = "Released in ${film.releaseYear}",
+                    text = stringResource(id = R.string.Released_in) + " ${film.releaseYear}",
                     color = primaryColor,
                     fontSize = 16.sp,
                     modifier = Modifier
-                        .padding(top = 4.dp)
+                        .padding(top = dimensionResource(id = R.dimen.small_padding))
                 )
                 Button(onClick = { addFilmToFavourites(film) }) {
-                    Text(text = if (!isFavourite) "Add to Favourites" else "Remove From Favourites")
+                    Text(text = if (!isFavourite)  stringResource(R.string.Add_Favourites) else  stringResource(R.string.Remove_Favourites))
                 }
             }
         }

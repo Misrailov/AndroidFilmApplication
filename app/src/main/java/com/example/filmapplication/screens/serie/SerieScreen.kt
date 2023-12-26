@@ -26,6 +26,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -38,6 +40,7 @@ import com.example.filmapplication.domain.DomainSerie
 import com.example.filmapplication.screens.ErrorScreen
 import com.example.filmapplication.screens.LoadingScreen
 import com.example.filmapplication.screens.primaryColor
+import com.example.filmapplication.R
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -67,14 +70,14 @@ fun SerieScreen(
                 LazyRow {
                     item {
                         Column {
-                            Text(text = "Most popular series")
+                            Text(text = stringResource(id = R.string.Most_Popular_Series))
 
                             SerieList(seriesPaged = mostPopSeries, addSerieToFav = ::addSerieFav, favouriteSeries =  favouriteSeries)
                         }
                     }
                     item {
                         Column {
-                            Text(text = "Top rated series")
+                            Text(text = stringResource(id = R.string.Top_Rated_Series))
                             SerieList(seriesPaged = topRatedSeries, addSerieToFav = ::addSerieFav, favouriteSeries = favouriteSeries)
                         }
                     }
@@ -96,8 +99,8 @@ fun SerieList(
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
-            .heightIn(min = 160.dp)
-            .padding(start = 16.dp)
+            .heightIn(min = dimensionResource(id = R.dimen.min_height))
+            .padding(start = dimensionResource(id = R.dimen.standard_padding))
     ) {
         if(seriesPaged !=null){
         itemsIndexed(seriesPaged) { _, serie ->
@@ -139,11 +142,14 @@ fun SerieComposable(
 ) {
     Card(
         modifier = Modifier
-            .padding(horizontal = 8.dp, vertical = 8.dp)
+            .padding(
+                horizontal = dimensionResource(id = R.dimen.medium_padding),
+                vertical = dimensionResource(id = R.dimen.medium_padding)
+            )
             .fillMaxWidth()
-            .defaultMinSize(300.dp),
+            .defaultMinSize(dimensionResource(id = R.dimen.standard_min_size)),
         elevation = CardDefaults.cardElevation(
-            defaultElevation = 6.dp
+            defaultElevation = dimensionResource(id = R.dimen.standard_elevation)
         ),
     ) {
         Column(
@@ -152,36 +158,38 @@ fun SerieComposable(
         ) {
             Image(
                 painter = rememberImagePainter(data = serie.primaryImage),
-                contentDescription = "Photo of ${serie.titleText}",
+                contentDescription = stringResource(id = R.string.Photo_Of) + " ${serie.titleText}",
                 modifier = Modifier
-                    .width(300.dp)
-                    .height(400.dp)
+                    .width(dimensionResource(id = R.dimen.standard_width))
+                    .height(dimensionResource(id = R.dimen.img_card_size))
                     .clip(MaterialTheme.shapes.medium)
-                    .background(Color.White)
+                    .background(MaterialTheme.colorScheme.primary)
             )
 
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(8.dp)
+                    .padding(dimensionResource(id = R.dimen.medium_padding))
             ) {
                 Text(
                     text = serie.titleText,
-                    color = Color.Black,
+                    color = MaterialTheme.colorScheme.onBackground,
                     fontSize = 15.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
-                        .padding(top = 8.dp)
+                        .padding(top = dimensionResource(id = R.dimen.medium_padding))
                 )
                 Text(
-                    text = "Released in ${serie.releaseYear}",
+                    text = stringResource(id = R.string.Released_in) + " ${serie.releaseYear}",
                     color = primaryColor,
                     fontSize = 16.sp,
                     modifier = Modifier
-                        .padding(top = 4.dp)
+                        .padding(top = dimensionResource(id = R.dimen.small_padding))
                 )
                 Button(onClick = { addSerieToFav(serie)}) {
-                    Text(text = if (!isFavourite) "Add to Favourites" else "Remove From Favourites")
+                    Text(text = if (!isFavourite) stringResource(id = R.string.Add_Favourites) else stringResource(
+                        id = R.string.Remove_Favourites
+                    ))
                 }
             }
         }

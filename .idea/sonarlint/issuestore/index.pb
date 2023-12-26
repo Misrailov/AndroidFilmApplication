@@ -15,8 +15,6 @@ Sapp/src/main/java/com/example/filmapplication/model/actor/ActorContainerSingula
 Kapp/src/main/java/com/example/filmapplication/model/actor/ActorContainer.kt,3/8/389ab4fb896161793c05ca19beb0dc696aab70b1
 u
 Eapp/src/main/java/com/example/filmapplication/model/actor/ApiActor.kt,3/c/3c0acbd7404c3d4674afc027d306011bea3c33c0
-Œ
-\app/src/main/java/com/example/filmapplication/screens/actor/ActorDetails/ActorDetailState.kt,0/7/07b753868f4e1fc6930acd89dbf9b5d5f1b8e7f5
 s
 Capp/src/main/java/com/example/filmapplication/domain/DomainActor.kt,f/0/f0f3b9418ecd486d81e576e696e1be494e714736
 Ž
@@ -115,3 +113,14 @@ Vapp/src/main/java/com/example/filmapplication/screens/navigation/FilmNavigation
 Tapp/src/main/java/com/example/filmapplication/screens/navigation/NavigationDrawer.kt,c/c/ccdc3d115c2ee84a4109f3f4b23c2a7fa1b55b5a
 t
 Dapp/src/main/java/com/example/filmapplication/screens/ErrorScreen.kt,0/8/08e62788565acfde5d8518b950843f651cad4585
+:
+
+.gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
+o
+?app/src/main/java/com/example/filmapplication/ui/theme/Theme.kt,d/d/dd51afb7490db1a3c68b0d6543c601bc6cd524e2
+o
+?app/src/main/java/com/example/filmapplication/ui/theme/Color.kt,8/e/8eb7c30db5b3c33f8fe0101b482380d94a686121
+m
+=app/src/main/java/com/example/filmapplication/MainActivity.kt,9/1/917795874099a5a81378d7a62f566a45343c2004
+{
+Kapp/src/main/java/com/example/filmapplication/screens/appBar/MyTopAppBar.kt,d/4/d4bf2bf514c45012bbd7e16040627ab9c7fa8c33

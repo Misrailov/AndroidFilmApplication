@@ -32,7 +32,6 @@ fun navComponent(
 
         }
         composable(Destinations.Movies.route) {
-            //MovieScreen(navController)
             FilmScreen()
 
         }

@@ -1,6 +1,7 @@
 package com.example.templateapplication.screens.appBar
 
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -13,15 +14,12 @@ import androidx.compose.ui.graphics.Color
 fun MyTopAppBar(currentpage: String) {
     TopAppBar(
         colors = TopAppBarDefaults.smallTopAppBarColors(
-            containerColor = Color.Transparent,
-            titleContentColor = Color.Black,
-
-            ),
+            containerColor = MaterialTheme.colorScheme.background,
+            titleContentColor = MaterialTheme.colorScheme.onBackground,
+        ),
         title = {
             Text(currentpage)
         },
-/*
-        navigationIcon = navigationIcon
-*/
+
     )
 }

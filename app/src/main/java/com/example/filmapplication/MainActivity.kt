@@ -28,8 +28,6 @@ class MainActivity : ComponentActivity() {
 
 
         // Initialize the colors here
-        primaryColor = ContextCompat.getColor(this, R.color.colorPrimary)
-        secondaryColor = ContextCompat.getColor(this, R.color.colorSecondary)
 
         setContent {
             EntertainmentApplicationTheme {

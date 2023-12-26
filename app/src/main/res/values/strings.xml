@@ -1,4 +1,23 @@
 <resources>
     <string name="app_name">FilmApplication</string>
     <string name="navigation_rail">Navigate between items here\n</string>
+    <string name="Remove_Favourites">Remove From Favourites</string>
+    <string name="Add_Favourites">Add To Favourites</string>
+    <string name="Movies">Movies</string>
+    <string name="Series">Series</string>
+    <string name="Actors">Actors</string>
+    <string name="TopBox_Movies">Top Box Office Films (Most Earnings)</string>
+    <string name="Top_Rated_Films">Top Rated Films</string>
+    <string name="Most_Popular_Series">Most Popular Series</string>
+    <string name="Top_Rated_Series">Top Rated Series</string>
+    <string name="No_Actors">No Actors Found</string>
+    <string name="No_Internet">No Internet Connection</string>
+    <string name="Released_in">Released in</string>
+    <string name="Photo_Of">Photo Of</string>
+    <string name="Born">Born</string>
+    <string name="Favourite_Series">Your Favourite Series</string>
+    <string name="Favourite_Movies">Your Favourite Movies</string>
+    <string name="Favourite_Actors">Your Favourite Actors</string>
+    <string name="Home">Home</string>
+    <string name="ActorsDetail">actorsDetail</string>
 </resources>

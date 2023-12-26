@@ -20,7 +20,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.dp
+import com.example.filmapplication.R
 
 @Composable
 fun MyBottomBar(
@@ -33,8 +35,8 @@ fun MyBottomBar(
     Text(text = "navbar")
     BottomAppBar(
         containerColor = MaterialTheme.colorScheme.background,
-        contentColor =  Color.Black,
-        modifier = Modifier.height(56.dp),
+        contentColor =  MaterialTheme.colorScheme.onBackground,
+        modifier = Modifier.height(dimensionResource(id = R.dimen.bottom_bar_height)),
         actions = {
             Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth()){
                 IconButton(onClick = OnHome) {
