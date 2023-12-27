@@ -15,23 +15,24 @@ import com.example.compose.EntertainmentApplicationTheme
 import com.example.filmapplication.screens.FilmApp
 import com.example.filmapplication.screens.utils.FilmApplicationNavigationType
 
+/**
+ * The main activity of the Film Application.
+ */
 class MainActivity : ComponentActivity() {
 
-    companion object { // makes the variables accessible from other files in the project
-        var primaryColor: Int = 0
-        var secondaryColor: Int = 0
-    }
-
+    /**
+     * Called when the activity is starting.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after previously being
+     * shut down, this Bundle contains the data it most recently supplied in
+     * [onSaveInstanceState]. Otherwise, it is null.
+     */
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
-        // Initialize the colors here
-
         setContent {
             EntertainmentApplicationTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background,

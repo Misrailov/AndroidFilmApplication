@@ -71,7 +71,12 @@ private val DarkColors = darkColorScheme(
     outlineVariant = md_theme_dark_outlineVariant,
     scrim = md_theme_dark_scrim,
 )
-
+/**
+ * Composable function that sets up the theme for the Entertainment Application.
+ *
+ * @param useDarkTheme Boolean flag to determine whether to use the dark theme.
+ * @param content The content of the theme.
+ */
 @Composable
 fun EntertainmentApplicationTheme(
   useDarkTheme: Boolean = isSystemInDarkTheme(),

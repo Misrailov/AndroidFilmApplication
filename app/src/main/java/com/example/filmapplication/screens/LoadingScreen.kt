@@ -8,7 +8,11 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.filmapplication.R
-
+/**
+ * Composable function for displaying a loading screen with a loading image.
+ *
+ * @param modifier The modifier for the loading screen.
+ */
 @Composable
 fun LoadingScreen(modifier: Modifier = Modifier) {
     Image(

@@ -39,10 +39,13 @@ import coil.compose.rememberImagePainter
 import com.example.filmapplication.domain.DomainSerie
 import com.example.filmapplication.screens.ErrorScreen
 import com.example.filmapplication.screens.LoadingScreen
-import com.example.filmapplication.screens.primaryColor
 import com.example.filmapplication.R
 
-
+/**
+ * Composable function for displaying a screen that lists TV series.
+ *
+ * @param serieViewModel The view model for managing TV series data.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SerieScreen(
@@ -88,7 +91,14 @@ fun SerieScreen(
 
     }
 }
-
+/**
+ * Composable function for displaying a list of TV series.
+ *
+ * @param serieList List of TV series data.
+ * @param seriesPaged LazyPagingItems for paged TV series data.
+ * @param addSerieToFav Function to add a TV series to favorites.
+ * @param favouriteSeries List of favorite TV series.
+ */
 @Composable
 fun SerieList(
     serieList:List<DomainSerie>? = listOf<DomainSerie>(),
@@ -133,7 +143,13 @@ fun SerieList(
     }
 }
 
-
+/**
+ * Composable function for displaying a single TV series item.
+ *
+ * @param serie TV series data.
+ * @param addSerieToFav Function to add a TV series to favorites.
+ * @param isFavourite Flag indicating if the TV series is in favorites.
+ */
 @Composable
 fun SerieComposable(
     serie: DomainSerie,
@@ -181,7 +197,7 @@ fun SerieComposable(
                 )
                 Text(
                     text = stringResource(id = R.string.Released_in) + " ${serie.releaseYear}",
-                    color = primaryColor,
+                    color = MaterialTheme.colorScheme.primary,
                     fontSize = 16.sp,
                     modifier = Modifier
                         .padding(top = dimensionResource(id = R.dimen.small_padding))

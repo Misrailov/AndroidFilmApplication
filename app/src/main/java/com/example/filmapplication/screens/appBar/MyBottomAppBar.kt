@@ -21,9 +21,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.filmapplication.R
-
+/**
+ * A custom BottomAppBar used for navigation within the application.
+ *
+ * @param OnHome Callback for the Home icon click action.
+ * @param OnMovie Callback for the Movie icon click action.
+ * @param OnSerie Callback for the Serie icon click action.
+ * @param OnActor Callback for the Actor icon click action.
+ */
 @Composable
 fun MyBottomBar(
     OnHome: () -> Unit,
@@ -40,22 +48,20 @@ fun MyBottomBar(
         actions = {
             Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth()){
                 IconButton(onClick = OnHome) {
-                    Icon(Icons.Outlined.Home, contentDescription = "Localized description")
+                    Icon(Icons.Outlined.Home, contentDescription = stringResource(id = R.string.Home))
                 }
                 IconButton(onClick = OnMovie) {
-                    Icon(Icons.Outlined.Movie, contentDescription = "Localized description")
+                    Icon(Icons.Outlined.Movie, contentDescription = stringResource(id = R.string.Movies))
                 }
                 IconButton(onClick = OnSerie) {
                     Icon(
                         Icons.Outlined.LocalMovies,
-                        contentDescription = "Localized description",
-                    )
+                        contentDescription = stringResource(id = R.string.Series))
                 }
                 IconButton(onClick = OnActor) {
                     Icon(
                         Icons.Outlined.People,
-                        contentDescription = "Localized description",
-                    )
+                        contentDescription = stringResource(id = R.string.Actors))
                 }
 
             }

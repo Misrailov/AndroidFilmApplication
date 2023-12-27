@@ -54,9 +54,14 @@ import com.example.filmapplication.domain.DomainFilm
 import com.example.filmapplication.network.NetworkConnectionInterceptor
 import com.example.filmapplication.screens.ErrorScreen
 import com.example.filmapplication.screens.LoadingScreen
-import com.example.filmapplication.screens.primaryColor
 import kotlinx.coroutines.launch
 
+/**
+ * Composable function for displaying a list of films, including top-rated films, worst films,
+ * and other film-related content.
+ *
+ * @param filmViewModel ViewModel responsible for handling film-related data and actions.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FilmScreen(filmViewModel: FilmViewModel = viewModel(factory = FilmViewModel.Factory)) {
@@ -110,7 +115,14 @@ fun FilmScreen(filmViewModel: FilmViewModel = viewModel(factory = FilmViewModel.
     }
 }
 
-
+/**
+ * Composable function for displaying a list of films.
+ *
+ * @param filmList A list of films to display.
+ * @param filmsPaged LazyPagingItems containing films to display (optional, if using paging).
+ * @param addFilmToFavourites Function to add a film to favorites.
+ * @param favouriteFilms List of favorite films.
+ */
 @Composable
 fun FilmList(
     filmList:List<DomainFilm>? = listOf<DomainFilm>(),
@@ -158,7 +170,13 @@ fun FilmList(
         }
     }
 }
-
+/**
+ * Composable function for displaying an individual film item.
+ *
+ * @param film The film to display.
+ * @param addFilmToFavourites Function to add a film to favorites.
+ * @param isFavourite Boolean indicating whether the film is in the user's favorites.
+ */
 @Composable
 fun FilmComposable(
     film: DomainFilm,
@@ -206,7 +224,7 @@ fun FilmComposable(
                 )
                 Text(
                     text = stringResource(id = R.string.Released_in) + " ${film.releaseYear}",
-                    color = primaryColor,
+                    color = MaterialTheme.colorScheme.primary,
                     fontSize = 16.sp,
                     modifier = Modifier
                         .padding(top = dimensionResource(id = R.dimen.small_padding))

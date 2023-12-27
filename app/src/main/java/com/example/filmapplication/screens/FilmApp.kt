@@ -38,20 +38,35 @@ import com.example.filmapplication.screens.utils.FilmApplicationNavigationType
 import com.example.taskapp.ui.components.FilmNavigationRail
 import com.example.taskapp.ui.components.NavigationDrawerContent
 
-
+/**
+ * Enum class representing various destinations in the film application.
+ *
+ * @property route The route associated with the destination.
+ * @property icon The icon associated with the destination.
+ */
 enum class Destinations (val route:String,val icon: ImageVector){
     Home("home",icon = Icons.Filled.Home),
     Movies("movies",icon = Icons.Filled.Movie),
     Series("series",icon = Icons.Filled.LocalMovies),
     Actors("actors",icon = Icons.Filled.People),
     ActorsDetail("actors detail",icon = Icons.Filled.Person);
+    /**
+     * Creates a route with the specified ID appended to the destination's route.
+     *
+     * @param id The ID to be appended to the route.
+     * @return The complete route.
+     */
     fun createRoute(id:String) = "$route/$id"
 
 }
 
+/**
+ * Composable function for the main film application.
+ *
+ * @param navigationType The type of navigation to use.
+ * @param navController The navigation controller.
+ */
 
-var primaryColor = Color(MainActivity.primaryColor)
-var secondaryColor = Color(MainActivity.secondaryColor)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FilmApp(navigationType: FilmApplicationNavigationType,navController:NavHostController = rememberNavController()) {
@@ -63,6 +78,11 @@ fun FilmApp(navigationType: FilmApplicationNavigationType,navController:NavHostC
     val goToMovies = { navController.navigate(Destinations.Movies.route) }
     val goToSeries = { navController.navigate(Destinations.Series.route) }
     val goToActors = { navController.navigate(Destinations.Actors.route) }
+    /**
+     * Handles navigation to the actor detail screen.
+     *
+     * @param actorId The ID of the actor to display details for.
+     */
     fun onActorClick(actorId:String){
         navController.navigate(Destinations.ActorsDetail.createRoute(actorId))
     }
@@ -85,7 +105,7 @@ fun FilmApp(navigationType: FilmApplicationNavigationType,navController:NavHostC
                 containerColor = MaterialTheme.colorScheme.background,
                 topBar = {
                     MyTopAppBar(
-                        currentpage = currentpage,
+                        currentPage = currentpage,
                     )
                 },
 
@@ -105,7 +125,7 @@ fun FilmApp(navigationType: FilmApplicationNavigationType,navController:NavHostC
             containerColor = MaterialTheme.colorScheme.background,
             topBar = {
                 MyTopAppBar(
-                    currentpage = currentpage,
+                    currentPage = currentpage,
                 )
             },
             bottomBar = {
@@ -136,7 +156,7 @@ fun FilmApp(navigationType: FilmApplicationNavigationType,navController:NavHostC
                 containerColor = MaterialTheme.colorScheme.background,
                 topBar = {
                     MyTopAppBar(
-                        currentpage = currentpage,
+                        currentPage = currentpage,
                     )
                 },
 

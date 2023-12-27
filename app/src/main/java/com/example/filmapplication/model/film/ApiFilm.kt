@@ -1,9 +1,26 @@
 package com.example.filmapplication.model.film;
 
+import PrimaryImage
+import ReleaseDate
+import TitleText
+import TitleType
+import YearRange
 import com.example.filmapplication.domain.DomainFilm
 import java.time.LocalDate
-import java.util.Date
 
+/**
+ * Represents a film retrieved from an API.
+ *
+ * @property _id The unique identifier for the film.
+ * @property id The ID of the film.
+ * @property primaryImage The URL of the primary image associated with the film.
+ * @property titleType The type of the film's title.
+ * @property titleText The text of the film's title.
+ * @property originalTitleText The original text of the film's title.
+ * @property releaseYear The release year of the film.
+ * @property releaseDate The release date of the film.
+ * @property position The position of the film.
+ */
 data class ApiFilm(
     val _id: String,
     val id: String,
@@ -17,50 +34,18 @@ data class ApiFilm(
 
 )
 
-data class PrimaryImage(
-    val id: String,
-    val width: Int,
-    val height: Int,
-    val url: String,
-    val caption: Caption
-)
-
-data class Caption(
-    val plainText: String,
-    val __typename: String
-)
-
-data class TitleType(
-    val text: String,
-    val id: String,
-    val isSeries: Boolean,
-    val isEpisode: Boolean,
-    val __typename: String=""
-)
-
-data class TitleText(
-    val text: String="",
-    val __typename: String=""
-)
-
-data class YearRange(
-    val year: Int=0,
-    val endYear: Int?=0,
-    val __typename: String=""
-)
-
-data class ReleaseDate(
-    val day: Int=0,
-    val month: Int=0,
-    val year: Int=0,
-    val __typename: String=""
-)
-
+/**
+ * Converts an [ApiFilm] object to a [DomainFilm] object.
+ *
+ * @return A [DomainFilm] object.
+ */
 fun ApiFilm.asDomainFilm(): DomainFilm {
     return DomainFilm(
         id = this._id, primaryImage = this.primaryImage.url,
         titleText = this.titleText.text, releaseYear = releaseYear.year,
-        releaseDate = LocalDate.of(this.releaseDate!!.year, this.releaseDate.month, releaseDate.day)
+        releaseDate = LocalDate.of((if(this.releaseDate!=null) this.releaseDate.year else 0)!!, if(this.releaseDate?.month !=null) this.releaseDate?.month else 0,
+            (if(this.releaseDate?.month !=null) releaseDate.day else 0)!!
+        )!!
             .toString()
     )
 }

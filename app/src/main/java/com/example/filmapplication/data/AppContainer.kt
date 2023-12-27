@@ -27,7 +27,13 @@ interface AppContainer {
 
 
 }
-class DefaultAppContainer (private val context: Context): AppContainer {
+
+/**
+ * Default implementation of the [AppContainer] interface, providing access to repositories for actors, films, and series.
+ *
+ * @param context The application context.
+ */
+class DefaultAppContainer(private val context: Context) : AppContainer {
     private val baseUrl = "https://moviesdatabase.p.rapidapi.com/"
 
     private val moshi = Moshi.Builder()
@@ -45,7 +51,9 @@ class DefaultAppContainer (private val context: Context): AppContainer {
             .build()
         chain.proceed(request)
     }
+
     private val networkCheck = NetworkConnectionInterceptor(context)
+
     private val client = OkHttpClient.Builder()
         .addInterceptor(networkCheck)
         .addInterceptor(logger)
@@ -63,20 +71,22 @@ class DefaultAppContainer (private val context: Context): AppContainer {
     }
 
     override val actorRepository: ActorRepository by lazy {
-        CachingActorRepository(FilmApplicationDb.getDatabase(context = context).actorDao(),actorApiService)
+        CachingActorRepository(FilmApplicationDb.getDatabase(context = context).actorDao(), actorApiService)
     }
 
-    private val filmApiService:FilmApiService by lazy{
+    private val filmApiService: FilmApiService by lazy {
         retrofit.create(FilmApiService::class.java)
     }
-    override  val filmRepository:FilmRepository by lazy{
-        CachingFilmRepository(FilmApplicationDb.getDatabase(context = context).filmDao(),filmApiService)
+
+    override val filmRepository: FilmRepository by lazy {
+        CachingFilmRepository(FilmApplicationDb.getDatabase(context = context).filmDao(), filmApiService)
     }
 
-    private val serieApiService: SerieApiService by lazy{
+    private val serieApiService: SerieApiService by lazy {
         retrofit.create(SerieApiService::class.java)
     }
-    override val serieRepository:SerieRepository by lazy{
-        CachingSerieRepository(FilmApplicationDb.getDatabase(context = context).serieDao(),serieApiService)
+
+    override val serieRepository: SerieRepository by lazy {
+        CachingSerieRepository(FilmApplicationDb.getDatabase(context = context).serieDao(), serieApiService)
     }
 }

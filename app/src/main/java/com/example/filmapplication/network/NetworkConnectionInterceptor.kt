@@ -10,8 +10,18 @@ import android.widget.Toast
 import okhttp3.Interceptor
 import okhttp3.Response
 import okio.IOException
-
+/**
+ * Interceptor for checking network connectivity before making network requests.
+ *
+ * @property context The [Context] used to check network connectivity.
+ */
 class NetworkConnectionInterceptor(val context: Context) : Interceptor {
+    /**
+     * Intercepts the network request and checks for network connectivity.
+     *
+     * @param chain The [Interceptor.Chain] representing the intercepted network request.
+     * @return The [Response] of the network request if there is a connection; otherwise, an [IOException] is thrown.
+     */
     override fun intercept(chain: Interceptor.Chain): Response = chain.run {
         if(!isConnected(context=context)){
             Log.i("retrofit", "there is no connection")
@@ -25,7 +35,12 @@ class NetworkConnectionInterceptor(val context: Context) : Interceptor {
         }
 
     }
-
+    /**
+     * Checks if the device is connected to a network.
+     *
+     * @param context The [Context] used to check network connectivity.
+     * @return `true` if the device is connected to a network, otherwise `false`.
+     */
     fun isConnected(context: Context): Boolean {
         var result = false
         val connectivityManager =

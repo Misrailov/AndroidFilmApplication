@@ -11,17 +11,31 @@ import com.example.filmapplication.data.database.film.dbFilm
 import com.example.filmapplication.data.database.serie.SerieDao
 import com.example.filmapplication.data.database.serie.dbSerie
 
-
-@Database(entities = [dbActor::class,dbSerie::class,dbFilm::class], version = 6, exportSchema = false)
+/**
+ * Room database class for the Film Application.
+ * Manages entities: [dbActor], [dbSerie], [dbFilm]
+ *
+ * @property actorDao DAO for managing actors in the database.
+ * @property filmDao DAO for managing films in the database.
+ * @property serieDao DAO for managing series in the database.
+ */
+@Database(entities = [dbActor::class, dbSerie::class, dbFilm::class], version = 6, exportSchema = false)
 abstract class FilmApplicationDb : RoomDatabase() {
 
     abstract fun actorDao(): ActorDao
-    abstract fun filmDao():FilmDao
-    abstract fun serieDao():SerieDao
+    abstract fun filmDao(): FilmDao
+    abstract fun serieDao(): SerieDao
+
     companion object {
         @Volatile
         private var Instance: FilmApplicationDb? = null
 
+        /**
+         * Returns the database instance or creates a new one if it doesn't exist.
+         *
+         * @param context The application context.
+         * @return The database instance.
+         */
         fun getDatabase(context: Context): FilmApplicationDb {
             // if the Instance is not null, return it, otherwise create a new database instance.
             return Instance ?: synchronized(this) {
@@ -30,7 +44,6 @@ abstract class FilmApplicationDb : RoomDatabase() {
                     .build()
                     .also { Instance = it }
             }
-
         }
     }
 }

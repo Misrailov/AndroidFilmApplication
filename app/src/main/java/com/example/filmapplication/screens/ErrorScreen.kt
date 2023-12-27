@@ -15,6 +15,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.filmapplication.R
 
+/**
+ * Composable function for displaying an error screen with an error image and message.
+ *
+ * @param modifier Modifier to apply to the entire composable.
+ */
 @Composable
 fun ErrorScreen(modifier: Modifier = Modifier) {
     Column(

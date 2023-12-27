@@ -28,51 +28,84 @@ import kotlinx.coroutines.launch
 import java.io.IOException
 
 
-sealed interface FilmViewUiState {
-    object loading: FilmViewUiState
-    data class Success(val apiFilms: List<DomainFilm>) : FilmViewUiState
-    object Error: FilmViewUiState
-}
-private const val FILMS_PER_PAGE =50
+/**
+ * The number of films to display per page in the paging data.
+ */
+private const val FILMS_PER_PAGE = 50
 
-class FilmViewModel(private val filmRepository: FilmRepository):ViewModel(){
+/**
+ * ViewModel for the Film screen.
+ *
+ * @param filmRepository The repository for film-related data.
+ */
+class FilmViewModel(private val filmRepository: FilmRepository) : ViewModel() {
+    /**
+     * Flow of [PagingData] for the top box office films.
+     */
+    val apiFilmPager: Flow<PagingData<DomainFilm>> =
+        Pager(config = PagingConfig(pageSize = FILMS_PER_PAGE, enablePlaceholders = false),
+            pagingSourceFactory = { filmRepository.filmPagingSource("top_boxoffice_200") }).flow.cachedIn(
+            viewModelScope
+        )
 
-    val apiFilmPager:Flow<PagingData<DomainFilm>> =
-        Pager(config = PagingConfig(pageSize = FILMS_PER_PAGE,enablePlaceholders = false),
-            pagingSourceFactory = {filmRepository.filmPagingSource("top_boxoffice_200")}).flow.cachedIn(viewModelScope)
-    val apiFilmPagerTopRated:Flow<PagingData<DomainFilm>> =
-        Pager(config = PagingConfig(pageSize = FILMS_PER_PAGE,enablePlaceholders = false),
-            pagingSourceFactory = {filmRepository.filmPagingSource("top_rated_english_250")}).flow.cachedIn(viewModelScope)
-    val apiFilmPagerWorstMovies:Flow<PagingData<DomainFilm>> =
-        Pager(config = PagingConfig(pageSize = FILMS_PER_PAGE,enablePlaceholders = false),
-            pagingSourceFactory = {filmRepository.filmPagingSource("top_rated_lowest_100")}).flow.cachedIn(viewModelScope)
+    /**
+     * Flow of [PagingData] for the top-rated films.
+     */
+    val apiFilmPagerTopRated: Flow<PagingData<DomainFilm>> =
+        Pager(config = PagingConfig(pageSize = FILMS_PER_PAGE, enablePlaceholders = false),
+            pagingSourceFactory = { filmRepository.filmPagingSource("top_rated_english_250") }).flow.cachedIn(
+            viewModelScope
+        )
 
-    var filmApiState:FilmApiState by mutableStateOf(FilmApiState.Loading)
+    /**
+     * Flow of [PagingData] for the worst-rated movies.
+     */
+    val apiFilmPagerWorstMovies: Flow<PagingData<DomainFilm>> =
+        Pager(config = PagingConfig(pageSize = FILMS_PER_PAGE, enablePlaceholders = false),
+            pagingSourceFactory = { filmRepository.filmPagingSource("top_rated_lowest_100") }).flow.cachedIn(
+            viewModelScope
+        )
+    /**
+     * Represents the state of the film-related API call.
+     */
+    var filmApiState: FilmApiState by mutableStateOf(FilmApiState.Loading)
         private set
+    /**
+     * The UI state for the Film screen.
+     */
     private val _uiState = MutableStateFlow(FilmState())
+    /**
+     * Flow of [FilmListState] containing favorite films.
+     */
     lateinit var uiListFilmState: StateFlow<FilmListState>
 
-    init{
+    init {
         getFavouriteFilms()
     }
-
-    fun getFavouriteFilms(){
-        try{
-            uiListFilmState = filmRepository.getAllFavourites().map {FilmListState(it) }
+    /**
+     * Retrieves favorite films and sets the [uiListFilmState] accordingly.
+     */
+    fun getFavouriteFilms() {
+        try {
+            uiListFilmState = filmRepository.getAllFavourites().map { FilmListState(it) }
                 .stateIn(
                     scope = viewModelScope,
                     started = SharingStarted.WhileSubscribed(5_000L),
                     initialValue = FilmListState()
-                    )
+                )
             filmApiState = FilmApiState.Success
-        }catch (e:IOException){
-            Log.e("IOException",e.stackTraceToString())
-            filmApiState =FilmApiState.Error
+        } catch (e: IOException) {
+            Log.e("IOException", e.stackTraceToString())
+            filmApiState = FilmApiState.Error
 
         }
     }
-
-    fun addFilmToFavourites(film:DomainFilm){
+    /**
+     * Toggles the favorite status of a film and updates the database.
+     *
+     * @param film The film to add/remove from favorites.
+     */
+    fun addFilmToFavourites(film: DomainFilm) {
         film.isFavourite = !film.isFavourite
         viewModelScope.launch {
             filmRepository.insert(film)
@@ -80,14 +113,14 @@ class FilmViewModel(private val filmRepository: FilmRepository):ViewModel(){
 
     }
 
-    var filmViewUiState:FilmViewUiState by mutableStateOf(FilmViewUiState.loading)
-    private set
 
-
-    companion object{
+    companion object {
+        /**
+         * Factory for creating a [FilmViewModel] instance.
+         */
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
-                val application= (this[APPLICATION_KEY] as FilmApplication)
+                val application = (this[APPLICATION_KEY] as FilmApplication)
                 val filmRepository = application.container.filmRepository
                 FilmViewModel(filmRepository)
             }

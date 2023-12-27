@@ -1,17 +1,16 @@
 package com.example.filmapplication.domain
 
-
-enum class Role {
-    ACTOR,
-    DIRECTOR,
-    PRODUCER,
-    WRITER,
-    STUNT_DOUBLE,
-    BACKGROUND_FIGURE,
-    CREW_MEMBER,
-    OTHER_ROLE
-}
-
+/**
+ * Represents an actor in the domain layer of the application.
+ *
+ * @property nconst The unique identifier for the actor.
+ * @property primaryName The primary name of the actor.
+ * @property birthYear The birth year of the actor (default is "0" if unknown).
+ * @property deathYear The death year of the actor (default is "0" if alive or unknown).
+ * @property primaryProfession The primary profession of the actor.
+ * @property knownForTitles Titles for which the actor is known.
+ * @property isFavourite Flag indicating if the actor is marked as a favorite (default is false).
+ */
 data class DomainActor(
     val nconst: String,
     val primaryName: String,

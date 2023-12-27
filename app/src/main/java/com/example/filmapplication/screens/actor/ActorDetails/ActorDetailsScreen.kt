@@ -22,7 +22,13 @@ import com.example.filmapplication.screens.ErrorScreen
 import com.example.filmapplication.screens.LoadingScreen
 import com.example.filmapplication.screens.movie.FilmList
 
-
+/**
+ * Composable function that displays detailed information about an actor, including their image,
+ * name, birth and death years, and a list of films they are known for.
+ *
+ * @param actorId The ID of the actor to retrieve details for.
+ * @param actorDetailViewModel The ViewModel responsible for fetching actor details.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ActorDetailScreen(
@@ -78,7 +84,12 @@ fun ActorDetailScreen(
         }
     )
 }
-
+/**
+ * Composable function to display the header section of an actor's details, including their image,
+ * name, birth and death years.
+ *
+ * @param actor The actor whose details are being displayed.
+ */
 @Composable
 fun ActorHeader(actor: DomainActor) {
     Log.e(" actornam", actor.primaryName)

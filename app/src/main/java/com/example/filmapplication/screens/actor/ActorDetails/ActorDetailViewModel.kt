@@ -16,54 +16,100 @@ import com.example.filmapplication.repository.ActorRepository
 import com.example.filmapplication.repository.FilmRepository
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+/**
+ * Represents the possible UI states for the Actor Detail screen.
+ */
+sealed interface ActorDetailViewUiState {
+    /**
+     * Loading state: Indicates that data is being fetched.
+     */
+    object loading : ActorDetailViewUiState
 
-sealed interface ActorDetailViewUiState{
-    object loading: ActorDetailViewUiState
-    data class Success(val films: List<DomainFilm>, val actor: DomainActor,val favFilms :List<DomainFilm> = listOf()):ActorDetailViewUiState
-    object Error: ActorDetailViewUiState
+    /**
+     * Success state: Indicates that data has been successfully loaded.
+     *
+     * @property films The list of films associated with the actor.
+     * @property actor The detailed information about the actor.
+     * @property favFilms The list of favorite films associated with the actor.
+     */
+    data class Success(
+        val films: List<DomainFilm>,
+        val actor: DomainActor,
+        val favFilms: List<DomainFilm> = listOf()
+    ) : ActorDetailViewUiState
+
+    /**
+     * Error state: Indicates that an error occurred while fetching data.
+     */
+    object Error : ActorDetailViewUiState
 }
 
-class ActorDetailViewModel(private val actorRepository: ActorRepository, private val filmRepository: FilmRepository
-
-):ViewModel(){
-    var actorDetailViewUiState:ActorDetailViewUiState by mutableStateOf(ActorDetailViewUiState.loading)
+/**
+ * ViewModel class for the Actor Detail screen.
+ *
+ * @param actorRepository The repository for actor-related data.
+ * @param filmRepository The repository for film-related data.
+ */
+class ActorDetailViewModel(
+    private val actorRepository: ActorRepository,
+    private val filmRepository: FilmRepository
+) : ViewModel() {
+    /**
+     * Current UI state for the Actor Detail screen.
+     */
+    var actorDetailViewUiState: ActorDetailViewUiState by mutableStateOf(ActorDetailViewUiState.loading)
         private set
 
-
-
-    fun getActorDetails(id:String) {
+    /**
+     * Fetches actor details and associated films.
+     *
+     * @param id The ID of the actor to retrieve details for.
+     */
+    fun getActorDetails(id: String) {
         viewModelScope.launch {
             actorDetailViewUiState = ActorDetailViewUiState.loading
 
             try {
                 val actor: DomainActor = actorRepository.getActorDetail(id)
                 val films: List<DomainFilm> = filmRepository.getFilmListByids(actor.knownForTitles)
-                var favourites :List<DomainFilm> = listOf()
-               // filmRepository.getAllFavourites().collect(){favourites=it}
-                actorDetailViewUiState = ActorDetailViewUiState.Success(films, actor,favourites)
+
+                // TODO: Uncomment the following lines when you are ready to fetch favorite films.
+                // var favourites: List<DomainFilm> = listOf()
+                // filmRepository.getAllFavourites().collect() { favourites = it }
+
+                actorDetailViewUiState = ActorDetailViewUiState.Success(films, actor)
+
             } catch (e: Exception) {
-
+                // Handle any exceptions that occur during data retrieval
                 Log.e("Exception", e.stackTraceToString())
-
                 actorDetailViewUiState = ActorDetailViewUiState.Error
             }
         }
     }
-    fun addFilmToFavourites(film:DomainFilm){
+
+    /**
+     * Toggles the favorite status of a film and updates the repository.
+     *
+     * @param film The film for which to toggle the favorite status.
+     */
+    fun addFilmToFavourites(film: DomainFilm) {
         film.isFavourite = !film.isFavourite
         viewModelScope.launch {
             filmRepository.insert(film)
         }
-
     }
-    companion object{
+
+    companion object {
+        /**
+         * Factory for creating an instance of [ActorDetailViewModel].
+         */
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
-                val application= (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as FilmApplication)
+                val application = (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as FilmApplication)
                 val actorRepository = application.container.actorRepository
-                val filmRepository= application.container.filmRepository
+                val filmRepository = application.container.filmRepository
 
-                ActorDetailViewModel(actorRepository,filmRepository)
+                ActorDetailViewModel(actorRepository, filmRepository)
             }
         }
     }

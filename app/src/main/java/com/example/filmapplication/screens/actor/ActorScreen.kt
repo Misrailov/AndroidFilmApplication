@@ -31,18 +31,25 @@ import com.example.filmapplication.screens.ErrorScreen
 import com.example.filmapplication.screens.LoadingScreen
 import com.example.filmapplication.R
 
-
+/**
+ * Composable function to display a list of actors.
+ *
+ * @param performClick Callback to handle clicking on an actor item.
+ * @param actorViewModel View model for managing actor-related data.
+ */
 @Composable
-fun ActorScreen (performClick: (id:String)->Unit, actorViewModel: ActorViewModel = viewModel(
-    factory=ActorViewModel.Factory
-)){
+fun ActorScreen(
+    performClick: (id: String) -> Unit, actorViewModel: ActorViewModel = viewModel(
+        factory = ActorViewModel.Factory
+    )
+) {
 
     val actorState by actorViewModel.uiState.collectAsState()
     val actorListState by actorViewModel.uiListActorState.collectAsState()
 
 
     val actorApiState = actorViewModel.actorApiState
-    fun addActorToFav(actor: DomainActor){
+    fun addActorToFav(actor: DomainActor) {
         actorViewModel.addActorToFavourites(actor)
     }
 
@@ -51,9 +58,7 @@ fun ActorScreen (performClick: (id:String)->Unit, actorViewModel: ActorViewModel
             .fillMaxWidth()
             .padding(dimensionResource(id = R.dimen.standard_padding)),
     ) {
-        FilledTonalButton(onClick = { actorViewModel.getRepoActors() }) {
-            Text("Refresh Random Actors")
-        }
+
         Spacer(
             modifier = Modifier
                 .height(dimensionResource(id = R.dimen.standard_height))
@@ -63,10 +68,15 @@ fun ActorScreen (performClick: (id:String)->Unit, actorViewModel: ActorViewModel
                 ),
         )
 
-        when(actorApiState){
+        when (actorApiState) {
             is ActorApiState.Loading -> LoadingScreen()
             is ActorApiState.Error -> ErrorScreen()
-            is  ActorApiState.Success ->  ActorList(actors = actorListState.actorList,favActors = actorListState.favouriteActors, addActorToFav = ::addActorToFav, performClick = performClick)
+            is ActorApiState.Success -> ActorList(
+                actors = actorListState.actorList,
+                favActors = actorListState.favouriteActors,
+                addActorToFav = ::addActorToFav,
+                performClick = performClick
+            )
 
 
         }
@@ -74,38 +84,62 @@ fun ActorScreen (performClick: (id:String)->Unit, actorViewModel: ActorViewModel
     }
 }
 
+/**
+ * Composable function to display a list of actors.
+ *
+ * @param actors List of actors to display.
+ * @param favActors List of favorite actors.
+ * @param addActorToFav Callback to add an actor to favorites.
+ * @param performClick Callback to handle clicking on an actor item.
+ */
 @Composable
-fun ActorList(actors:List<DomainActor>, favActors:List<DomainActor>, addActorToFav: (item:DomainActor) -> Unit, performClick: (item: String) -> Unit){
-    LazyColumn(        modifier = Modifier.run {
-        fillMaxWidth()
-            .heightIn(min = dimensionResource(id = R.dimen.min_height))
-            .padding(dimensionResource(id = R.dimen.standard_padding))
-    },
-        ){
-        if(actors.isEmpty()){
-            item{
+fun ActorList(
+    actors: List<DomainActor>,
+    favActors: List<DomainActor>,
+    addActorToFav: (item: DomainActor) -> Unit,
+    performClick: (item: String) -> Unit
+) {
+    LazyColumn(
+        modifier = Modifier.run {
+            fillMaxWidth()
+                .heightIn(min = dimensionResource(id = R.dimen.min_height))
+                .padding(dimensionResource(id = R.dimen.standard_padding))
+        },
+    ) {
+        if (actors.isEmpty()) {
+            item {
                 Text(stringResource(id = R.string.No_Actors))
             }
-        }else {
+        } else {
             actors.forEach { actor ->
                 var isFavouriteActor = favActors.contains(actor)
                 item {
                     ActorComposable(
                         addActorToFav = addActorToFav,
-                        actor= actor,
-                        isFavouriteActor=isFavouriteActor,
+                        actor = actor,
+                        isFavouriteActor = isFavouriteActor,
                         performClick = performClick
                     )
                 }
             }
         }
     }
-}@Composable
+}
+
+/**
+ * Composable function to display an actor item in a card.
+ *
+ * @param addActorToFav Callback to add an actor to favorites.
+ * @param actor The actor to display.
+ * @param isFavouriteActor Flag indicating if the actor is a favorite.
+ * @param performClick Callback to handle clicking on the actor item.
+ */
+@Composable
 fun ActorComposable(
-    addActorToFav: (item:DomainActor) -> Unit,
-    actor:DomainActor,
-    isFavouriteActor:Boolean,
-    performClick: (item:String)->Unit
+    addActorToFav: (item: DomainActor) -> Unit,
+    actor: DomainActor,
+    isFavouriteActor: Boolean,
+    performClick: (item: String) -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -113,20 +147,26 @@ fun ActorComposable(
                 start = dimensionResource(id = R.dimen.small_padding),
                 end = dimensionResource(id = R.dimen.standard_padding)
             )
-            .widthIn(max = dimensionResource(id = R.dimen.actor_card_width), min = dimensionResource(id = R.dimen.actor_card_width))
-            .heightIn(min = dimensionResource(id = R.dimen.min_height), max = dimensionResource(id = R.dimen.max_height))
+            .widthIn(
+                max = dimensionResource(id = R.dimen.actor_card_width),
+                min = dimensionResource(id = R.dimen.actor_card_width)
+            )
+            .heightIn(
+                min = dimensionResource(id = R.dimen.min_height),
+                max = dimensionResource(id = R.dimen.max_height)
+            )
             .padding(bottom = dimensionResource(id = R.dimen.standard_padding))
             .clickable { performClick(actor.nconst) },
         elevation = CardDefaults.cardElevation(
             defaultElevation = dimensionResource(id = R.dimen.standard_elevation),
         ),
 
-    ) {
+        ) {
         Row(
             modifier = Modifier.padding(start = dimensionResource(id = R.dimen.medium_padding)),
         ) {
 
-            Column (modifier = Modifier.padding(start = dimensionResource(id = R.dimen.standard_padding))){
+            Column(modifier = Modifier.padding(start = dimensionResource(id = R.dimen.standard_padding))) {
                 Text(
                     text = actor.primaryName,
                     color = MaterialTheme.colorScheme.onPrimaryContainer,
@@ -135,20 +175,27 @@ fun ActorComposable(
                 )
 
                 Text(
-                    text = stringResource(id = R.string.Born)  +": $actor.birthYear",
+                    text = stringResource(id = R.string.Born) + ": $actor.birthYear",
                     color = MaterialTheme.colorScheme.onPrimaryContainer,
                     fontSize = 24.sp,
-                    modifier = Modifier.padding(top = dimensionResource(id = R.dimen.standard_padding), bottom = dimensionResource(id = R.dimen.standard_padding)),
+                    modifier = Modifier.padding(
+                        top = dimensionResource(id = R.dimen.standard_padding),
+                        bottom = dimensionResource(id = R.dimen.standard_padding)
+                    ),
                 )
 
-                Button(onClick = { addActorToFav(actor) },modifier =Modifier.padding(bottom=dimensionResource(id = R.dimen.standard_padding))) {
-                    Text(text = if (!isFavouriteActor) stringResource(id = R.string.Add_Favourites) else stringResource(
-                        id = R.string.Remove_Favourites
-                    ))
+                Button(
+                    onClick = { addActorToFav(actor) },
+                    modifier = Modifier.padding(bottom = dimensionResource(id = R.dimen.standard_padding))
+                ) {
+                    Text(
+                        text = if (!isFavouriteActor) stringResource(id = R.string.Add_Favourites) else stringResource(
+                            id = R.string.Remove_Favourites
+                        )
+                    )
                 }
 
             }
-
 
 
         }

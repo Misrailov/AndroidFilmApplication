@@ -6,19 +6,22 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
 
-
+/**
+ * A custom TopAppBar used for displaying the current page title.
+ *
+ * @param currentPage The title or label to be displayed in the app bar.
+ */
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun MyTopAppBar(currentpage: String) {
+fun MyTopAppBar(currentPage: String) {
     TopAppBar(
         colors = TopAppBarDefaults.smallTopAppBarColors(
             containerColor = MaterialTheme.colorScheme.background,
             titleContentColor = MaterialTheme.colorScheme.onBackground,
         ),
         title = {
-            Text(currentpage)
+            Text(currentPage)
         },
 
     )

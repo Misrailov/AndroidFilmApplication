@@ -15,7 +15,13 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.navigation.NavDestination
 import com.example.filmapplication.R
 import com.example.filmapplication.screens.Destinations
-
+/**
+ * A composable function that defines the content of the navigation drawer in the Film Application.
+ *
+ * @param selectedDestination The currently selected navigation destination.
+ * @param onTabPressed A callback function to handle tab item clicks.
+ * @param modifier Modifier for styling and positioning the navigation drawer content.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NavigationDrawerContent(
