@@ -194,14 +194,23 @@ fun FilmComposable(
     isFavourite: Boolean,
     isOnActorPage:Boolean = false
 ) {
-    Card(
-        modifier = Modifier
+    var modifierCard = if(!isOnActorPage) Modifier
+        .padding(
+            horizontal = dimensionResource(id = R.dimen.medium_padding),
+            vertical = dimensionResource(id = R.dimen.medium_padding)
+        )
+        .fillMaxWidth()
+        .defaultMinSize(dimensionResource(id = R.dimen.standard_min_size)) else
+        Modifier
             .padding(
                 horizontal = dimensionResource(id = R.dimen.medium_padding),
                 vertical = dimensionResource(id = R.dimen.medium_padding)
             )
-            .fillMaxWidth()
-            .defaultMinSize(dimensionResource(id = R.dimen.standard_min_size)),
+            .width(dimensionResource(id = R.dimen.standard_width))
+
+            .defaultMinSize(dimensionResource(id = R.dimen.standard_min_size))
+    Card(
+        modifier = modifierCard,
 
         elevation = CardDefaults.cardElevation(
             defaultElevation = dimensionResource(id = R.dimen.standard_elevation)

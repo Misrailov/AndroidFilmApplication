@@ -30,7 +30,7 @@ fun NavigationDrawerContent(
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier) {
-        for (navItem in Destinations.values()) {
+        for (navItem in Destinations.values().copyOfRange(0,4)) {
             NavigationDrawerItem(
                 selected = selectedDestination?.route == navItem.name,
                 label = {

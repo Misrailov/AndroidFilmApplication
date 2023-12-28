@@ -138,17 +138,8 @@ class CachingActorRepository(
         try {
 
             actorApiService.getActorsAsFlow().collect { value ->
-                var favourites: List<DomainActor> = listOf()
-                getAllFavourites().collect() { favourites = it }
-
                 for (actor in value.results) {
-                    if (favourites.isNotEmpty()) {
-
-                        if (favourites.filter { x -> x.nconst.equals(actor.nconst) }.isNotEmpty()) {
-                            insert(favourites.find { x -> x.nconst == actor.nconst }!!)
-                        } else insert(actor.asDomainActor())
-                    } else insert(actor.asDomainActor())
-
+                    insert(actor.asDomainActor())
                 }
             }
         } catch (e: SocketTimeoutException) {

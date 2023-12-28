@@ -147,10 +147,7 @@ fun ActorComposable(
                 start = dimensionResource(id = R.dimen.small_padding),
                 end = dimensionResource(id = R.dimen.standard_padding)
             )
-            .widthIn(
-                max = dimensionResource(id = R.dimen.actor_card_width),
-                min = dimensionResource(id = R.dimen.actor_card_width)
-            )
+            .fillMaxWidth()
             .heightIn(
                 min = dimensionResource(id = R.dimen.min_height),
                 max = dimensionResource(id = R.dimen.max_height)
@@ -166,7 +163,7 @@ fun ActorComposable(
             modifier = Modifier.padding(start = dimensionResource(id = R.dimen.medium_padding)),
         ) {
 
-            Column(modifier = Modifier.padding(start = dimensionResource(id = R.dimen.standard_padding))) {
+            Column(modifier = Modifier.padding(start = dimensionResource(id = R.dimen.standard_padding)).fillMaxWidth()) {
                 Text(
                     text = actor.primaryName,
                     color = MaterialTheme.colorScheme.onPrimaryContainer,
@@ -186,7 +183,7 @@ fun ActorComposable(
 
                 Button(
                     onClick = { addActorToFav(actor) },
-                    modifier = Modifier.padding(bottom = dimensionResource(id = R.dimen.standard_padding))
+                    modifier = Modifier.padding(bottom = dimensionResource(id = R.dimen.standard_padding), end = dimensionResource(id = R.dimen.standard_padding)),
                 ) {
                     Text(
                         text = if (!isFavouriteActor) stringResource(id = R.string.Add_Favourites) else stringResource(

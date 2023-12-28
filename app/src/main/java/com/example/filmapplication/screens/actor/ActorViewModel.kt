@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -72,6 +73,7 @@ class ActorViewModel(
      * Fetches actor data from the repository, updates the UI states, and handles API call results.
      */
     fun getRepoActors() {
+        viewModelScope.launch {
         try {
             viewModelScope.launch { actorRepository.refresh() }
             uiListActorState = actorRepository.getAllItems().combine(actorRepository.getAllFavourites()) { actors, favouriteActors ->
@@ -84,7 +86,7 @@ class ActorViewModel(
             actorApiState = ActorApiState.Success
         } catch (e: IOException) {
             actorApiState = ActorApiState.Error
-        }
+        }}
     }
 
     companion object {
