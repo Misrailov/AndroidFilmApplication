@@ -2,6 +2,7 @@ package com.example.filmapplication.screens.serie
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
@@ -104,7 +105,7 @@ fun SerieList(
     serieList:List<DomainSerie>? = listOf<DomainSerie>(),
     seriesPaged: LazyPagingItems<DomainSerie>?=null,
     addSerieToFav:(serie: DomainSerie)->Unit,
-    favouriteSeries: List<DomainSerie>
+    favouriteSeries: List<DomainSerie>,
 ) {
     LazyColumn(
         modifier = Modifier
@@ -134,6 +135,7 @@ fun SerieList(
                         serie = serie,
                         addSerieToFav = addSerieToFav,
                         isFavourite = isFavourite
+
                     )
                 }
             } }
@@ -155,6 +157,7 @@ fun SerieComposable(
     serie: DomainSerie,
     addSerieToFav:(serie: DomainSerie)->Unit,
     isFavourite: Boolean
+
 ) {
     Card(
         modifier = Modifier
@@ -164,6 +167,7 @@ fun SerieComposable(
             )
             .fillMaxWidth()
             .defaultMinSize(dimensionResource(id = R.dimen.standard_min_size)),
+
         elevation = CardDefaults.cardElevation(
             defaultElevation = dimensionResource(id = R.dimen.standard_elevation)
         ),

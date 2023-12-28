@@ -20,4 +20,7 @@
     <string name="Favourite_Actors">Your Favourite Actors</string>
     <string name="Home">Home</string>
     <string name="ActorsDetail">actorsDetail</string>
+    <string name="Films">Films</string>
+    <string name="Died">Died:</string>
+    <string name="Known_for">Known For:</string>
 </resources>

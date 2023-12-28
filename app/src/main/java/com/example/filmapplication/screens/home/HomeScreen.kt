@@ -13,7 +13,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.filmapplication.domain.DomainActor
 import com.example.filmapplication.domain.DomainFilm
@@ -21,7 +20,7 @@ import com.example.filmapplication.domain.DomainSerie
 import com.example.filmapplication.screens.ErrorScreen
 import com.example.filmapplication.screens.LoadingScreen
 import com.example.filmapplication.screens.actor.ActorList
-import com.example.filmapplication.screens.movie.FilmList
+import com.example.filmapplication.screens.film.FilmList
 import com.example.filmapplication.screens.serie.SerieList
 import com.example.filmapplication.R
 
@@ -35,7 +34,8 @@ import com.example.filmapplication.R
 @Composable
 fun HomeScreen(
     homeViewModel: HomeViewModel = viewModel(factory = HomeViewModel.Factory),
-    performClick: (id: String) -> Unit
+    goToActor: (id: String) -> Unit,
+
 ) {
 
     val homeListState by homeViewModel.uiListHomeState.collectAsState()
@@ -90,7 +90,7 @@ fun HomeScreen(
                                 actors = homeListState.actors,
                                 favActors = homeListState.actors,
                                 addActorToFav = ::addActorToFav,
-                                performClick = performClick
+                                performClick = goToActor
                             )
                         }
                     }

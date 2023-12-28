@@ -14,12 +14,14 @@ import androidx.compose.runtime.Composable
  */
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun MyTopAppBar(currentPage: String) {
+fun MyTopAppBar(currentPage: String,navigationIcon: @Composable () -> Unit,) {
     TopAppBar(
         colors = TopAppBarDefaults.smallTopAppBarColors(
             containerColor = MaterialTheme.colorScheme.background,
             titleContentColor = MaterialTheme.colorScheme.onBackground,
         ),
+        navigationIcon = navigationIcon,
+
         title = {
             Text(currentPage)
         },

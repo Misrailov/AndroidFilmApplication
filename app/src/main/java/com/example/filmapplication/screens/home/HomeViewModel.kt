@@ -16,12 +16,10 @@ import com.example.filmapplication.domain.DomainSerie
 import com.example.filmapplication.repository.ActorRepository
 import com.example.filmapplication.repository.FilmRepository
 import com.example.filmapplication.repository.SerieRepository
-import com.example.filmapplication.screens.movie.FilmViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch

@@ -23,7 +23,7 @@ sealed interface ActorDetailViewUiState {
     /**
      * Loading state: Indicates that data is being fetched.
      */
-    object loading : ActorDetailViewUiState
+    object Loading : ActorDetailViewUiState
 
     /**
      * Success state: Indicates that data has been successfully loaded.
@@ -35,8 +35,9 @@ sealed interface ActorDetailViewUiState {
     data class Success(
         val films: List<DomainFilm>,
         val actor: DomainActor,
-        val favFilms: List<DomainFilm> = listOf()
-    ) : ActorDetailViewUiState
+
+
+        ) : ActorDetailViewUiState
 
     /**
      * Error state: Indicates that an error occurred while fetching data.
@@ -57,7 +58,7 @@ class ActorDetailViewModel(
     /**
      * Current UI state for the Actor Detail screen.
      */
-    var actorDetailViewUiState: ActorDetailViewUiState by mutableStateOf(ActorDetailViewUiState.loading)
+    var actorDetailViewUiState: ActorDetailViewUiState by mutableStateOf(ActorDetailViewUiState.Loading)
         private set
 
     /**
@@ -67,15 +68,13 @@ class ActorDetailViewModel(
      */
     fun getActorDetails(id: String) {
         viewModelScope.launch {
-            actorDetailViewUiState = ActorDetailViewUiState.loading
+            actorDetailViewUiState = ActorDetailViewUiState.Loading
 
             try {
                 val actor: DomainActor = actorRepository.getActorDetail(id)
                 val films: List<DomainFilm> = filmRepository.getFilmListByids(actor.knownForTitles)
 
-                // TODO: Uncomment the following lines when you are ready to fetch favorite films.
-                // var favourites: List<DomainFilm> = listOf()
-                // filmRepository.getAllFavourites().collect() { favourites = it }
+
 
                 actorDetailViewUiState = ActorDetailViewUiState.Success(films, actor)
 

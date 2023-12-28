@@ -117,7 +117,7 @@ fun ActorList(
                     ActorComposable(
                         addActorToFav = addActorToFav,
                         actor = actor,
-                        isFavouriteActor = isFavouriteActor,
+                        isFavouriteActor = isFavouriteActor ,
                         performClick = performClick
                     )
                 }
@@ -175,7 +175,7 @@ fun ActorComposable(
                 )
 
                 Text(
-                    text = stringResource(id = R.string.Born) + ": $actor.birthYear",
+                    text = stringResource(id = R.string.Born) + ": ${actor.birthYear}",
                     color = MaterialTheme.colorScheme.onPrimaryContainer,
                     fontSize = 24.sp,
                     modifier = Modifier.padding(

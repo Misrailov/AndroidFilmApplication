@@ -134,15 +134,21 @@ class CachingActorRepository(
      * Refreshes the actor data by fetching it from the remote API and updating the local database.
      */
     override suspend fun refresh() {
+        Log.e("refresh","get all")
         try {
 
             actorApiService.getActorsAsFlow().collect { value ->
                 var favourites: List<DomainActor> = listOf()
                 getAllFavourites().collect() { favourites = it }
+
                 for (actor in value.results) {
-                    if (favourites.filter { x -> x.nconst.equals(actor.nconst) }.isNotEmpty()) {
-                        insert(favourites.find { x -> x.nconst == actor.nconst }!!)
+                    if (favourites.isNotEmpty()) {
+
+                        if (favourites.filter { x -> x.nconst.equals(actor.nconst) }.isNotEmpty()) {
+                            insert(favourites.find { x -> x.nconst == actor.nconst }!!)
+                        } else insert(actor.asDomainActor())
                     } else insert(actor.asDomainActor())
+
                 }
             }
         } catch (e: SocketTimeoutException) {
@@ -212,6 +218,7 @@ class CachingActorRepository(
      */
     override fun getAllItems(): Flow<List<DomainActor>> {
         return actorDao.getAllItems().map {
+            Log.e("Get all","get all")
             it.asDomainActors()
         }.onEach {
             if (it.isEmpty()) {

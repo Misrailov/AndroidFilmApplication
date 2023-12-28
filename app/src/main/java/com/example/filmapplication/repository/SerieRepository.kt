@@ -174,7 +174,7 @@ class CachingSerieRepository(
      */
     override suspend fun getSerieById(id: String): DomainSerie {
         return try {
-            serieApiService.getSerieById(id).asDomainSerie()
+            serieApiService.getSerieById(id).results.asDomainSerie()
         } catch (e: SocketTimeoutException) {
             Log.e("SocketTimeoutException", e.stackTraceToString())
             DomainSerie()

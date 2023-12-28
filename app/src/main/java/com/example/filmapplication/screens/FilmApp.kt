@@ -8,12 +8,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.LocalMovies
 import androidx.compose.material.icons.filled.Movie
 import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.PermanentDrawerSheet
 import androidx.compose.material3.PermanentNavigationDrawer
@@ -50,6 +53,8 @@ enum class Destinations (val route:String,val icon: ImageVector){
     Series("series",icon = Icons.Filled.LocalMovies),
     Actors("actors",icon = Icons.Filled.People),
     ActorsDetail("actors detail",icon = Icons.Filled.Person);
+
+
     /**
      * Creates a route with the specified ID appended to the destination's route.
      *
@@ -73,7 +78,7 @@ fun FilmApp(navigationType: FilmApplicationNavigationType,navController:NavHostC
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = currentBackStackEntry?.destination?.route
     val currentEnumDestination: Destinations? = currentDestination?.let { route -> enumValues<Destinations>().find { it.route == route } }
-    val currentpage = currentEnumDestination?.name ?: Destinations.Home.name
+    val currentpage = currentEnumDestination?.name ?: "Actor Details"
     val goToHome = { navController.navigate(Destinations.Home.route) }
     val goToMovies = { navController.navigate(Destinations.Movies.route) }
     val goToSeries = { navController.navigate(Destinations.Series.route) }
@@ -106,7 +111,14 @@ fun FilmApp(navigationType: FilmApplicationNavigationType,navController:NavHostC
                 topBar = {
                     MyTopAppBar(
                         currentPage = currentpage,
-                    )
+                    ){
+                        val isStartDestination = currentDestination == Destinations.Home.route
+                        if (!isStartDestination) {
+                        IconButton(onClick = { navController.popBackStack() }) {
+                            Icon(Icons.Filled.ArrowBack, contentDescription = "Localized description", tint = MaterialTheme.colorScheme.onPrimary)
+                        }
+                    }
+                    }
                 },
 
             ) { innerPadding ->
@@ -126,7 +138,14 @@ fun FilmApp(navigationType: FilmApplicationNavigationType,navController:NavHostC
             topBar = {
                 MyTopAppBar(
                     currentPage = currentpage,
-                )
+                ){
+                val isStartDestination = currentDestination == Destinations.Home.route
+                if (!isStartDestination) {
+                    IconButton(onClick = { navController.popBackStack() }) {
+                        Icon(Icons.Filled.ArrowBack, contentDescription = "Localized description", tint = MaterialTheme.colorScheme.onBackground)
+                    }
+                }}
+
             },
             bottomBar = {
 
@@ -140,6 +159,8 @@ fun FilmApp(navigationType: FilmApplicationNavigationType,navController:NavHostC
                 modifier = Modifier.padding(innerPadding),
                 navigationType = navigationType,
                 onActorClick = ::onActorClick
+
+
 
             )
         }
@@ -157,7 +178,15 @@ fun FilmApp(navigationType: FilmApplicationNavigationType,navController:NavHostC
                 topBar = {
                     MyTopAppBar(
                         currentPage = currentpage,
-                    )
+                    ){
+
+                        val isStartDestination = currentDestination == Destinations.Home.route
+                        if (!isStartDestination) {
+                            IconButton(onClick = { navController.popBackStack() }) {
+                                Icon(Icons.Filled.ArrowBack, contentDescription = "Localized description", tint = MaterialTheme.colorScheme.onPrimary)
+                            }
+                        }
+                    }
                 },
 
             ) { innerPadding ->
@@ -167,6 +196,7 @@ fun FilmApp(navigationType: FilmApplicationNavigationType,navController:NavHostC
                     modifier = Modifier.padding(innerPadding),
                     navigationType = navigationType,
                     onActorClick = ::onActorClick
+
 
                 )
             }

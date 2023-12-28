@@ -180,7 +180,7 @@ class CachingFilmRepository(
      */
     override suspend fun getFilmDetail(id: String): DomainFilm {
         return try {
-            filmApiService.getFilmById(id).asDomainFilm()
+            filmApiService.getFilmById(id).results.asDomainFilm()
         } catch (e: SocketTimeoutException) {
             Log.e("SocketTimeoutException", e.stackTraceToString())
             DomainFilm("", "", "", 0, "", 0)

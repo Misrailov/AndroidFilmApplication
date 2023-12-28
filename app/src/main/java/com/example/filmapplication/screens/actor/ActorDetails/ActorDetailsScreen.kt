@@ -12,16 +12,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.filmapplication.R
 import com.example.filmapplication.domain.DomainActor
 import com.example.filmapplication.domain.DomainFilm
 import com.example.filmapplication.screens.ErrorScreen
 import com.example.filmapplication.screens.LoadingScreen
-import com.example.filmapplication.screens.movie.FilmList
-
+import com.example.filmapplication.screens.film.FilmList
+ //TODO: refactor state so it can work with collect
 /**
  * Composable function that displays detailed information about an actor, including their image,
  * name, birth and death years, and a list of films they are known for.
@@ -34,6 +34,7 @@ import com.example.filmapplication.screens.movie.FilmList
 fun ActorDetailScreen(
     actorId: String?,
     actorDetailViewModel: ActorDetailViewModel = viewModel(factory = ActorDetailViewModel.Factory)
+
 ) {
     LaunchedEffect(key1 = actorId ){
         actorDetailViewModel.getActorDetails(actorId.toString())
@@ -48,7 +49,7 @@ fun ActorDetailScreen(
     }
 
             when(actorDetailViewModel.actorDetailViewUiState){
-        ActorDetailViewUiState.loading ->{
+        ActorDetailViewUiState.Loading ->{
             LoadingScreen(modifier = Modifier.fillMaxSize())
         }
         ActorDetailViewUiState.Error ->{
@@ -58,7 +59,6 @@ fun ActorDetailScreen(
 
             actor = (actorDetailViewModel.actorDetailViewUiState as ActorDetailViewUiState.Success).actor;
             films = (actorDetailViewModel.actorDetailViewUiState as ActorDetailViewUiState.Success).films
-            favouriteFilms = (actorDetailViewModel.actorDetailViewUiState as ActorDetailViewUiState.Success).favFilms
         }
     }
 
@@ -76,7 +76,7 @@ fun ActorDetailScreen(
                     ActorHeader(actor = actor!!)
                     Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.standard_spacing)))
 
-                    FilmList(filmList = films, addFilmToFavourites = ::addFilmFav,favouriteFilms=favouriteFilms)
+                    FilmList(filmList = films, addFilmToFavourites = ::addFilmFav,favouriteFilms=favouriteFilms, isOnActorPage = true)
 
                     }
 
@@ -104,21 +104,15 @@ fun ActorHeader(actor: DomainActor) {
                 .padding(bottom = dimensionResource(id = R.dimen.standard_padding)),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.loading_img),
-                contentDescription = "Actor Image",
-                modifier = Modifier
-                    .size(dimensionResource(id = R.dimen.img_size))
-                    .clip(CircleShape)
-                    .background(MaterialTheme.colorScheme.primary)
-            )
+
             Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.standard_spacing)))
             Column {
                 Text(
                     text = actor.primaryName,
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
                 )
-                Text(text = "Born: ${actor.birthYear}")
+
+                Text(text = "${stringResource(id = R.string.Died)} ${actor.birthYear}")
                 if (actor.deathYear != "0") {
                     Text(text = "Died: ${actor.deathYear}")
                 }
@@ -126,8 +120,8 @@ fun ActorHeader(actor: DomainActor) {
         }
         Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.standard_padding)))
         Text(
-            text = "Known For",
-            style = MaterialTheme.typography.labelSmall,
+            text = "${stringResource(id = R.string.Known_for)} ",
+            style = MaterialTheme.typography.bodyLarge,
         )
     }
 }

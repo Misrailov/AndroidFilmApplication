@@ -36,7 +36,7 @@ data class ApiSerie(
  */
 fun ApiSerie.asDomainSerie(): DomainSerie {
         return DomainSerie(
-                id = this._id, primaryImage = this.primaryImage.url,
+                id = this.id, primaryImage = this.primaryImage.url,
                 titleText = this.titleText.text, releaseYear = releaseYear.year!!,
                 releaseDate = LocalDate.of(this.releaseDate.year!!, this.releaseDate.month!!, releaseDate.day!!)
                         .toString()

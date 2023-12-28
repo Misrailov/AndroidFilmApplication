@@ -51,7 +51,7 @@ fun MyBottomBar(
                     Icon(Icons.Outlined.Home, contentDescription = stringResource(id = R.string.Home))
                 }
                 IconButton(onClick = OnMovie) {
-                    Icon(Icons.Outlined.Movie, contentDescription = stringResource(id = R.string.Movies))
+                    Icon(Icons.Outlined.Movie, contentDescription = stringResource(id = R.string.Films))
                 }
                 IconButton(onClick = OnSerie) {
                     Icon(

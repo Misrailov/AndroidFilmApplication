@@ -2,7 +2,6 @@ package com.example.filmapplication.screens.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -10,7 +9,7 @@ import com.example.filmapplication.screens.Destinations
 import com.example.filmapplication.screens.actor.ActorDetails.ActorDetailScreen
 import com.example.filmapplication.screens.actor.ActorScreen
 import com.example.filmapplication.screens.home.HomeScreen
-import com.example.filmapplication.screens.movie.FilmScreen
+import com.example.filmapplication.screens.film.FilmScreen
 import com.example.filmapplication.screens.serie.SerieScreen
 import com.example.filmapplication.screens.utils.FilmApplicationNavigationType
 
@@ -27,7 +26,10 @@ fun navComponent(
     navController: NavHostController,
     navigationType: FilmApplicationNavigationType,
     modifier: Modifier = Modifier,
-    onActorClick: (String) -> Unit
+    onActorClick: (String) -> Unit,
+
+
+
 
 ) {
     NavHost(
@@ -36,7 +38,7 @@ fun navComponent(
         modifier = modifier,
     ) {
         composable(Destinations.Home.route) {
-            HomeScreen(performClick = onActorClick)
+            HomeScreen(goToActor = onActorClick)
 
         }
         composable(Destinations.Movies.route) {
@@ -59,5 +61,6 @@ fun navComponent(
 
 
         }
+
     }
 }

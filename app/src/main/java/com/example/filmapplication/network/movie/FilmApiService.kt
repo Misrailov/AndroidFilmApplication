@@ -2,6 +2,7 @@ package com.example.filmapplication.network.movie
 
 import com.example.filmapplication.model.film.ApiFilm
 import com.example.filmapplication.model.film.FilmContainer
+import com.example.filmapplication.model.film.FilmContainerSingular
 import com.example.filmapplication.model.film.MultipleFilmsContainer
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -16,7 +17,7 @@ interface FilmApiService {
     suspend fun getFilms(@Query("list") list:String,@Query("page") page:Int, @Query("startYear") startYear:Int): FilmContainer
 
     @GET("titles/{id}")
-    suspend fun getFilmById(@Path("id") id: String): ApiFilm
+    suspend fun getFilmById(@Path("id") id: String): FilmContainerSingular
 
     @GET("titles/x/titles-by-ids")
     suspend fun getFilmListByids(@Query("idsList") idsList: String) : MultipleFilmsContainer
