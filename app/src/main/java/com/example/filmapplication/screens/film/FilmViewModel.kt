@@ -99,8 +99,8 @@ class FilmViewModel(private val filmRepository: FilmRepository) : ViewModel() {
      *
      * @param film The film to add/remove from favorites.
      */
-    fun addFilmToFavourites(film: DomainFilm) {
-        film.isFavourite = !film.isFavourite
+    fun addFilmToFavourites(film: DomainFilm,isFavourite:Boolean) {
+        film.isFavourite = !isFavourite
         viewModelScope.launch {
             filmRepository.insert(film)
         }

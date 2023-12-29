@@ -57,8 +57,8 @@ fun SerieScreen(
     val serieApiState = serieViewModel.serieApiState
     var favouriteSeries = listOf<DomainSerie>()
 
-    fun addSerieFav(serie:DomainSerie){
-        serieViewModel.addSerieToFavourites(serie)
+    fun addSerieFav(serie:DomainSerie,isFavourite:Boolean){
+        serieViewModel.addSerieToFavourites(serie,isFavourite)
     }
 
     when (serieApiState) {
@@ -101,7 +101,7 @@ fun SerieScreen(
 fun SerieList(
     serieList:List<DomainSerie>? = listOf<DomainSerie>(),
     seriesPaged: LazyPagingItems<DomainSerie>?=null,
-    addSerieToFav:(serie: DomainSerie)->Unit,
+    addSerieToFav:(serie: DomainSerie,isFavourite:Boolean)->Unit,
     favouriteSeries: List<DomainSerie>,
 ) {
     LazyColumn(
@@ -157,7 +157,7 @@ fun SerieList(
 @Composable
 fun SerieComposable(
     serie: DomainSerie,
-    addSerieToFav:(serie: DomainSerie)->Unit,
+    addSerieToFav:(serie: DomainSerie,isFavourite:Boolean)->Unit,
     isFavourite: Boolean
 
 ) {
@@ -208,7 +208,7 @@ fun SerieComposable(
                     modifier = Modifier
                         .padding(top = dimensionResource(id = R.dimen.small_padding))
                 )
-                Button(onClick = { addSerieToFav(serie)}) {
+                Button(onClick = { addSerieToFav(serie,isFavourite)}) {
                     Text(text = if (!isFavourite) stringResource(id = R.string.Add_Favourites) else stringResource(
                         id = R.string.Remove_Favourites
                     ))
@@ -217,3 +217,5 @@ fun SerieComposable(
         }
     }
 }
+
+

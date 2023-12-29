@@ -41,12 +41,12 @@ fun HomeScreen(
 
     val homeListState by homeViewModel.uiListHomeState.collectAsState()
     val homeApiState = homeViewModel.homeApiState
-    fun addFilmFav(film: DomainFilm) {
-        homeViewModel.addFilmToFavourites(film)
+    fun addFilmFav(film: DomainFilm, isFavourite: Boolean) {
+        homeViewModel.addFilmToFavourites(film,isFavourite)
     }
 
-    fun addSerieFav(serie: DomainSerie) {
-        homeViewModel.addSerieToFavourites(serie)
+    fun addSerieFav(serie: DomainSerie, isFavourite: Boolean) {
+        homeViewModel.addSerieToFavourites(serie,isFavourite)
     }
 
     fun addActorToFav(actor: DomainActor) {

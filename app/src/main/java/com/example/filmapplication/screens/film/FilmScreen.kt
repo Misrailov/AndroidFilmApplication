@@ -56,8 +56,8 @@ fun FilmScreen(
     val filmListState by filmViewModel.uiListFilmState.collectAsState()
     val filmApiState = filmViewModel.filmApiState
     var favouriteFilms = listOf<DomainFilm>()
-    fun addFilmFav(film: DomainFilm) {
-        filmViewModel.addFilmToFavourites(film)
+    fun addFilmFav(film: DomainFilm,isFavourite:Boolean) {
+        filmViewModel.addFilmToFavourites(film,isFavourite)
     }
 
 
@@ -114,7 +114,7 @@ fun FilmScreen(
 fun FilmList(
     filmList: List<DomainFilm>? = listOf<DomainFilm>(),
     filmsPaged: LazyPagingItems<DomainFilm>? = null,
-    addFilmToFavourites: (film: DomainFilm) -> Unit,
+    addFilmToFavourites: (film: DomainFilm,isFavourite:Boolean) -> Unit,
     favouriteFilms: List<DomainFilm>,isOnActorPage: Boolean = false
 
 ) {
@@ -177,7 +177,7 @@ fun FilmList(
 @Composable
 fun FilmComposable(
     film: DomainFilm,
-    addFilmToFavourites: (film: DomainFilm) -> Unit,
+    addFilmToFavourites: (film: DomainFilm,isFavourite:Boolean) -> Unit,
     isFavourite: Boolean,
     isOnActorPage:Boolean = false
 ) {
@@ -238,7 +238,7 @@ fun FilmComposable(
                         .padding(top = dimensionResource(id = R.dimen.small_padding))
                 )
                 if(!isOnActorPage){
-                Button(onClick = { addFilmToFavourites(film) }) {
+                Button(onClick = { addFilmToFavourites(film,isFavourite) }) {
                     Text(
                         text = if (!isFavourite) stringResource(R.string.Add_Favourites) else stringResource(
                             R.string.Remove_Favourites

@@ -71,8 +71,8 @@ class HomeViewModel(
      *
      * @param film The film to toggle.
      */
-    fun addFilmToFavourites(film: DomainFilm){
-        film.isFavourite = !film.isFavourite
+    fun addFilmToFavourites(film: DomainFilm,isFavourite: Boolean){
+        film.isFavourite = !isFavourite
         viewModelScope.launch {
             filmRepository.insert(film)
         }
@@ -83,8 +83,8 @@ class HomeViewModel(
      *
      * @param serie The serie to toggle.
      */
-    fun addSerieToFavourites(serie: DomainSerie){
-        serie.isFavourite = !serie.isFavourite
+    fun addSerieToFavourites(serie: DomainSerie,isFavourite: Boolean){
+        serie.isFavourite = !isFavourite
         viewModelScope.launch {
             serieRepository.insert(serie)
         }

@@ -90,8 +90,8 @@ class SerieViewModel(private val serieRepository: SerieRepository) : ViewModel()
      *
      * @param serie The TV series to update.
      */
-    fun addSerieToFavourites(serie:DomainSerie){
-        serie.isFavourite = !serie.isFavourite
+    fun addSerieToFavourites(serie:DomainSerie,isFavourite:Boolean){
+        serie.isFavourite = !isFavourite
         viewModelScope.launch {
             serieRepository.insert(serie)
         }

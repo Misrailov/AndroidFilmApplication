@@ -90,8 +90,8 @@ class ActorDetailViewModel(
      *
      * @param film The film for which to toggle the favorite status.
      */
-    fun addFilmToFavourites(film: DomainFilm) {
-        film.isFavourite = !film.isFavourite
+    fun addFilmToFavourites(film: DomainFilm,isFavourite:Boolean) {
+        film.isFavourite = !isFavourite
         viewModelScope.launch {
             filmRepository.insert(film)
         }
