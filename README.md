@@ -1,5 +1,5 @@
 # AndroidFilmApplication Information
-`AndroidFilmApplication` is a simple application I made to showcase my knowledge of Kotlin and Android Compose. Most of the struggle-points were not utilising the language and toolkit themselves as I followed most of the lessons and made use of these during the DevOps project. What made this application difficult through some points was the limitations of the API that I used.
+`AndroidFilmApplication` is a simple application I made to showcase my knowledge of Kotlin and Android Compose. Most of the struggle-points were not caused by the language and toolkit themselves as I followed most of the lessons and made use of these during the DevOps project. What made this application difficult through some points was the limitations of the API that I used.
 A couple of limitations are:
 - Many of the requests that were available didn't work or stopped working during the process of building the application.
 - Doing detail requests didn't provide extra information, which is why I didn't make a detail page.
