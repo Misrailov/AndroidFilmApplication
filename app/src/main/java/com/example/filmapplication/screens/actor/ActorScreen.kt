@@ -9,12 +9,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,7 +21,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.filmapplication.domain.DomainActor
@@ -166,14 +163,14 @@ fun ActorComposable(
                 Text(
                     text = actor.primaryName,
                     color = MaterialTheme.colorScheme.onPrimaryContainer,
-                    fontSize = 24.sp,
+                    fontSize = MaterialTheme.typography.headlineMedium.fontSize,
                     modifier = Modifier.padding(top = dimensionResource(id = R.dimen.standard_padding)),
                 )
 
                 Text(
                     text = stringResource(id = R.string.Born) + ": ${actor.birthYear}",
                     color = MaterialTheme.colorScheme.onPrimaryContainer,
-                    fontSize = 24.sp,
+                    fontSize = MaterialTheme.typography.headlineMedium.fontSize,
                     modifier = Modifier.padding(
                         top = dimensionResource(id = R.dimen.standard_padding),
                         bottom = dimensionResource(id = R.dimen.standard_padding)

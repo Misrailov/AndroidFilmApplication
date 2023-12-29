@@ -1,6 +1,5 @@
 package com.example.filmapplication.network.serie
 
-import com.example.filmapplication.model.serie.ApiSerie
 import com.example.filmapplication.model.serie.SerieContainer
 import com.example.filmapplication.model.serie.SerieContainerSingular
 import kotlinx.coroutines.flow.Flow

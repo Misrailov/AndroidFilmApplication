@@ -4,7 +4,6 @@ import android.util.Log
 import com.example.filmapplication.data.database.serie.SerieDao
 import com.example.filmapplication.data.database.serie.asDbSerie
 import com.example.filmapplication.data.database.serie.asDomainSerie
-import com.example.filmapplication.domain.DomainFilm
 import com.example.filmapplication.domain.DomainSerie
 import com.example.filmapplication.model.serie.asDomainSerie
 import com.example.filmapplication.network.serie.SerieApiService

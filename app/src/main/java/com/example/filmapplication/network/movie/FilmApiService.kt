@@ -1,6 +1,5 @@
 package com.example.filmapplication.network.movie
 
-import com.example.filmapplication.model.film.ApiFilm
 import com.example.filmapplication.model.film.FilmContainer
 import com.example.filmapplication.model.film.FilmContainerSingular
 import com.example.filmapplication.model.film.MultipleFilmsContainer

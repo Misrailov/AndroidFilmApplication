@@ -2,7 +2,6 @@ package com.example.filmapplication.screens.film
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
@@ -20,17 +19,12 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -42,10 +36,8 @@ import androidx.paging.compose.itemsIndexed
 import coil.compose.rememberImagePainter
 import com.example.filmapplication.R
 import com.example.filmapplication.domain.DomainFilm
-import com.example.filmapplication.network.NetworkConnectionInterceptor
 import com.example.filmapplication.screens.ErrorScreen
 import com.example.filmapplication.screens.LoadingScreen
-import kotlinx.coroutines.launch
 
 /**
  * Composable function for displaying a list of films, including top-rated films, worst films,
@@ -60,7 +52,6 @@ fun FilmScreen(
 ) {
 
     var films = filmViewModel.apiFilmPager.collectAsLazyPagingItems();
-    var worstFilms = filmViewModel.apiFilmPagerWorstMovies.collectAsLazyPagingItems();
     var bestFilms = filmViewModel.apiFilmPagerTopRated.collectAsLazyPagingItems();
     val filmListState by filmViewModel.uiListFilmState.collectAsState()
     val filmApiState = filmViewModel.filmApiState
@@ -234,7 +225,7 @@ fun FilmComposable(
                 Text(
                     text = film.titleText,
                     color = MaterialTheme.colorScheme.onBackground,
-                    fontSize = 15.sp,
+                    fontSize = MaterialTheme.typography.bodyMedium.fontSize,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
                         .padding(top = dimensionResource(id = R.dimen.medium_padding))
@@ -242,7 +233,7 @@ fun FilmComposable(
                 Text(
                     text = stringResource(id = R.string.Released_in) + " ${film.releaseYear}",
                     color = MaterialTheme.colorScheme.primary,
-                    fontSize = 16.sp,
+                    fontSize = MaterialTheme.typography.bodyMedium.fontSize,
                     modifier = Modifier
                         .padding(top = dimensionResource(id = R.dimen.small_padding))
                 )

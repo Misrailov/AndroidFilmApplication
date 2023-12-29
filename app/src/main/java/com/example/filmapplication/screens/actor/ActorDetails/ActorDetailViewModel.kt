@@ -14,7 +14,6 @@ import com.example.filmapplication.domain.DomainActor
 import com.example.filmapplication.domain.DomainFilm
 import com.example.filmapplication.repository.ActorRepository
 import com.example.filmapplication.repository.FilmRepository
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 /**
  * Represents the possible UI states for the Actor Detail screen.
