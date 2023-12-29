@@ -2,7 +2,7 @@
 `AndroidFilmApplication` is a simple application I made to showcase my knowledge of Kotlin and Android Compose. Most of the struggle-points were not caused by the language and toolkit themselves, as I followed most of the lessons and made use of these during the DevOps project. What made this application difficult through some points were the limitations of the API that I used.
 A couple of limitations are:
 - Many of the requests that were available didn't work or stopped working during the process of building the application.
-- Doing detail requests didn't provide extra information, which is why I didn't make a detail page.
+- Doing detail requests didn't provide extra information, which is why I didn't make a detail page for Films and Series.
 - I couldn't always rely on the API to be running, which made developer some things difficult.
 - I split the titles as Series And Films in my application. My reason for this was that the API provided extra information like Number of Episodes, Episode Titles. However these usually didn't work, so now the application has a seperate class for two objects that are practically the same.
 
