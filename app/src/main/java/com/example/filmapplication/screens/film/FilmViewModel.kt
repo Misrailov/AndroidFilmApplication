@@ -70,10 +70,6 @@ class FilmViewModel(private val filmRepository: FilmRepository) : ViewModel() {
     var filmApiState: FilmApiState by mutableStateOf(FilmApiState.Loading)
         private set
     /**
-     * The UI state for the Film screen.
-     */
-    private val _uiState = MutableStateFlow(FilmState())
-    /**
      * Flow of [FilmListState] containing favorite films.
      */
     lateinit var uiListFilmState: StateFlow<FilmListState>

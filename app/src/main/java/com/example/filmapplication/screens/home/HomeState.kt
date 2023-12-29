@@ -3,16 +3,7 @@ package com.example.filmapplication.screens.home
 import com.example.filmapplication.domain.DomainActor
 import com.example.filmapplication.domain.DomainFilm
 import com.example.filmapplication.domain.DomainSerie
-/**
- * Data class representing the state of the Home screen.
- *
- * @param scrollActionIdx Index for scroll action.
- * @param scrollToItemIndex Index for the item to scroll to.
- */
-data class HomeState(
-    val scrollActionIdx: Int = 0,
-    val scrollToItemIndex: Int = 0
-)
+
 
 /**
  * Data class representing the state of the Home screen lists.

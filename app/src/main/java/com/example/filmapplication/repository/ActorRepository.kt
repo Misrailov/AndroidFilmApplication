@@ -134,9 +134,8 @@ class CachingActorRepository(
      * Refreshes the actor data by fetching it from the remote API and updating the local database.
      */
     override suspend fun refresh() {
-        Log.e("refresh","get all")
         try {
-
+            Log.e("refresh", "refresh")
             actorApiService.getActorsAsFlow().collect { value ->
                 for (actor in value.results) {
                     insert(actor.asDomainActor())
@@ -209,7 +208,6 @@ class CachingActorRepository(
      */
     override fun getAllItems(): Flow<List<DomainActor>> {
         return actorDao.getAllItems().map {
-            Log.e("Get all","get all")
             it.asDomainActors()
         }.onEach {
             if (it.isEmpty()) {

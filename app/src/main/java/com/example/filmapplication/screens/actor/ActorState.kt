@@ -1,16 +1,7 @@
 package com.example.filmapplication.screens.actor
 
 import com.example.filmapplication.domain.DomainActor
-/**
- * Represents the state of the actor screen.
- *
- * @property scrollActionIdx An integer representing a scroll action index.
- * @property scrollToItemIndex An integer representing the index of the item to which the screen should scroll.
- */
-data class ActorState(
-    val scrollActionIdx: Int = 0,
-    val scrollToItemIndex: Int = 0
-)
+
 
 /**
  * Represents the state of the actor list within the actor screen.

@@ -9,6 +9,7 @@ import YearRange
 import com.example.filmapplication.fake.FakeDataSource
 import com.example.filmapplication.model.film.ApiFilm
 import com.example.filmapplication.model.film.FilmContainer
+import com.example.filmapplication.model.film.FilmContainerSingular
 import com.example.filmapplication.model.film.MultipleFilmsContainer
 
 import com.example.filmapplication.network.movie.FilmApiService
@@ -24,8 +25,8 @@ class FakeFilmApiService : FilmApiService {
 
     }
 
-    override suspend fun getFilmById(id: String): ApiFilm {
-        return FakeDataSource.fakeApiFilms[0]
+    override suspend fun getFilmById(id: String): FilmContainerSingular {
+        return FilmContainerSingular(FakeDataSource.fakeApiFilms[0])
     }
 
     override suspend fun getFilmListByids(idsList: String): MultipleFilmsContainer {

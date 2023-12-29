@@ -51,6 +51,7 @@ class FakeFilmsRepository:FilmRepository {
     }
 
     override fun filmPagingSource(query: String): FilmPagingSource {
+
         return FilmPagingSource(this,"text")
     }
 }

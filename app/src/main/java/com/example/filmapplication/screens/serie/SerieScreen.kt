@@ -74,14 +74,14 @@ fun SerieScreen(
                 LazyRow {
                     item {
                         Column {
-                            Text(text = stringResource(id = R.string.Most_Popular_Series))
+                            Text(text = stringResource(id = R.string.Most_Popular_Series), Modifier.padding(start = dimensionResource(id = R.dimen.standard_padding), end = dimensionResource(id = R.dimen.standard_padding)))
 
                             SerieList(seriesPaged = mostPopSeries, addSerieToFav = ::addSerieFav, favouriteSeries =  favouriteSeries)
                         }
                     }
                     item {
                         Column {
-                            Text(text = stringResource(id = R.string.Top_Rated_Series))
+                            Text(text = stringResource(id = R.string.Top_Rated_Series), Modifier.padding(start = dimensionResource(id = R.dimen.standard_padding), end = dimensionResource(id = R.dimen.standard_padding)))
                             SerieList(seriesPaged = topRatedSeries, addSerieToFav = ::addSerieFav, favouriteSeries = favouriteSeries)
                         }
                     }
@@ -113,6 +113,11 @@ fun SerieList(
             .heightIn(min = dimensionResource(id = R.dimen.min_height))
             .padding(start = dimensionResource(id = R.dimen.standard_padding))
     ) {
+        if(serieList.isNullOrEmpty() && seriesPaged?.itemCount == 0){
+            item {
+                Text(stringResource(id = R.string.No_Series))
+            }
+        }
         if(seriesPaged !=null){
         itemsIndexed(seriesPaged) { _, serie ->
             val isFavourite =

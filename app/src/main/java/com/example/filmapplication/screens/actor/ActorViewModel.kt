@@ -33,8 +33,7 @@ import java.io.IOException
  * @param filmRepository The repository for film-related data.
  */
 class ActorViewModel(
-    private val actorRepository: ActorRepository,
-    private val filmRepository: FilmRepository
+    private val actorRepository: ActorRepository
 ) : ViewModel() {
     /**
      * The current state of actor API call, represented by [ActorApiState].
@@ -42,11 +41,7 @@ class ActorViewModel(
     var actorApiState: ActorApiState by mutableStateOf(ActorApiState.Loading)
         private set
 
-    /**
-     * A [StateFlow] representing the UI state of the actor screen.
-     */
-    private val _uiState = MutableStateFlow(ActorState())
-    val uiState: StateFlow<ActorState> = _uiState.asStateFlow()
+
 
     /**
      * A [StateFlow] representing the list of actors and their favorite status.
@@ -75,7 +70,7 @@ class ActorViewModel(
     fun getRepoActors() {
         viewModelScope.launch {
         try {
-            viewModelScope.launch { actorRepository.refresh() }
+
             uiListActorState = actorRepository.getAllItems().combine(actorRepository.getAllFavourites()) { actors, favouriteActors ->
                 ActorListState(actors, favouriteActors)
             }.stateIn(
@@ -97,9 +92,8 @@ class ActorViewModel(
             initializer {
                 val application = (this[APPLICATION_KEY] as FilmApplication)
                 val actorRepository = application.container.actorRepository
-                val filmRepository = application.container.filmRepository
 
-                ActorViewModel(actorRepository, filmRepository)
+                ActorViewModel(actorRepository)
             }
         }
     }

@@ -1,16 +1,7 @@
 package com.example.filmapplication.screens.film
 
 import com.example.filmapplication.domain.DomainFilm
-/**
- * Represents the state of the film screen, including scroll information.
- *
- * @property scrollActionIdx The index of the scroll action.
- * @property scrollToItemIndex The index to scroll to.
- */
-data class FilmState(
-    val scrollActionIdx: Int = 0,
-    val scrollToItemIndex: Int = 0
-)
+
 
 /**
  * Represents the state of the film list, including favorite films.

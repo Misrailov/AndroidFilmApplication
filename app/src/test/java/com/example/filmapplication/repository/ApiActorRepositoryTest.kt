@@ -51,6 +51,7 @@ class ApiActorRepositoryTest {
     @Test
     fun apiActorRepositoryTest_getActorDetail_verifyActor() =
         runTest {
+
             assertEquals(FakeDataSource.actors[0], repository.getActorDetail("blabla"))
             assertEquals(FakeDataSource.actors[0].nconst, repository.getActorDetail("blabla").nconst)
             assertTrue(!repository.getActorDetail("blabla").isFavourite)

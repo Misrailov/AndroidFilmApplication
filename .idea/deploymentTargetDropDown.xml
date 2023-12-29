@@ -5,10 +5,13 @@
       <entry key="MainActivity">
         <State />
       </entry>
-      <entry key="NavigationTests">
+      <entry key="Tests in 'com.example.filmapplication'">
         <State />
       </entry>
-      <entry key="navigateToMovies()">
+      <entry key="app">
+        <State />
+      </entry>
+      <entry key="daoUpdate_updateFilmInDB()">
         <State />
       </entry>
     </value>

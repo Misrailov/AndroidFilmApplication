@@ -17,7 +17,7 @@ import com.example.filmapplication.model.serie.ApiSerie
 object FakeDataSource {
 
 
-    val actors = listOf<DomainActor>(
+    var actors = listOf<DomainActor>(
         DomainActor("fakeID1", "John Doe", "1987", "2021", "Actor", "fakemovieList"),
         DomainActor("fakeID2", "Jane Smith", "1990", "2019", "Actress", "anotherFakeMovieList"),
         DomainActor(
@@ -36,6 +36,8 @@ object FakeDataSource {
         DomainActor("fakeID9", "Alexander Miller", "1983", "2021", "Actor", "movies4RealFake"),
         DomainActor("fakeID10", "Ella Anderson", "1991", "2018", "Actress", "fakeMovieTime")
     )
+//
+
     val films = listOf<DomainFilm>(
         DomainFilm(
             "fakeMovieID1",

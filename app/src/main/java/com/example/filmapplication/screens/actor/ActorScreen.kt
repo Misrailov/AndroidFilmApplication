@@ -44,7 +44,6 @@ fun ActorScreen(
     )
 ) {
 
-    val actorState by actorViewModel.uiState.collectAsState()
     val actorListState by actorViewModel.uiListActorState.collectAsState()
 
 

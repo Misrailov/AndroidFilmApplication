@@ -27,6 +27,17 @@ data class dbActor(
     val isFavourite: Boolean = false
 )
 
+private val dbActor.domainActor: DomainActor
+    get() = DomainActor(
+        nconst = this.nconst,
+        primaryName = this.primaryName,
+        birthYear = this.birthYear,
+        deathYear = this.deathYear.toString(),
+        primaryProfession = this.primaryProfession,
+        knownForTitles = this.knownForTitles,
+        isFavourite = this.isFavourite
+    )
+
 /**
  * Converts a [dbActor] object to a [DomainActor] object.
  *

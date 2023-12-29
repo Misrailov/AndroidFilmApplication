@@ -38,8 +38,7 @@ class HomeViewModel(
 ) : ViewModel() {
     var homeApiState: HomeApiState by mutableStateOf(HomeApiState.Loading)
         private set
-    private val _uiState = MutableStateFlow(HomeState())
-    val uiState: StateFlow<HomeState> = _uiState.asStateFlow()
+
     lateinit var uiListHomeState: StateFlow<HomeListState>
 
     init {

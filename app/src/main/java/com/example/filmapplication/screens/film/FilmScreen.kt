@@ -69,9 +69,7 @@ fun FilmScreen(
         filmViewModel.addFilmToFavourites(film)
     }
 
-    val networkCheck = NetworkConnectionInterceptor(LocalContext.current)
-    val snackbarHostState = remember { SnackbarHostState() }
-    val scope = rememberCoroutineScope()
+
 
 
     when (filmApiState) {
@@ -80,21 +78,14 @@ fun FilmScreen(
         is FilmApiState.Success -> {
             favouriteFilms = filmListState.favouriteFilms
             Scaffold(
-                snackbarHost = {
-                    SnackbarHost(hostState = snackbarHostState)
-                },
             ) { padding ->
 
-                if (!networkCheck.isConnected(LocalContext.current)) {
-                    scope.launch {
-                        snackbarHostState.showSnackbar(R.string.No_Internet.toString())
-                    }
-                }
+
                 Spacer(modifier = Modifier.padding(padding))
                 LazyRow {
                     item {
                         Column {
-                            Text(text = stringResource(R.string.TopBox_Movies))
+                            Text(text = stringResource(R.string.TopBox_Movies), Modifier.padding(start = dimensionResource(id = R.dimen.standard_padding), end = dimensionResource(id = R.dimen.standard_padding)))
 
                             FilmList(
                                 filmsPaged = films,
@@ -105,7 +96,7 @@ fun FilmScreen(
                     }
                     item {
                         Column {
-                            Text(text = stringResource(R.string.Top_Rated_Films))
+                            Text(text = stringResource(R.string.Top_Rated_Films), Modifier.padding(start = dimensionResource(id = R.dimen.standard_padding), end = dimensionResource(id = R.dimen.standard_padding)))
                             FilmList(
                                 filmsPaged = bestFilms,
                                 addFilmToFavourites = ::addFilmFav,
@@ -144,6 +135,11 @@ fun FilmList(
             .heightIn(min = dimensionResource(id = R.dimen.min_height))
             .padding(start = dimensionResource(id = R.dimen.standard_padding))
     ) {
+        if(filmList.isNullOrEmpty() && filmsPaged?.itemCount==0){
+            item {
+                Text(stringResource(id = R.string.No_Films))
+            }
+        }
         if (filmsPaged != null) {
             itemsIndexed(filmsPaged) { _, film ->
                 val isFavourite =

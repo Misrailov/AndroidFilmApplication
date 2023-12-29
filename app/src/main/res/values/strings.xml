@@ -23,4 +23,6 @@
     <string name="Films">Films</string>
     <string name="Died">Died:</string>
     <string name="Known_for">Known For:</string>
+    <string name="No_Films">No Films Available</string>
+    <string name="No_Series">No Series Available</string>
 </resources>

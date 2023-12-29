@@ -16,6 +16,7 @@ class FakeActorsRepository:ActorRepository {
     }
 
     override suspend fun insert(item: DomainActor) {
+        FakeDataSource.actors[0].isFavourite = true
     }
 
     override suspend fun update(item: DomainActor) {

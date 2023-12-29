@@ -2,8 +2,13 @@ package com.example.filmapplication
 
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.test.assertAll
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onAllNodesWithContentDescription
+import androidx.compose.ui.test.onAllNodesWithText
+import androidx.compose.ui.test.onFirst
+import androidx.compose.ui.test.onLast
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
@@ -69,17 +74,29 @@ class NavigationTests {
             .onNodeWithText("Top Rated Series")
             .assertIsDisplayed()
     }
+
     @Test
     fun navigateToActors() {
         composeTestRule
             .onNodeWithContentDescription("Actors")
             .performClick()
-        composeTestRule
-            .onNodeWithText("No Actors Found")
-            .assertIsDisplayed()
+
         composeTestRule
             .onNodeWithText("Actors")
             .assertIsDisplayed()
+    }
+    @Test
+    fun navigateToActorsAndPressFavouriteButton(){
+        composeTestRule
+            .onNodeWithContentDescription("Actors")
+            .performClick()
+        composeTestRule
+            .onNodeWithText("Actors")
+            .assertIsDisplayed()
+        composeTestRule.onAllNodesWithText("Add To Favourites").onFirst().assertIsDisplayed()
+        composeTestRule.onAllNodesWithText("Add To Favourites").onFirst().performClick()
+        composeTestRule.onAllNodesWithText("Remove From Favourites").onFirst().assertIsDisplayed()
+
     }
 
 
