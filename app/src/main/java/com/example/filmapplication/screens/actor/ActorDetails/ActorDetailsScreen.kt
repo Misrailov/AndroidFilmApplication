@@ -37,7 +37,7 @@ fun ActorDetailScreen(
     var actor by remember { mutableStateOf<DomainActor?>(null)}
 
     var films: List<DomainFilm> by remember { mutableStateOf(listOf()) }
-    var favouriteFilms: List<DomainFilm> by remember { mutableStateOf(listOf()) }
+    val favouriteFilms: List<DomainFilm> by remember { mutableStateOf(listOf()) }
     fun addFilmFav(film:DomainFilm,isFavourite:Boolean){
         actorDetailViewModel.addFilmToFavourites(film,isFavourite)
     }

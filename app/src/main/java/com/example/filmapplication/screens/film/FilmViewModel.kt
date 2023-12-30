@@ -79,7 +79,7 @@ class FilmViewModel(private val filmRepository: FilmRepository) : ViewModel() {
     /**
      * Retrieves favorite films and sets the [uiListFilmState] accordingly.
      */
-    fun getFavouriteFilms() {
+    private fun getFavouriteFilms() {
         try {
             uiListFilmState = filmRepository.getAllFavourites().map { FilmListState(it) }
                 .stateIn(

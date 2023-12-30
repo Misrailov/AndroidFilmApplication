@@ -112,7 +112,7 @@ class CachingFilmRepository(
      */
     override suspend fun refresh(query: String, page: Int) {
         try {
-            filmApiService.getFilmsAsFlow(query, page, 2010).collect() { value ->
+            filmApiService.getFilmsAsFlow(query, page, 2010).collect { value ->
                 for (film in value.results) {
                     insert(film.asDomainFilm())
                 }
@@ -149,7 +149,7 @@ class CachingFilmRepository(
      */
     override fun getAllFavourites(): Flow<List<DomainFilm>> {
         return try {
-            filmDao.getAllItems().map {
+            filmDao.getAllItems().map { it ->
                 it.asDomainFilm().filter { it.isFavourite }
             }
         } catch (e: Exception) {

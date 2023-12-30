@@ -18,9 +18,9 @@ import org.mockito.Mockito.mock
 import org.mockito.Mockito.`when`
 
 class ApiSerieRepositoryTest {
-    lateinit var serieDaoMock: SerieDao
-    lateinit var fakeSerieApiService: SerieApiService
-    lateinit var repository: SerieRepository
+    private lateinit var serieDaoMock: SerieDao
+    private lateinit var fakeSerieApiService: SerieApiService
+    private lateinit var repository: SerieRepository
 
     @Before
     fun prepareMockAndFakeData() {

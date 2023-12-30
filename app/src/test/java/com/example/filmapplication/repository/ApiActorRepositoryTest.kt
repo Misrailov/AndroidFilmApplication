@@ -2,29 +2,24 @@ package com.example.filmapplication.repository
 
 import com.example.filmapplication.data.database.actor.ActorDao
 import com.example.filmapplication.data.database.actor.asDbActor
-import com.example.filmapplication.data.database.film.FilmDao
 import com.example.filmapplication.fake.FakeDataSource
 import com.example.filmapplication.fake.network.FakeActorApiService
-import com.example.filmapplication.fake.network.FakeFilmApiService
-import com.example.filmapplication.fake.repository.FakeActorsRepository
 import com.example.filmapplication.network.actor.ActorApiService
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Mockito.any
 import org.mockito.Mockito.anyString
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.`when`
 
 class ApiActorRepositoryTest {
-    lateinit var actorsDaoMock: ActorDao
-    lateinit var fakeActorApiService: ActorApiService
-    lateinit var repository: ActorRepository
+    private lateinit var actorsDaoMock: ActorDao
+    private lateinit var fakeActorApiService: ActorApiService
+    private lateinit var repository: ActorRepository
 
     @Before
     fun prepareMockAndFakeData() {

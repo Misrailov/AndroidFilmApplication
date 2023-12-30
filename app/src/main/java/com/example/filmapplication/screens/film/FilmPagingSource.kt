@@ -11,7 +11,7 @@ import com.example.filmapplication.repository.FilmRepository
  * @param filmRepository The repository responsible for fetching film data.
  * @param query The query string used to search for films.
  */
-class FilmPagingSource(val filmRepository: FilmRepository, val query: String) :
+class FilmPagingSource( private val filmRepository: FilmRepository, val query: String) :
     PagingSource<Int, DomainFilm>() {
 
     /**
@@ -23,16 +23,16 @@ class FilmPagingSource(val filmRepository: FilmRepository, val query: String) :
     override suspend fun load(
         params: LoadParams<Int>
     ): LoadResult<Int, DomainFilm> {
-        try {
+        return try {
             val nextPageNumber = params.key ?: 1
             val response = filmRepository.getFilms(query, nextPageNumber)
-            return LoadResult.Page(
+            LoadResult.Page(
                 data = response,
                 prevKey = if (nextPageNumber == 1) null else nextPageNumber - 1,
                 nextKey = if (response.isEmpty()) null else nextPageNumber + 1
             )
         } catch (e: Exception) {
-            return LoadResult.Error(e)
+            LoadResult.Error(e)
         }
     }
     /**

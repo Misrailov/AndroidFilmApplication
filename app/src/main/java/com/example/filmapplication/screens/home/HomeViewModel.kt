@@ -48,7 +48,7 @@ class HomeViewModel(
     /**
      * Fetches and combines favorite films, series, and actors from repositories to populate the UI list.
      */
-    fun getFavourites() {
+    private fun getFavourites() {
         try {
 
                  uiListHomeState =combine(filmRepository.getAllFavourites(),serieRepository.getAllFavourites(),actorRepository.getAllFavourites()) { films, series,actors ->

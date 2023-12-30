@@ -1,4 +1,4 @@
-package com.example.filmapplication.model.serie;
+package com.example.filmapplication.model.serie
 
 /**
  * Represents a container for a list of series data.

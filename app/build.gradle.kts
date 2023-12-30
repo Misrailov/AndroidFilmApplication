@@ -1,6 +1,4 @@
 import org.jetbrains.dokka.gradle.DokkaTask
-import org.jetbrains.dokka.gradle.DokkaTaskPartial
-import org.jetbrains.dokka.DokkaConfiguration.Visibility
 
 plugins {
     id("com.android.application")

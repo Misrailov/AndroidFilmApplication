@@ -28,16 +28,15 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
-import coil.compose.rememberImagePainter
+import coil.compose.rememberAsyncImagePainter
+import com.example.filmapplication.R
 import com.example.filmapplication.domain.DomainSerie
 import com.example.filmapplication.screens.ErrorScreen
 import com.example.filmapplication.screens.LoadingScreen
-import com.example.filmapplication.R
 
 /**
  * Composable function for displaying a screen that lists TV series.
@@ -51,8 +50,8 @@ fun SerieScreen(
         factory = SerieViewModel.Factory
     )
 ) {
-    var mostPopSeries = serieViewModel.seriePager.collectAsLazyPagingItems()
-    var topRatedSeries = serieViewModel.serieTopRatedPager.collectAsLazyPagingItems()
+    val mostPopSeries = serieViewModel.seriePager.collectAsLazyPagingItems()
+    val topRatedSeries = serieViewModel.serieTopRatedPager.collectAsLazyPagingItems()
     val serieListState by serieViewModel.uiListSerieState.collectAsState()
     val serieApiState = serieViewModel.serieApiState
     var favouriteSeries = listOf<DomainSerie>()
@@ -99,7 +98,7 @@ fun SerieScreen(
  */
 @Composable
 fun SerieList(
-    serieList:List<DomainSerie>? = listOf<DomainSerie>(),
+    serieList:List<DomainSerie>? = listOf(),
     seriesPaged: LazyPagingItems<DomainSerie>?=null,
     addSerieToFav:(serie: DomainSerie,isFavourite:Boolean)->Unit,
     favouriteSeries: List<DomainSerie>,
@@ -118,7 +117,7 @@ fun SerieList(
         if(seriesPaged !=null){
         itemsIndexed(seriesPaged) { _, serie ->
             val isFavourite =
-                favouriteSeries.filter { x -> x.id == serie!!.id && x.isFavourite }.isNotEmpty()
+                favouriteSeries.any { x -> x.id == serie!!.id && x.isFavourite }
             serie?.let {
                 SerieComposable(
                     serie = serie,
@@ -131,7 +130,7 @@ fun SerieList(
         }else{
             serieList?.forEach { serie ->item {
                 val isFavourite =
-                    favouriteSeries.filter { x -> x.id == serie.id && x.isFavourite }.isNotEmpty()
+                    favouriteSeries.any { x -> x.id == serie.id && x.isFavourite }
                 SerieComposable(
                     serie = serie,
                     addSerieToFav = addSerieToFav,
@@ -177,7 +176,7 @@ fun SerieComposable(
                 .fillMaxSize()
         ) {
             Image(
-                painter = rememberImagePainter(data = serie.primaryImage),
+                painter = rememberAsyncImagePainter(model = serie.primaryImage),
                 contentDescription = stringResource(id = R.string.Photo_Of) + " ${serie.titleText}",
                 modifier = Modifier
                     .width(dimensionResource(id = R.dimen.standard_width))

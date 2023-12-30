@@ -1,6 +1,5 @@
 package com.example.filmapplication.screens.actor
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,12 +20,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.filmapplication.R
 import com.example.filmapplication.domain.DomainActor
 import com.example.filmapplication.screens.ErrorScreen
 import com.example.filmapplication.screens.LoadingScreen
-import com.example.filmapplication.R
 
 /**
  * Composable function to display a list of actors.
@@ -108,7 +106,7 @@ fun ActorList(
             }
         } else {
             actors.forEach { actor ->
-                var isFavouriteActor = favActors.contains(actor)
+                val isFavouriteActor = favActors.contains(actor)
                 item {
                     ActorComposable(
                         addActorToFav = addActorToFav,

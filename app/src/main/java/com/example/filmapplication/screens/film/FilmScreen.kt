@@ -50,8 +50,8 @@ fun FilmScreen(
     filmViewModel: FilmViewModel = viewModel(factory = FilmViewModel.Factory)
 ) {
 
-    var films = filmViewModel.apiFilmPager.collectAsLazyPagingItems()
-    var bestFilms = filmViewModel.apiFilmPagerTopRated.collectAsLazyPagingItems()
+    val films = filmViewModel.apiFilmPager.collectAsLazyPagingItems()
+    val bestFilms = filmViewModel.apiFilmPagerTopRated.collectAsLazyPagingItems()
     val filmListState by filmViewModel.uiListFilmState.collectAsState()
     val filmApiState = filmViewModel.filmApiState
     var favouriteFilms = listOf<DomainFilm>()
@@ -67,8 +67,7 @@ fun FilmScreen(
         is FilmApiState.Loading -> LoadingScreen()
         is FilmApiState.Success -> {
             favouriteFilms = filmListState.favouriteFilms
-            Scaffold(
-            ) { padding ->
+            Scaffold { padding ->
 
 
                 Spacer(modifier = Modifier.padding(padding))
@@ -111,10 +110,10 @@ fun FilmScreen(
  */
 @Composable
 fun FilmList(
-    filmList: List<DomainFilm>? = listOf<DomainFilm>(),
+    filmList: List<DomainFilm>? = listOf(),
     filmsPaged: LazyPagingItems<DomainFilm>? = null,
     addFilmToFavourites: (film: DomainFilm,isFavourite:Boolean) -> Unit,
-    favouriteFilms: List<DomainFilm>,isOnActorPage: Boolean = false
+    favouriteFilms: List<DomainFilm>, isOnActorPage: Boolean = false
 
 ) {
 
@@ -133,7 +132,7 @@ fun FilmList(
         if (filmsPaged != null) {
             itemsIndexed(filmsPaged) { _, film ->
                 val isFavourite =
-                    favouriteFilms.filter { x -> x.id == film!!.id && x.isFavourite }.isNotEmpty()
+                    favouriteFilms.any { x -> x.id == film!!.id && x.isFavourite }
 
                 film?.let {
                     FilmComposable(
@@ -149,7 +148,7 @@ fun FilmList(
             filmList?.forEach { film ->
                 item {
                     val isFavourite =
-                        favouriteFilms.filter { x -> x.id == film.id && x.isFavourite }.isNotEmpty()
+                        favouriteFilms.any { x -> x.id == film.id && x.isFavourite }
 
                     FilmComposable(
                         film,
@@ -177,7 +176,7 @@ fun FilmComposable(
     isFavourite: Boolean,
     isOnActorPage:Boolean = false
 ) {
-    var modifierCard = if(!isOnActorPage) Modifier
+    val modifierCard = if(!isOnActorPage) Modifier
         .padding(
             horizontal = dimensionResource(id = R.dimen.medium_padding),
             vertical = dimensionResource(id = R.dimen.medium_padding)

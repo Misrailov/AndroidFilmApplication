@@ -166,3 +166,11 @@ P
  app/src/main/AndroidManifest.xml,8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e
 C
 settings.gradle.kts,7/4/749edfcc96398253e5b3416184e95c46621da850
+|
+Lapp/src/test/java/com/example/filmapplication/viewmodel/HomeViewModeltest.kt,4/8/483b413bafb960d1634e4c55a37a8b4ba03fc0c4
+ê
+`app/src/main/java/com/example/filmapplication/screens/actor/actorDetails/ActorDetailViewModel.kt,2/1/2103fee3903357629d084ab58fc65fd6900066a9
+é
+^app/src/main/java/com/example/filmapplication/screens/actor/actorDetails/ActorDetailsScreen.kt,8/9/89f3ddd58eb0b28d21f7a4dc804e1ca4225f1515
+{
+Kapp/src/main/java/com/example/filmapplication/screens/film/FilmViewModel.kt,a/f/af95ea90e4a89f5f4d4005ed1d314c3e0cca0ab1

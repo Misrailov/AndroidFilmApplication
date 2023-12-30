@@ -4,12 +4,9 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import com.example.filmapplication.data.database.FilmApplicationDb
-import com.example.filmapplication.data.database.actor.asDbActor
-import com.example.filmapplication.data.database.actor.asDomainActor
 import com.example.filmapplication.data.database.film.FilmDao
 import com.example.filmapplication.data.database.film.asDbFilm
 import com.example.filmapplication.data.database.film.asDomainFilm
-import junit.framework.TestCase
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.flow.first
@@ -73,7 +70,7 @@ class FilmDaoTest {
     fun daoGetOneSpecificFilm_returnsOneFilm() = runBlocking {
         filmDao.insert(FakeDataSource.films[0].asDbFilm())
         val film = filmDao.getItem(FakeDataSource.films[0].id).first()
-        assertEquals(film?.asDomainFilm(), FakeDataSource.films[0])
+        assertEquals(film.asDomainFilm(), FakeDataSource.films[0])
     }
     @Test
     @Throws(Exception::class)
@@ -87,8 +84,8 @@ class FilmDaoTest {
 
         val retrievedFilm = filmDao.getItem(originalFilm.id).first()
 
-        assertEquals(retrievedFilm?.titleText, "New Film Title")
-        assertEquals(retrievedFilm?.asDomainFilm(), updatedFilm)
+        assertEquals(retrievedFilm.titleText, "New Film Title")
+        assertEquals(retrievedFilm.asDomainFilm(), updatedFilm)
     }
 
 

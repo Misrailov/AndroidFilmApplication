@@ -22,19 +22,19 @@ import com.example.filmapplication.R
 /**
  * A custom BottomAppBar used for navigation within the application.
  *
- * @param OnHome Callback for the Home icon click action.
- * @param OnMovie Callback for the Movie icon click action.
- * @param OnSerie Callback for the Serie icon click action.
- * @param OnActor Callback for the Actor icon click action.
+ * @param onHome Callback for the Home icon click action.
+ * @param onMovie Callback for the Movie icon click action.
+ * @param onSerie Callback for the Serie icon click action.
+ * @param onActor Callback for the Actor icon click action.
  */
 @Composable
 fun MyBottomBar(
-    OnHome: () -> Unit,
-    OnMovie: () -> Unit,
-    OnSerie : () -> Unit,
-    OnActor: () -> Unit,
+    onHome: () -> Unit,
+    onMovie: () -> Unit,
+    onSerie : () -> Unit,
+    onActor: () -> Unit,
 
-){
+    ){
     Text(text = "navbar")
     BottomAppBar(
         containerColor = MaterialTheme.colorScheme.background,
@@ -42,18 +42,18 @@ fun MyBottomBar(
         modifier = Modifier.height(dimensionResource(id = R.dimen.bottom_bar_height)),
         actions = {
             Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth()){
-                IconButton(onClick = OnHome) {
+                IconButton(onClick = onHome) {
                     Icon(Icons.Outlined.Home, contentDescription = stringResource(id = R.string.Home))
                 }
-                IconButton(onClick = OnMovie) {
+                IconButton(onClick = onMovie) {
                     Icon(Icons.Outlined.Movie, contentDescription = stringResource(id = R.string.Films))
                 }
-                IconButton(onClick = OnSerie) {
+                IconButton(onClick = onSerie) {
                     Icon(
                         Icons.Outlined.LocalMovies,
                         contentDescription = stringResource(id = R.string.Series))
                 }
-                IconButton(onClick = OnActor) {
+                IconButton(onClick = onActor) {
                     Icon(
                         Icons.Outlined.People,
                         contentDescription = stringResource(id = R.string.Actors))

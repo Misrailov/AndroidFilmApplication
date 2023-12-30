@@ -40,7 +40,7 @@ class ActorDaoTest {
     fun daoInert_insertActorIntoDB() = runBlocking {
         actorDao.insert(FakeDataSource.actors[0].asDbActor())
         val actors = actorDao.getAllItems().first()
-        assertEquals(actors.get(0).asDomainActor(), FakeDataSource.actors[0])
+        assertEquals(actors[0].asDomainActor(), FakeDataSource.actors[0])
 
     }
     @Test
@@ -71,7 +71,7 @@ class ActorDaoTest {
     }
     @Test
     @Throws(Exception::class)
-    fun DoeGetOneSpecificActor_returnsOneActor() = runBlocking {
+    fun daoGetOneSpecificActor_returnsOneActor() = runBlocking {
        actorDao.insert(FakeDataSource.actors[0].asDbActor())
         val actor = actorDao.getItem(FakeDataSource.actors[0].primaryName).first()
         assertEquals(actor.asDomainActor(), FakeDataSource.actors[0])

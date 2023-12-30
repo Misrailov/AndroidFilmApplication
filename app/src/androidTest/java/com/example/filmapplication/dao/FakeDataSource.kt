@@ -18,7 +18,7 @@ import com.example.filmapplication.model.serie.ApiSerie
 object FakeDataSource {
 
 
-    var actors = listOf<DomainActor>(
+    var actors = listOf(
         DomainActor("fakeID1", "John Doe", "1987", "2021", "Actor", "fakemovieList"),
         DomainActor("fakeID2", "Jane Smith", "1990", "2019", "Actress", "anotherFakeMovieList"),
         DomainActor(
@@ -39,7 +39,7 @@ object FakeDataSource {
     )
 //
 
-    val films = listOf<DomainFilm>(
+    val films = listOf(
         DomainFilm(
             "fakeMovieID1",
             "https://www.nme.com/wp-content/uploads/2023/07/dwayne-johnson-the-rock-actors-strike.jpg",
@@ -123,7 +123,7 @@ object FakeDataSource {
     )
 
 
-    val series = listOf<DomainSerie>(
+    val series = listOf(
         DomainSerie(
             "fakeSerieID1",
             "hthttps://m.media-amazon.com/images/M/MV5BN2IzYzBiOTQtNGZmMi00NDI5LTgxMzMtN2EzZjA1NjhlOGMxXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_FMjpg_UX1000_.jpg",

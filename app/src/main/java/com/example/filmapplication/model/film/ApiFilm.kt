@@ -44,7 +44,7 @@ fun ApiFilm.asDomainFilm(): DomainFilm {
     return DomainFilm(
         id = this.id, primaryImage = this.primaryImage.url,
         titleText = this.titleText.text, releaseYear = releaseYear.year,
-        releaseDate = LocalDate.of((if(this.releaseDate!=null) this.releaseDate.year else 0)!!, if(this.releaseDate?.month !=null) this.releaseDate?.month else 0,
+        releaseDate = LocalDate.of((if(this.releaseDate!=null) this.releaseDate.year else 0)!!, if(this.releaseDate?.month !=null) this.releaseDate.month else 0,
             (if(this.releaseDate?.month !=null) releaseDate.day else 0)!!
         )!!
             .toString()

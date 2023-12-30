@@ -71,7 +71,7 @@ class SerieViewModel(private val serieRepository: SerieRepository) : ViewModel()
     /**
      * Get the list of favorite TV series from the database.
      */
-    fun getFavouriteSeries() {
+    private fun getFavouriteSeries() {
         try {
             uiListSerieState = serieRepository.getAllFavourites().map { SerieListState(it) }
                 .stateIn(

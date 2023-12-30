@@ -6,27 +6,21 @@ import com.example.filmapplication.fake.FakeDataSource
 import com.example.filmapplication.fake.network.FakeFilmApiService
 import com.example.filmapplication.model.film.asDomainFilm
 import com.example.filmapplication.network.movie.FilmApiService
-import junit.framework.TestCase
-import kotlinx.coroutines.flow.flow
+import junit.framework.TestCase.assertEquals
+import junit.framework.TestCase.assertTrue
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito.anyString
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.`when`
-import junit.framework.TestCase.assertEquals
-import junit.framework.TestCase.assertTrue
-import kotlinx.coroutines.flow.first
-import org.mockito.Mockito
-import org.mockito.Mockito.anyInt
-import org.mockito.kotlin.verify
 
 class ApiFilmRepositoryTest {
-    lateinit var filmsDaoMock: FilmDao
-    lateinit var fakeFilmApiService: FilmApiService
-    lateinit var repository: FilmRepository
+    private lateinit var filmsDaoMock: FilmDao
+    private lateinit var fakeFilmApiService: FilmApiService
+    private lateinit var repository: FilmRepository
 
     @Before
     fun prepareMockAndFakeData() {

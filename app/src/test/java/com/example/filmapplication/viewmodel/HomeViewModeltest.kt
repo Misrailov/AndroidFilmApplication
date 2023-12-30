@@ -6,8 +6,6 @@ import com.example.filmapplication.fake.repository.FakeSerieRepository
 import com.example.filmapplication.repository.ActorRepository
 import com.example.filmapplication.repository.FilmRepository
 import com.example.filmapplication.repository.SerieRepository
-import com.example.filmapplication.screens.actor.ActorApiState
-import com.example.filmapplication.screens.actor.ActorListState
 import com.example.filmapplication.screens.home.HomeApiState
 import com.example.filmapplication.screens.home.HomeListState
 import com.example.filmapplication.screens.home.HomeViewModel
@@ -61,7 +59,7 @@ class HomeViewModeltest {
                     collectCompleted.complete(Unit)
                 }
             }
-            var FakeHomeState = HomeListState(series = serieRepository.getSeries("blabla",1),
+            val fakeHomeState = HomeListState(series = serieRepository.getSeries("blabla",1),
                 films = filmRepository.getFilms("blabla",1),
                 actors = actorRepository.getActors())
 
@@ -70,15 +68,15 @@ class HomeViewModeltest {
             TestCase.assertEquals(viewModel.homeApiState, HomeApiState.Success)
             TestCase.assertEquals(
                 uiListHome!!.actors,
-                FakeHomeState.actors
+                fakeHomeState.actors
             )
             TestCase.assertEquals(
                 uiListHome!!.films,
-                FakeHomeState.films
+                fakeHomeState.films
             )
             TestCase.assertEquals(
                 uiListHome!!.films,
-                FakeHomeState.films
+                fakeHomeState.films
             )
 
 

@@ -69,18 +69,18 @@ class ActorDetailViewModel(
         viewModelScope.launch {
             actorDetailViewUiState = ActorDetailViewUiState.Loading
 
-            try {
+            actorDetailViewUiState = try {
                 val actor: DomainActor = actorRepository.getActorDetail(id)
                 val films: List<DomainFilm> = filmRepository.getFilmListByids(actor.knownForTitles)
 
 
 
-                actorDetailViewUiState = ActorDetailViewUiState.Success(films, actor)
+                ActorDetailViewUiState.Success(films, actor)
 
             } catch (e: Exception) {
                 // Handle any exceptions that occur during data retrieval
                 Log.e("Exception", e.stackTraceToString())
-                actorDetailViewUiState = ActorDetailViewUiState.Error
+                ActorDetailViewUiState.Error
             }
         }
     }

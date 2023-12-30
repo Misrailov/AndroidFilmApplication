@@ -1,14 +1,10 @@
 package com.example.filmapplication
 
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.test.assertAll
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onAllNodesWithContentDescription
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onFirst
-import androidx.compose.ui.test.onLast
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
@@ -24,7 +20,7 @@ class NavigationTests {
 
     @get:Rule
     val composeTestRule = createComposeRule()
-    lateinit var navController: TestNavHostController
+    private lateinit var navController: TestNavHostController
 
 
     @Before

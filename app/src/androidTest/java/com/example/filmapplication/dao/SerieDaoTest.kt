@@ -70,7 +70,7 @@ class SerieDaoTest {
     fun daoGetOneSpecificSerie_returnsOneSerie() = runBlocking {
         serieDao.insert(FakeDataSource.series[0].asDbSerie())
         val serie = serieDao.getItem(FakeDataSource.series[0].id).first()
-        assertEquals(serie?.asDomainSerie(), FakeDataSource.series[0])
+        assertEquals(serie.asDomainSerie(), FakeDataSource.series[0])
     }
     @Test
     @Throws(Exception::class)
@@ -84,8 +84,8 @@ class SerieDaoTest {
 
         val retrievedSerie = serieDao.getItem(originalSerie.id).first()
 
-        assertEquals(retrievedSerie?.titleText, "New Title")
-        assertEquals(retrievedSerie?.asDomainSerie(), updatedSerie)
+        assertEquals(retrievedSerie.titleText, "New Title")
+        assertEquals(retrievedSerie.asDomainSerie(), updatedSerie)
     }
 
 

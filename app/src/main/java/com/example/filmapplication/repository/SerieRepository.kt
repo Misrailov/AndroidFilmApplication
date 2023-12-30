@@ -107,7 +107,7 @@ class CachingSerieRepository(
      */
     override suspend fun refresh(query: String, page: Int) {
         try {
-            serieApiService.getSeriesAsFlow(query, page, 2010).collect() { value ->
+            serieApiService.getSeriesAsFlow(query, page, 2010).collect { value ->
                 for (serie in value.results) {
                     insert(serie.asDomainSerie())
                 }
@@ -144,7 +144,7 @@ class CachingSerieRepository(
      */
     override fun getAllFavourites(): Flow<List<DomainSerie>> {
         return try {
-            serieDao.getAllItems().map {
+            serieDao.getAllItems().map { it ->
                 it.asDomainSerie().filter { it.isFavourite }
             }
         } catch (e: Exception) {

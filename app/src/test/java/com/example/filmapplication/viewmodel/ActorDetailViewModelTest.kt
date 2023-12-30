@@ -5,31 +5,22 @@ import com.example.filmapplication.fake.repository.FakeActorsRepository
 import com.example.filmapplication.fake.repository.FakeFilmsRepository
 import com.example.filmapplication.repository.ActorRepository
 import com.example.filmapplication.repository.FilmRepository
-import com.example.filmapplication.screens.actor.ActorApiState
 import com.example.filmapplication.screens.actor.ActorDetails.ActorDetailViewModel
 import com.example.filmapplication.screens.actor.ActorDetails.ActorDetailViewUiState
-import com.example.filmapplication.screens.actor.ActorViewModel
 import junit.framework.TestCase.assertEquals
-import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.StandardTestDispatcher
-import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.TestScope
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
-import org.junit.rules.TestWatcher
-import org.junit.runner.Description
 
 class ActorDetailViewModelTest {
     private lateinit var viewModel: ActorDetailViewModel

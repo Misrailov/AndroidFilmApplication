@@ -90,103 +90,69 @@ fun FilmApp(navigationType: FilmApplicationNavigationType,navController:NavHostC
         navController.navigate(Destinations.ActorsDetail.createRoute(actorId))
     }
 
-    if (navigationType == FilmApplicationNavigationType.PERMANENT_NAVIGATION_DRAWER) {
-        PermanentNavigationDrawer(drawerContent = {
-            PermanentDrawerSheet(Modifier.width(dimensionResource(R.dimen.drawer_width))) {
-                NavigationDrawerContent(
-                    selectedDestination = navController.currentDestination,
-                    onTabPressed = { node: String -> navController.navigate(node) },
-                    modifier = Modifier
-                        .wrapContentWidth()
-                        .fillMaxHeight()
-                        .background(MaterialTheme.colorScheme.inverseOnSurface)
-                        .padding(dimensionResource(R.dimen.drawer_padding_content)),
-                )
-            }
-        }) {
-            Scaffold(
-                containerColor = MaterialTheme.colorScheme.background,
-                topBar = {
-                    MyTopAppBar(
-                        currentPage = currentpage,
-                    ){
-                        val isStartDestination = currentDestination == Destinations.Home.route
-                        if (!isStartDestination) {
-                        IconButton(onClick = { navController.popBackStack() }) {
-                            Icon(Icons.Filled.ArrowBack, contentDescription = "Localized description", tint = MaterialTheme.colorScheme.onPrimary)
+    when (navigationType) {
+        FilmApplicationNavigationType.PERMANENT_NAVIGATION_DRAWER -> {
+            PermanentNavigationDrawer(drawerContent = {
+                PermanentDrawerSheet(Modifier.width(dimensionResource(R.dimen.drawer_width))) {
+                    NavigationDrawerContent(
+                        selectedDestination = navController.currentDestination,
+                        onTabPressed = { node: String -> navController.navigate(node) },
+                        modifier = Modifier
+                            .wrapContentWidth()
+                            .fillMaxHeight()
+                            .background(MaterialTheme.colorScheme.inverseOnSurface)
+                            .padding(dimensionResource(R.dimen.drawer_padding_content)),
+                    )
+                }
+            }) {
+                Scaffold(
+                    containerColor = MaterialTheme.colorScheme.background,
+                    topBar = {
+                        MyTopAppBar(
+                            currentPage = currentpage,
+                        ){
+                            val isStartDestination = currentDestination == Destinations.Home.route
+                            if (!isStartDestination) {
+                                IconButton(onClick = { navController.popBackStack() }) {
+                                    Icon(Icons.Filled.ArrowBack, contentDescription = "Localized description", tint = MaterialTheme.colorScheme.onPrimary)
+                                }
+                            }
                         }
-                    }
-                    }
-                },
+                    },
 
-            ) { innerPadding ->
+                    ) { innerPadding ->
 
-                NavComponent(
-                    navController = navController,
-                    modifier = Modifier.padding(innerPadding),
-                    onActorClick = ::onActorClick
+                    NavComponent(
+                        navController = navController,
+                        modifier = Modifier.padding(innerPadding),
+                        onActorClick = ::onActorClick
 
-                )
+                    )
+                }
             }
         }
-    } else if (navigationType == FilmApplicationNavigationType.BOTTOM_NAVIGATION) {
-        Scaffold(
-            containerColor = MaterialTheme.colorScheme.background,
-            topBar = {
-                MyTopAppBar(
-                    currentPage = currentpage,
-                ){
-                val isStartDestination = currentDestination == Destinations.Home.route
-                if (!isStartDestination) {
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(Icons.Filled.ArrowBack, contentDescription = "Localized description", tint = MaterialTheme.colorScheme.onBackground)
-                    }
-                }}
-
-            },
-            bottomBar = {
-
-                MyBottomBar(goToHome, goToMovies, goToSeries, goToActors)
-
-            },
-
-        ) { innerPadding ->
-            NavComponent(
-                navController = navController,
-                modifier = Modifier.padding(innerPadding),
-                onActorClick = ::onActorClick
-
-
-
-            )
-        }
-    } else {
-        Row {
-            AnimatedVisibility(visible = navigationType == FilmApplicationNavigationType.NAVIGATION_RAIL) {
-                val navigationRailContentDescription = stringResource(R.string.navigation_rail)
-                FilmNavigationRail(
-                    selectedDestination = navController.currentDestination,
-                    onTabPressed = { node: String -> navController.navigate(node) },
-                )
-            }
+        FilmApplicationNavigationType.BOTTOM_NAVIGATION -> {
             Scaffold(
                 containerColor = MaterialTheme.colorScheme.background,
                 topBar = {
                     MyTopAppBar(
                         currentPage = currentpage,
                     ){
-
                         val isStartDestination = currentDestination == Destinations.Home.route
                         if (!isStartDestination) {
                             IconButton(onClick = { navController.popBackStack() }) {
-                                Icon(Icons.Filled.ArrowBack, contentDescription = "Localized description", tint = MaterialTheme.colorScheme.onPrimary)
+                                Icon(Icons.Filled.ArrowBack, contentDescription = "Localized description", tint = MaterialTheme.colorScheme.onBackground)
                             }
-                        }
-                    }
+                        }}
+
+                },
+                bottomBar = {
+
+                    MyBottomBar(goToHome, goToMovies, goToSeries, goToActors)
+
                 },
 
-            ) { innerPadding ->
-
+                ) { innerPadding ->
                 NavComponent(
                     navController = navController,
                     modifier = Modifier.padding(innerPadding),
@@ -194,6 +160,43 @@ fun FilmApp(navigationType: FilmApplicationNavigationType,navController:NavHostC
 
 
                 )
+            }
+        }
+        else -> {
+            Row {
+                AnimatedVisibility(visible = navigationType == FilmApplicationNavigationType.NAVIGATION_RAIL) {
+                    val navigationRailContentDescription = stringResource(R.string.navigation_rail)
+                    FilmNavigationRail(
+                        selectedDestination = navController.currentDestination,
+                        onTabPressed = { node: String -> navController.navigate(node) },
+                    )
+                }
+                Scaffold(
+                    containerColor = MaterialTheme.colorScheme.background,
+                    topBar = {
+                        MyTopAppBar(
+                            currentPage = currentpage,
+                        ){
+
+                            val isStartDestination = currentDestination == Destinations.Home.route
+                            if (!isStartDestination) {
+                                IconButton(onClick = { navController.popBackStack() }) {
+                                    Icon(Icons.Filled.ArrowBack, contentDescription = "Localized description", tint = MaterialTheme.colorScheme.onPrimary)
+                                }
+                            }
+                        }
+                    },
+
+                    ) { innerPadding ->
+
+                    NavComponent(
+                        navController = navController,
+                        modifier = Modifier.padding(innerPadding),
+                        onActorClick = ::onActorClick
+
+
+                    )
+                }
             }
         }
     }

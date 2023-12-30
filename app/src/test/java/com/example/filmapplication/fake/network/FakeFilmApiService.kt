@@ -1,17 +1,9 @@
 package com.example.filmapplication.fake.network
 
-import com.example.filmapplication.model.Caption
-import com.example.filmapplication.model.PrimaryImage
-import com.example.filmapplication.model.ReleaseDate
-import com.example.filmapplication.model.TitleText
-import com.example.filmapplication.model.TitleType
-import com.example.filmapplication.model.YearRange
 import com.example.filmapplication.fake.FakeDataSource
-import com.example.filmapplication.model.film.ApiFilm
 import com.example.filmapplication.model.film.FilmContainer
 import com.example.filmapplication.model.film.FilmContainerSingular
 import com.example.filmapplication.model.film.MultipleFilmsContainer
-
 import com.example.filmapplication.network.movie.FilmApiService
 
 class FakeFilmApiService : FilmApiService {

@@ -80,7 +80,7 @@ private val DarkColors = darkColorScheme(
 @Composable
 fun EntertainmentApplicationTheme(
   useDarkTheme: Boolean = isSystemInDarkTheme(),
-  content: @Composable() () -> Unit
+  content: @Composable () -> Unit
 ) {
   val colors = if (!useDarkTheme) {
     LightColors

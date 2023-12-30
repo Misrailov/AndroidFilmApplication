@@ -1,6 +1,5 @@
 package com.example.filmapplication.screens.actor
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -24,7 +23,6 @@ import java.io.IOException
  * ViewModel class for managing actor-related data and UI states.
  *
  * @param actorRepository The repository for actor-related data.
- * @param filmRepository The repository for film-related data.
  */
 class ActorViewModel(
     private val actorRepository: ActorRepository
@@ -61,7 +59,7 @@ class ActorViewModel(
     /**
      * Fetches actor data from the repository, updates the UI states, and handles API call results.
      */
-    fun getRepoActors() {
+    private fun getRepoActors() {
         viewModelScope.launch {
         try {
 

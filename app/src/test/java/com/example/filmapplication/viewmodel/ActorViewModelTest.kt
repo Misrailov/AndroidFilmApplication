@@ -1,35 +1,25 @@
 package com.example.filmapplication.viewmodel
 
-import com.example.filmapplication.data.database.actor.asDbActor
 import com.example.filmapplication.fake.FakeDataSource
 import com.example.filmapplication.fake.repository.FakeActorsRepository
 import com.example.filmapplication.repository.ActorRepository
 import com.example.filmapplication.screens.actor.ActorApiState
 import com.example.filmapplication.screens.actor.ActorListState
 import com.example.filmapplication.screens.actor.ActorViewModel
-import junit.framework.TestCase
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
-import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.TestScope
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
-import org.junit.rules.TestWatcher
-import org.junit.runner.Description
-import org.mockito.Mockito
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.test.advanceUntilIdle
-import kotlinx.coroutines.test.runTest
 
 class ActorViewModelTest {
     private lateinit var viewModel: ActorViewModel

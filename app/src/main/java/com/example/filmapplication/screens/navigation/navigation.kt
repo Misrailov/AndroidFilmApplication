@@ -16,7 +16,6 @@ import com.example.filmapplication.screens.serie.SerieScreen
  * A composable function that defines the navigation component for the Film Application.
  *
  * @param navController The [NavHostController] responsible for handling navigation within the app.
- * @param navigationType The type of navigation within the Film Application.
  * @param modifier Modifier for styling and positioning the navigation component.
  * @param onActorClick A callback function to handle actor item clicks.
  */

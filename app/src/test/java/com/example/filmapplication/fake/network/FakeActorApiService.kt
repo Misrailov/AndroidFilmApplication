@@ -21,7 +21,7 @@ class FakeActorApiService : ActorApiService {
     }
 
     override suspend fun getActorById(id: String): ActorContainerSingular {
-        var domainActor = FakeDataSource.actors[0]
+        val domainActor = FakeDataSource.actors[0]
         return ActorContainerSingular(
             ApiActor(
                 domainActor.nconst,

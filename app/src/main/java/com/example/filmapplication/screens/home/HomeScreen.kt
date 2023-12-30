@@ -29,7 +29,6 @@ import com.example.filmapplication.R
  * Composable function that displays the home screen with lists of favorite movies, series, and actors.
  *
  * @param homeViewModel The ViewModel responsible for managing the data and state of the home screen.
- * @param performClick A lambda function to handle item clicks when navigating to details screens.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

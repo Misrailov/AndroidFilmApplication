@@ -14,7 +14,7 @@ import okio.IOException
  *
  * @property context The [Context] used to check network connectivity.
  */
-class NetworkConnectionInterceptor(val context: Context) : Interceptor {
+class NetworkConnectionInterceptor(private val context: Context) : Interceptor {
     /**
      * Intercepts the network request and checks for network connectivity.
      *
@@ -40,7 +40,7 @@ class NetworkConnectionInterceptor(val context: Context) : Interceptor {
      * @param context The [Context] used to check network connectivity.
      * @return `true` if the device is connected to a network, otherwise `false`.
      */
-    fun isConnected(context: Context): Boolean {
+    private fun isConnected(context: Context): Boolean {
         var result = false
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
