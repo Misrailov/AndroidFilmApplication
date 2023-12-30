@@ -10,9 +10,9 @@ import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSiz
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.ui.Modifier
-import com.example.compose.EntertainmentApplicationTheme
 import com.example.filmapplication.screens.FilmApp
 import com.example.filmapplication.screens.utils.FilmApplicationNavigationType
+import com.example.filmapplication.ui.theme.EntertainmentApplicationTheme
 
 /**
  * The main activity of the Film Application.

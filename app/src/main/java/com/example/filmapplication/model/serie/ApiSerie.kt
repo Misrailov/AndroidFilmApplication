@@ -1,10 +1,10 @@
 package com.example.filmapplication.model.serie
 
-import PrimaryImage
-import ReleaseDate
-import TitleText
-import TitleType
-import YearRange
+import com.example.filmapplication.model.PrimaryImage
+import com.example.filmapplication.model.ReleaseDate
+import com.example.filmapplication.model.TitleText
+import com.example.filmapplication.model.TitleType
+import com.example.filmapplication.model.YearRange
 import com.example.filmapplication.domain.DomainSerie
 import java.time.LocalDate
 /**

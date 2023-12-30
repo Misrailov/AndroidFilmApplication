@@ -1,4 +1,4 @@
-package com.example.templateapplication.screens.appBar
+package com.example.filmapplication.screens.appBar
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme

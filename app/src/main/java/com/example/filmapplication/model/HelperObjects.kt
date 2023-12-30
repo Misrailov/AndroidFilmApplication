@@ -1,3 +1,5 @@
+package com.example.filmapplication.model
+
 /**
  * Represents the primary image associated with a title.
  *

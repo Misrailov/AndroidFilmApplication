@@ -1,4 +1,5 @@
-package com.example.taskapp.ui.components
+package com.example.filmapplication.screens.navigation
+
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding

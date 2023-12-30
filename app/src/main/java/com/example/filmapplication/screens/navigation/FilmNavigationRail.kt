@@ -1,4 +1,5 @@
-package com.example.taskapp.ui.components
+package com.example.filmapplication.screens.navigation
+
 
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationRail

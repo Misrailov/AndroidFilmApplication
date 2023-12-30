@@ -31,13 +31,13 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.filmapplication.screens.appBar.MyBottomBar
-import com.example.templateapplication.screens.appBar.MyTopAppBar
 import com.example.filmapplication.R
+import com.example.filmapplication.screens.appBar.MyTopAppBar
+import com.example.filmapplication.screens.navigation.FilmNavigationRail
+import com.example.filmapplication.screens.navigation.NavigationDrawerContent
 
-import com.example.filmapplication.screens.navigation.navComponent
+import com.example.filmapplication.screens.navigation.NavComponent
 import com.example.filmapplication.screens.utils.FilmApplicationNavigationType
-import com.example.taskapp.ui.components.FilmNavigationRail
-import com.example.taskapp.ui.components.NavigationDrawerContent
 
 /**
  * Enum class representing various destinations in the film application.
@@ -121,10 +121,9 @@ fun FilmApp(navigationType: FilmApplicationNavigationType,navController:NavHostC
 
             ) { innerPadding ->
 
-                navComponent(
+                NavComponent(
                     navController = navController,
                     modifier = Modifier.padding(innerPadding),
-                    navigationType = navigationType,
                     onActorClick = ::onActorClick
 
                 )
@@ -152,10 +151,9 @@ fun FilmApp(navigationType: FilmApplicationNavigationType,navController:NavHostC
             },
 
         ) { innerPadding ->
-            navComponent(
+            NavComponent(
                 navController = navController,
                 modifier = Modifier.padding(innerPadding),
-                navigationType = navigationType,
                 onActorClick = ::onActorClick
 
 
@@ -189,10 +187,9 @@ fun FilmApp(navigationType: FilmApplicationNavigationType,navController:NavHostC
 
             ) { innerPadding ->
 
-                navComponent(
+                NavComponent(
                     navController = navController,
                     modifier = Modifier.padding(innerPadding),
-                    navigationType = navigationType,
                     onActorClick = ::onActorClick
 
 

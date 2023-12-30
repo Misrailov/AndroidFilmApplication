@@ -11,7 +11,6 @@ import com.example.filmapplication.screens.actor.ActorScreen
 import com.example.filmapplication.screens.home.HomeScreen
 import com.example.filmapplication.screens.film.FilmScreen
 import com.example.filmapplication.screens.serie.SerieScreen
-import com.example.filmapplication.screens.utils.FilmApplicationNavigationType
 
 /**
  * A composable function that defines the navigation component for the Film Application.
@@ -22,9 +21,8 @@ import com.example.filmapplication.screens.utils.FilmApplicationNavigationType
  * @param onActorClick A callback function to handle actor item clicks.
  */
 @Composable
-fun navComponent(
+fun NavComponent(
     navController: NavHostController,
-    navigationType: FilmApplicationNavigationType,
     modifier: Modifier = Modifier,
     onActorClick: (String) -> Unit,
 

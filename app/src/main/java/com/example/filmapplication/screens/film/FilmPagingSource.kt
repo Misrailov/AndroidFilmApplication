@@ -1,3 +1,5 @@
+package com.example.filmapplication.screens.film
+
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.filmapplication.domain.DomainFilm

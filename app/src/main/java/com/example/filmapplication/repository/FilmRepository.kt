@@ -1,6 +1,5 @@
 package com.example.filmapplication.repository
 
-import FilmPagingSource
 import android.util.Log
 import com.example.filmapplication.data.database.film.FilmDao
 import com.example.filmapplication.data.database.film.asDbFilm
@@ -9,6 +8,7 @@ import com.example.filmapplication.domain.DomainFilm
 import com.example.filmapplication.model.film.asDomainFilm
 import com.example.filmapplication.network.movie.FilmApiService
 import com.example.filmapplication.network.movie.getFilmsAsFlow
+import com.example.filmapplication.screens.film.FilmPagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map

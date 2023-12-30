@@ -1,11 +1,12 @@
 package com.example.filmapplication.model.film;
 
-import PrimaryImage
-import ReleaseDate
-import TitleText
-import TitleType
-import YearRange
+
 import com.example.filmapplication.domain.DomainFilm
+import com.example.filmapplication.model.PrimaryImage
+import com.example.filmapplication.model.ReleaseDate
+import com.example.filmapplication.model.TitleText
+import com.example.filmapplication.model.TitleType
+import com.example.filmapplication.model.YearRange
 import java.time.LocalDate
 
 /**

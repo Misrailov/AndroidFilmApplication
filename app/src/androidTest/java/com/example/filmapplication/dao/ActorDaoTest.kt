@@ -90,9 +90,9 @@ class ActorDaoTest {
         val retrievedActor = actorDao.getItem(updatedActor.primaryName).first()
         println("$retrievedActor retrievedActor")
 
-        assertEquals(retrievedActor?.primaryName, "New Actor Name")
-        assertEquals(retrievedActor?.asDomainActor(), updatedActor)
-        assertEquals(actorWithOriginalName?.asDomainActor(), null)
+        assertEquals(retrievedActor.primaryName, "New Actor Name")
+        assertEquals(retrievedActor.asDomainActor(), updatedActor)
+        assertEquals(actorWithOriginalName.asDomainActor(), null)
     }
 
 
