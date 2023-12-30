@@ -43,7 +43,7 @@ fun List<ApiActor>.asDomainActors(): List<DomainActor> {
             nconst = it.nconst,
             primaryName = it.primaryName,
             birthYear = it.birthYear,
-            deathYear = it.deathYear.toString(),
+            deathYear = it.deathYear,
             primaryProfession = it.primaryProfession,
             knownForTitles = it.knownForTitles
         )

@@ -1,11 +1,11 @@
 package com.example.filmapplication.fake.network
 
-import Caption
-import PrimaryImage
-import ReleaseDate
-import TitleText
-import TitleType
-import YearRange
+import com.example.filmapplication.model.Caption
+import com.example.filmapplication.model.PrimaryImage
+import com.example.filmapplication.model.ReleaseDate
+import com.example.filmapplication.model.TitleText
+import com.example.filmapplication.model.TitleType
+import com.example.filmapplication.model.YearRange
 import com.example.filmapplication.fake.FakeDataSource
 import com.example.filmapplication.model.film.ApiFilm
 import com.example.filmapplication.model.film.FilmContainer

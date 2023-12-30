@@ -1,14 +1,15 @@
 package com.example.filmapplication.dao
 
-import Caption
-import PrimaryImage
-import ReleaseDate
-import TitleText
-import TitleType
-import YearRange
+
 import com.example.filmapplication.domain.DomainActor
 import com.example.filmapplication.domain.DomainFilm
 import com.example.filmapplication.domain.DomainSerie
+import com.example.filmapplication.model.Caption
+import com.example.filmapplication.model.PrimaryImage
+import com.example.filmapplication.model.ReleaseDate
+import com.example.filmapplication.model.TitleText
+import com.example.filmapplication.model.TitleType
+import com.example.filmapplication.model.YearRange
 import com.example.filmapplication.model.actor.ApiActor
 import com.example.filmapplication.model.film.ApiFilm
 import com.example.filmapplication.model.serie.ApiSerie

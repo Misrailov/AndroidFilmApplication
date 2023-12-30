@@ -95,7 +95,7 @@ class CachingActorRepository(
      */
     override suspend fun getActors(): List<DomainActor> {
         return try {
-            actorApiService.getActors().results.asDomainActors();
+            actorApiService.getActors().results.asDomainActors()
         } catch (e: SocketTimeoutException) {
             Log.e("SocketTimeoutException", e.stackTraceToString())
             listOf()

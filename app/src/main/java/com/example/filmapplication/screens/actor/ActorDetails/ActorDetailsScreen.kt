@@ -51,7 +51,7 @@ fun ActorDetailScreen(
         }
         is ActorDetailViewUiState.Success ->{
 
-            actor = (actorDetailViewModel.actorDetailViewUiState as ActorDetailViewUiState.Success).actor;
+            actor = (actorDetailViewModel.actorDetailViewUiState as ActorDetailViewUiState.Success).actor
             films = (actorDetailViewModel.actorDetailViewUiState as ActorDetailViewUiState.Success).films
         }
     }

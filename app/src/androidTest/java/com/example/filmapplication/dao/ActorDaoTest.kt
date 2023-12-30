@@ -92,7 +92,7 @@ class ActorDaoTest {
 
         assertEquals(retrievedActor.primaryName, "New Actor Name")
         assertEquals(retrievedActor.asDomainActor(), updatedActor)
-        assertEquals(actorWithOriginalName.asDomainActor(), null)
+        assertEquals(actorWithOriginalName, null)
     }
 
 

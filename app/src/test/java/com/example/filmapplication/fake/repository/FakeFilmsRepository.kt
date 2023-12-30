@@ -1,9 +1,9 @@
 package com.example.filmapplication.fake.repository
 
-import FilmPagingSource
 import com.example.filmapplication.domain.DomainFilm
 import com.example.filmapplication.fake.FakeDataSource
 import com.example.filmapplication.repository.FilmRepository
+import com.example.filmapplication.screens.film.FilmPagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 

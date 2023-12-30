@@ -1,4 +1,4 @@
-package com.example.filmapplication.model.film;
+package com.example.filmapplication.model.film
 
 
 import com.example.filmapplication.domain.DomainFilm

@@ -132,14 +132,12 @@ fun SerieList(
             serieList?.forEach { serie ->item {
                 val isFavourite =
                     favouriteSeries.filter { x -> x.id == serie.id && x.isFavourite }.isNotEmpty()
-                serie.let {
-                    SerieComposable(
-                        serie = serie,
-                        addSerieToFav = addSerieToFav,
-                        isFavourite = isFavourite
+                SerieComposable(
+                    serie = serie,
+                    addSerieToFav = addSerieToFav,
+                    isFavourite = isFavourite
 
-                    )
-                }
+                )
             } }
         }
 

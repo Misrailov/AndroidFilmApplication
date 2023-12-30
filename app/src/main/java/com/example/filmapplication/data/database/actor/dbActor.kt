@@ -32,7 +32,7 @@ private val dbActor.domainActor: DomainActor
         nconst = this.nconst,
         primaryName = this.primaryName,
         birthYear = this.birthYear,
-        deathYear = this.deathYear.toString(),
+        deathYear = this.deathYear,
         primaryProfession = this.primaryProfession,
         knownForTitles = this.knownForTitles,
         isFavourite = this.isFavourite
@@ -49,7 +49,7 @@ fun dbActor.asDomainActor(): DomainActor {
         nconst = this.nconst,
         primaryName = this.primaryName,
         birthYear = this.birthYear,
-        deathYear = this.deathYear.toString(),
+        deathYear = this.deathYear,
         primaryProfession = this.primaryProfession,
         knownForTitles = this.knownForTitles,
         isFavourite = this.isFavourite
@@ -84,7 +84,7 @@ fun List<dbActor>.asDomainActors(): List<DomainActor> {
             nconst = it.nconst,
             primaryName = it.primaryName,
             birthYear = it.birthYear,
-            deathYear = it.deathYear.toString(),
+            deathYear = it.deathYear,
             primaryProfession = it.primaryProfession,
             knownForTitles = it.knownForTitles,
             isFavourite = it.isFavourite

@@ -42,7 +42,7 @@ class FilmDaoTest {
     fun daoInert_insertActorIntoDB() = runBlocking {
         filmDao.insert(FakeDataSource.films[0].asDbFilm())
         val films = filmDao.getAllItems().first()
-        TestCase.assertEquals(films.get(0).asDomainFilm(), FakeDataSource.films[0])
+        assertEquals(films[0].asDomainFilm(), FakeDataSource.films[0])
 
     }
     @Test

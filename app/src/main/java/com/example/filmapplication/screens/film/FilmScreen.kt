@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -29,12 +28,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
-import coil.compose.rememberImagePainter
+import coil.compose.rememberAsyncImagePainter
 import com.example.filmapplication.R
 import com.example.filmapplication.domain.DomainFilm
 import com.example.filmapplication.screens.ErrorScreen
@@ -52,8 +50,8 @@ fun FilmScreen(
     filmViewModel: FilmViewModel = viewModel(factory = FilmViewModel.Factory)
 ) {
 
-    var films = filmViewModel.apiFilmPager.collectAsLazyPagingItems();
-    var bestFilms = filmViewModel.apiFilmPagerTopRated.collectAsLazyPagingItems();
+    var films = filmViewModel.apiFilmPager.collectAsLazyPagingItems()
+    var bestFilms = filmViewModel.apiFilmPagerTopRated.collectAsLazyPagingItems()
     val filmListState by filmViewModel.uiListFilmState.collectAsState()
     val filmApiState = filmViewModel.filmApiState
     var favouriteFilms = listOf<DomainFilm>()
@@ -153,15 +151,12 @@ fun FilmList(
                     val isFavourite =
                         favouriteFilms.filter { x -> x.id == film.id && x.isFavourite }.isNotEmpty()
 
-                    film.let {
-                        FilmComposable(
-                            film,
-                            addFilmToFavourites,
-                            isFavourite
-                            ,isOnActorPage = isOnActorPage
-                        )
-
-                    }
+                    FilmComposable(
+                        film,
+                        addFilmToFavourites,
+                        isFavourite
+                        ,isOnActorPage = isOnActorPage
+                    )
                 }
             }
         }
@@ -209,8 +204,8 @@ fun FilmComposable(
                 .fillMaxSize()
         ) {
             Image(
-                painter = rememberImagePainter(data = film.primaryImage),
-                contentDescription = stringResource(id = R.string.Photo_Of) + "${film.titleText}",
+                painter = rememberAsyncImagePainter(model = film.primaryImage),
+                contentDescription = stringResource(id = R.string.Photo_Of) + film.titleText,
                 modifier = Modifier
                     .width(dimensionResource(id = R.dimen.standard_width))
                     .height(dimensionResource(id = R.dimen.img_card_size))
