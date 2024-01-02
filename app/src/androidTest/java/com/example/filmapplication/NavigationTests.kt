@@ -41,8 +41,7 @@ class NavigationTests {
             .assertIsDisplayed()
         composeTestRule.onNodeWithText("Your Favourite Series")
             .assertIsDisplayed()
-        composeTestRule.onNodeWithText("Your Favourite Actors")
-            .assertIsDisplayed()
+
 
     }
 

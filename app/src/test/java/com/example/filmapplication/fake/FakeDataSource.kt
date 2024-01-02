@@ -10,7 +10,6 @@ import com.example.filmapplication.model.ReleaseDate
 import com.example.filmapplication.model.TitleText
 import com.example.filmapplication.model.TitleType
 import com.example.filmapplication.model.YearRange
-import com.example.filmapplication.model.actor.ApiActor
 import com.example.filmapplication.model.film.ApiFilm
 import com.example.filmapplication.model.serie.ApiSerie
 
@@ -206,48 +205,6 @@ object FakeDataSource {
         )
     )
 
-    val fakeApiActors = listOf(
-        ApiActor(
-            nconst = "nm001",
-            primaryName = "John Smith",
-            birthYear = "1975",
-            deathYear = "0",
-            primaryProfession = "Actor",
-            knownForTitles = "tt123,tt456,tt789"
-        ),
-        ApiActor(
-            nconst = "nm002",
-            primaryName = "Jane Doe",
-            birthYear = "1980",
-            deathYear = "0",
-            primaryProfession = "Actress",
-            knownForTitles = "tt101,tt202,tt303"
-        ),
-        ApiActor(
-            nconst = "nm003",
-            primaryName = "Robert Johnson",
-            birthYear = "1965",
-            deathYear = "2020",
-            primaryProfession = "Actor",
-            knownForTitles = "tt555,tt666,tt777"
-        ),
-        ApiActor(
-            nconst = "nm004",
-            primaryName = "Emily Williams",
-            birthYear = "1992",
-            deathYear = "0",
-            primaryProfession = "Actress",
-            knownForTitles = "tt888,tt999,tt111"
-        ),
-        ApiActor(
-            nconst = "nm005",
-            primaryName = "Michael Brown",
-            birthYear = "1988",
-            deathYear = "0",
-            primaryProfession = "Actor",
-            knownForTitles = "tt222,tt333,tt444"
-        )
-    )
     val fakeApiFilms = listOf(
         ApiFilm(
             _id = "film1",

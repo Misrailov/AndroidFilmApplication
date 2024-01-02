@@ -34,7 +34,7 @@ interface ActorApiService {
 }
 
 /**
- * Extension function to convert the [getActors] function to a Flow.
+ * Extension function to convert the [getActors()] function to a Flow.
  *
  * @return A Flow of [ActorContainer].
  */

@@ -15,11 +15,3 @@ data class ActorContainer(
     val results: List<ApiActor>
 )
 
-/**
- * Extracts a list of [ApiActor] objects from the [ActorContainer].
- *
- * @return A list of [ApiActor] objects.
- */
-fun ActorContainer.getList(): List<ApiActor> {
-    return this.results
-}

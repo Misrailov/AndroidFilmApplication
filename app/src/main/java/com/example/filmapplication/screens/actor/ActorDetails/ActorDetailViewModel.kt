@@ -29,7 +29,6 @@ sealed interface ActorDetailViewUiState {
      *
      * @property films The list of films associated with the actor.
      * @property actor The detailed information about the actor.
-     * @property favFilms The list of favorite films associated with the actor.
      */
     data class Success(
         val films: List<DomainFilm>,

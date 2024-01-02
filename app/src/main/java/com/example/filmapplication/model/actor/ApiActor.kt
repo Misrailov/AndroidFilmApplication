@@ -1,8 +1,6 @@
 package com.example.filmapplication.model.actor
 
 import com.example.filmapplication.domain.DomainActor
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 
 /**
  * Represents an actor retrieved from an API.
@@ -23,14 +21,7 @@ data class ApiActor(
     val knownForTitles: String
 )
 
-/**
- * Converts a [Flow] of lists of [ApiActor] objects to a [Flow] of lists of [DomainActor] objects.
- *
- * @return A [Flow] of lists of [DomainActor] objects.
- */
-fun Flow<List<ApiActor>>.asDomainActors(): Flow<List<DomainActor>> {
-    return this.map { it.asDomainActors() }
-}
+
 
 /**
  * Converts a list of [ApiActor] objects to a list of [DomainActor] objects.
